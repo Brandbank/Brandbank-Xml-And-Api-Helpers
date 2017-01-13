@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace Brandbank.Xml.Helpers
 {
@@ -22,9 +23,13 @@ namespace Brandbank.Xml.Helpers
             Action fn) =>
             fn();
 
-        public static T ConvertTo<T>(this string data) where T : class
+        public static T ConvertXmlStringTo<T>(this string data) where T : class
         {
-            return JsonConvert.DeserializeObject<T>(data);
+            using (var stringReader = new StringReader(data))
+            {
+                var xmlSerializer = new XmlSerializer(typeof(T));
+                return (T)xmlSerializer.Deserialize(stringReader);
+            }
         }
 
         public static float ConvertToFloat(this string item)

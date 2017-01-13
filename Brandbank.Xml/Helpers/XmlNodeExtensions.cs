@@ -33,11 +33,7 @@ namespace Brandbank.Xml.Helpers
 
         public static T ConvertTo<T>(this XmlNode xmlNode) where T : class, new()
         {
-            using (var stringReader = new StringReader(xmlNode.OuterXml))
-            {
-                var xmlSerializer = new XmlSerializer(typeof(T));
-                return (T)xmlSerializer.Deserialize(stringReader);
-            }
+            return xmlNode.OuterXml.ConvertXmlStringTo<T>();
         }
 
         public static XmlNode ConvertToXml<T>(this T obj) where T : class, new()
