@@ -3,6 +3,7 @@ using Brandbank.Xml.Helpers;
 using Brandbank.Xml.Models.Message;
 using System;
 using System.IO;
+using System.Xml.Schema;
 
 namespace Brandbank.Api.Clients
 {
@@ -29,7 +30,7 @@ namespace Brandbank.Api.Clients
 
             return messageBuilder()
                 .ConvertToXml()
-                .ValidateXml("")
+                .ValidateXml("", validationEventHandler)
                 .CreateDirectory(newDirectory)
                 .SaveToDirectory(newDirectory, "BrandbankMessage.xml")
                 .CompressFolder();
@@ -38,5 +39,10 @@ namespace Brandbank.Api.Clients
         public UploadResponse UploadMessageToBrandbank(Stream message) => _uploadClient.UploadZip(_header, message);
 
         public UploadResponse GetUploadResponse(Guid receiptId) => _uploadClient.GetUploadResponse(_header, receiptId);
+
+        private ValidationEventHandler validationEventHandler()
+        {
+            return (o, e) => { };
+        }
     }
 }

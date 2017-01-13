@@ -7,7 +7,7 @@
     <authors>$author$</authors>
     <owners>$author$</owners>
     <licenseUrl>https://github.com/Brandbank/Xml-And-Api-Helpers/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/Brandbank/Xml-And-Api-Helpers</projectUrl>
+    <projectUrl>https://github.com/Brandbank/Xml-And-Api-Helpers/tree/master/Brandbank.Api</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>Initial release</releaseNotes>
