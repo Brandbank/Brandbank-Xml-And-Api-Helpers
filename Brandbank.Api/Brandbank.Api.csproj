@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrandbankApi.cs" />
     <Compile Include="Clients\CoverageClient.cs" />
     <Compile Include="Clients\CoverageClientLogger.cs" />
     <Compile Include="Clients\FeedbackClient.cs" />
