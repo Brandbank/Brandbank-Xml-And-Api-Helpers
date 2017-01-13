@@ -2,6 +2,7 @@
 using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Brandbank.Xml.Helpers
@@ -23,10 +24,10 @@ namespace Brandbank.Xml.Helpers
             return returnItem;
         }
 
-        public static string SaveToDirectory(this XElement element, string path, string name)
+        public static string SaveToDirectory(this XmlNode xmlNode, string path, string name)
         {
             var fullPath = Path.Combine(path, name);
-            File.WriteAllText(fullPath, element.ToString());
+            File.WriteAllText(fullPath, xmlNode.OuterXml);
             return path;
         }
 
