@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service allows the extraction of data via the product library</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="GetUnsentProductData">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetUnsentProductDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUnsentProductDataResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExternalCallerHeader" type="tns:ExternalCallerHeader" />
+      <s:complexType name="ExternalCallerHeader">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ExternalCallerId" type="s1:guid" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="GetProductDataForGTINs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="gtins" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="gtin" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetProductDataForGTINsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductDataForGTINsResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AcknowledgeMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="messageGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AcknowledgeMessageResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetUnsentProductDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUnsentProductData" />
+  </wsdl:message>
+  <wsdl:message name="GetUnsentProductDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUnsentProductDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUnsentProductDataExternalCallerHeader">
+    <wsdl:part name="ExternalCallerHeader" element="tns:ExternalCallerHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetProductDataForGTINsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductDataForGTINs" />
+  </wsdl:message>
+  <wsdl:message name="GetProductDataForGTINsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductDataForGTINsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductDataForGTINsExternalCallerHeader">
+    <wsdl:part name="ExternalCallerHeader" element="tns:ExternalCallerHeader" />
+  </wsdl:message>
+  <wsdl:message name="AcknowledgeMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:AcknowledgeMessage" />
+  </wsdl:message>
+  <wsdl:message name="AcknowledgeMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:AcknowledgeMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="AcknowledgeMessageExternalCallerHeader">
+    <wsdl:part name="ExternalCallerHeader" element="tns:ExternalCallerHeader" />
+  </wsdl:message>
+  <wsdl:portType name="Data_x0020_ExtractSoap">
+    <wsdl:operation name="GetUnsentProductData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return xml data for all products not yet downloaded</wsdl:documentation>
+      <wsdl:input message="tns:GetUnsentProductDataSoapIn" />
+      <wsdl:output message="tns:GetUnsentProductDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDataForGTINs">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return xml data for specific products</wsdl:documentation>
+      <wsdl:input message="tns:GetProductDataForGTINsSoapIn" />
+      <wsdl:output message="tns:GetProductDataForGTINsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Acknowledge the receipt of a message</wsdl:documentation>
+      <wsdl:input message="tns:AcknowledgeMessageSoapIn" />
+      <wsdl:output message="tns:AcknowledgeMessageSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Data_x0020_ExtractSoap" type="tns:Data_x0020_ExtractSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetUnsentProductData">
+      <soap:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/GetUnsentProductData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetUnsentProductDataExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDataForGTINs">
+      <soap:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/GetProductDataForGTINs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetProductDataForGTINsExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeMessage">
+      <soap:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/AcknowledgeMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AcknowledgeMessageExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Data_x0020_ExtractSoap12" type="tns:Data_x0020_ExtractSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetUnsentProductData">
+      <soap12:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/GetUnsentProductData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetUnsentProductDataExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDataForGTINs">
+      <soap12:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/GetProductDataForGTINs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetProductDataForGTINsExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeMessage">
+      <soap12:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/AcknowledgeMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AcknowledgeMessageExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Data_x0020_Extract">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service allows the extraction of data via the product library</wsdl:documentation>
+    <wsdl:port name="Data_x0020_ExtractSoap" binding="tns:Data_x0020_ExtractSoap">
+      <soap:address location="https://api.brandbank.com/svc/feed/extractdata.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Data_x0020_ExtractSoap12" binding="tns:Data_x0020_ExtractSoap12">
+      <soap12:address location="https://api.brandbank.com/svc/feed/extractdata.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

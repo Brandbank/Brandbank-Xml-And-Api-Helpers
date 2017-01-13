@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f35df423-e7ff-4ba2-a133-9607757a7a6f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://api.brandbank.com/svc/DataImport/Upload.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Upload.xsd" MetadataType="Schema" ID="d2b7f1b5-72bf-4023-ba36-fceef8f2942a" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd1" />
+    <MetadataFile FileName="Upload1.xsd" MetadataType="Schema" ID="fdf53790-e605-4690-9cc8-d182200aa3d6" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd0" />
+    <MetadataFile FileName="Upload.wsdl" MetadataType="Wsdl" ID="96cd4b77-01f3-4038-93ff-9878d34a691a" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?wsdl" />
+    <MetadataFile FileName="Upload2.xsd" MetadataType="Schema" ID="ba1af9f5-3141-4225-98f7-43672f5dccc8" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd2" />
+    <MetadataFile FileName="Upload3.xsd" MetadataType="Schema" ID="e46c6406-cb79-46e7-9ca0-477df5ec70f6" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandbank.Xml", "Brandbank.Xml\Brandbank.Xml.csproj", "{A131B9C8-66FB-4D34-8568-B540FA477C63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandbank.Xml.Tests", "Brandbank.Xml.Tests\Brandbank.Xml.Tests.csproj", "{E79DF2B9-F3C7-44CE-BECB-F00AC68BD256}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandbank.Api", "Brandbank.Api\Brandbank.Api.csproj", "{72C912C1-AD45-414D-A164-67FA5C1E86CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A131B9C8-66FB-4D34-8568-B540FA477C63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A131B9C8-66FB-4D34-8568-B540FA477C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A131B9C8-66FB-4D34-8568-B540FA477C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A131B9C8-66FB-4D34-8568-B540FA477C63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E79DF2B9-F3C7-44CE-BECB-F00AC68BD256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E79DF2B9-F3C7-44CE-BECB-F00AC68BD256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E79DF2B9-F3C7-44CE-BECB-F00AC68BD256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E79DF2B9-F3C7-44CE-BECB-F00AC68BD256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C912C1-AD45-414D-A164-67FA5C1E86CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C912C1-AD45-414D-A164-67FA5C1E86CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C912C1-AD45-414D-A164-67FA5C1E86CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C912C1-AD45-414D-A164-67FA5C1E86CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

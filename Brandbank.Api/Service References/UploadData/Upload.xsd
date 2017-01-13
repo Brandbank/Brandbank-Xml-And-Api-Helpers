@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://www.brandbank.com/WebServices/DataImport/2010/03" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/Message" />
+  <xs:import schemaLocation="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Brandbank.Import.UploadService" />
+  <xs:element name="UploadStream">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.microsoft.com/Message" name="stream" type="q1:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="UserCredentialHeader">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserCredential" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q2="http://www.brandbank.com/WebServices/DataImport/2010/03" name="UserCredentialHeader" nillable="true" type="q2:UserCredentialHeader" />
+  <xs:element name="UploadStreamResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Brandbank.Import.UploadService" minOccurs="0" name="UploadStreamResult" nillable="true" type="q3:UploadResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadZip">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/Message" name="zipStream" type="q4:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadZipResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Brandbank.Import.UploadService" minOccurs="0" name="UploadZipResult" nillable="true" type="q5:UploadResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUploadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="receiptId" type="ser:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUploadResponseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Brandbank.Import.UploadService" minOccurs="0" name="GetUploadResponseResult" nillable="true" type="q6:UploadResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

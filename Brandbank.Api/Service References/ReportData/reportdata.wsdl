@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service allows external partners to report on a feed, and supply site coverage information</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="SupplyCoverageReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlData">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SupplyCoverageReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SupplyCoverageReportResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExternalCallerHeader" type="tns:ExternalCallerHeader" />
+      <s:complexType name="ExternalCallerHeader">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ExternalCallerId" type="s1:guid" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="SupplyExtractionFeedback">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlData">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SupplyExtractionFeedbackResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SupplyExtractionFeedbackResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SupplyRawFileData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="rawFileData" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="usage" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SupplyRawFileDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SupplyRawFileDataResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SupplyCompressedCoverageReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="rawFileData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SupplyCompressedCoverageReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SupplyCompressedCoverageReportResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SupplyCompressedExtractionFeedback">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="rawFileData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SupplyCompressedExtractionFeedbackResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SupplyCompressedExtractionFeedbackResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SupplyCoverageReportSoapIn">
+    <wsdl:part name="parameters" element="tns:SupplyCoverageReport" />
+  </wsdl:message>
+  <wsdl:message name="SupplyCoverageReportSoapOut">
+    <wsdl:part name="parameters" element="tns:SupplyCoverageReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="SupplyCoverageReportExternalCallerHeader">
+    <wsdl:part name="ExternalCallerHeader" element="tns:ExternalCallerHeader" />
+  </wsdl:message>
+  <wsdl:message name="SupplyExtractionFeedbackSoapIn">
+    <wsdl:part name="parameters" element="tns:SupplyExtractionFeedback" />
+  </wsdl:message>
+  <wsdl:message name="SupplyExtractionFeedbackSoapOut">
+    <wsdl:part name="parameters" element="tns:SupplyExtractionFeedbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="SupplyExtractionFeedbackExternalCallerHeader">
+    <wsdl:part name="ExternalCallerHeader" element="tns:ExternalCallerHeader" />
+  </wsdl:message>
+  <wsdl:message name="SupplyRawFileDataSoapIn">
+    <wsdl:part name="parameters" element="tns:SupplyRawFileData" />
+  </wsdl:message>
+  <wsdl:message name="SupplyRawFileDataSoapOut">
+    <wsdl:part name="parameters" element="tns:SupplyRawFileDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SupplyRawFileDataExternalCallerHeader">
+    <wsdl:part name="ExternalCallerHeader" element="tns:ExternalCallerHeader" />
+  </wsdl:message>
+  <wsdl:message name="SupplyCompressedCoverageReportSoapIn">
+    <wsdl:part name="parameters" element="tns:SupplyCompressedCoverageReport" />
+  </wsdl:message>
+  <wsdl:message name="SupplyCompressedCoverageReportSoapOut">
+    <wsdl:part name="parameters" element="tns:SupplyCompressedCoverageReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="SupplyCompressedCoverageReportExternalCallerHeader">
+    <wsdl:part name="ExternalCallerHeader" element="tns:ExternalCallerHeader" />
+  </wsdl:message>
+  <wsdl:message name="SupplyCompressedExtractionFeedbackSoapIn">
+    <wsdl:part name="parameters" element="tns:SupplyCompressedExtractionFeedback" />
+  </wsdl:message>
+  <wsdl:message name="SupplyCompressedExtractionFeedbackSoapOut">
+    <wsdl:part name="parameters" element="tns:SupplyCompressedExtractionFeedbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="SupplyCompressedExtractionFeedbackExternalCallerHeader">
+    <wsdl:part name="ExternalCallerHeader" element="tns:ExternalCallerHeader" />
+  </wsdl:message>
+  <wsdl:portType name="Data_x0020_ReportSoap">
+    <wsdl:operation name="SupplyCoverageReport">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This allows partners to supply information regarding their products that they range</wsdl:documentation>
+      <wsdl:input message="tns:SupplyCoverageReportSoapIn" />
+      <wsdl:output message="tns:SupplyCoverageReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SupplyExtractionFeedback">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This is required to indicate the outcome of processing a data extraction</wsdl:documentation>
+      <wsdl:input message="tns:SupplyExtractionFeedbackSoapIn" />
+      <wsdl:output message="tns:SupplyExtractionFeedbackSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SupplyRawFileData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This allows sending raw file data for a given usage scenario (eg sending a compressed list of suppliers)</wsdl:documentation>
+      <wsdl:input message="tns:SupplyRawFileDataSoapIn" />
+      <wsdl:output message="tns:SupplyRawFileDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SupplyCompressedCoverageReport">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This allows partners to supply compressed (zipped) information regarding their products that they range</wsdl:documentation>
+      <wsdl:input message="tns:SupplyCompressedCoverageReportSoapIn" />
+      <wsdl:output message="tns:SupplyCompressedCoverageReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SupplyCompressedExtractionFeedback">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This takes compressed (zipped) information required to indicate the outcome of processing a data extraction</wsdl:documentation>
+      <wsdl:input message="tns:SupplyCompressedExtractionFeedbackSoapIn" />
+      <wsdl:output message="tns:SupplyCompressedExtractionFeedbackSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Data_x0020_ReportSoap" type="tns:Data_x0020_ReportSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SupplyCoverageReport">
+      <soap:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyCoverageReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SupplyCoverageReportExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SupplyExtractionFeedback">
+      <soap:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyExtractionFeedback" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SupplyExtractionFeedbackExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SupplyRawFileData">
+      <soap:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyRawFileData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SupplyRawFileDataExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SupplyCompressedCoverageReport">
+      <soap:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyCompressedCoverageReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SupplyCompressedCoverageReportExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SupplyCompressedExtractionFeedback">
+      <soap:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyCompressedExtractionFeedback" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SupplyCompressedExtractionFeedbackExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Data_x0020_ReportSoap12" type="tns:Data_x0020_ReportSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SupplyCoverageReport">
+      <soap12:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyCoverageReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SupplyCoverageReportExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SupplyExtractionFeedback">
+      <soap12:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyExtractionFeedback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SupplyExtractionFeedbackExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SupplyRawFileData">
+      <soap12:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyRawFileData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SupplyRawFileDataExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SupplyCompressedCoverageReport">
+      <soap12:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyCompressedCoverageReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SupplyCompressedCoverageReportExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SupplyCompressedExtractionFeedback">
+      <soap12:operation soapAction="http://www.i-label.net/Partners/WebServices/DataFeed/2005/11/SupplyCompressedExtractionFeedback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SupplyCompressedExtractionFeedbackExternalCallerHeader" part="ExternalCallerHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Data_x0020_Report">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service allows external partners to report on a feed, and supply site coverage information</wsdl:documentation>
+    <wsdl:port name="Data_x0020_ReportSoap" binding="tns:Data_x0020_ReportSoap">
+      <soap:address location="https://api.brandbank.com/svc/feed/reportdata.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Data_x0020_ReportSoap12" binding="tns:Data_x0020_ReportSoap12">
+      <soap12:address location="https://api.brandbank.com/svc/feed/reportdata.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
