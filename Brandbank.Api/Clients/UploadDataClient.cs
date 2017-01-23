@@ -12,7 +12,7 @@ namespace Brandbank.Api.Clients
         private readonly UploadClient _uploadClient;
         private readonly UserCredentialHeader _header;
 
-        public UploadDataClient(Guid guid, string endpointAddress)
+        public UploadDataClient(Guid guid)
         {
             if (guid == null)
                 throw new NullReferenceException("Guid cannot be null");

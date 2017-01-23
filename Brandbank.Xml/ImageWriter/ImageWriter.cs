@@ -13,7 +13,8 @@ namespace Brandbank.Xml.ImageWriter
 
         public void SaveToDisk(Stream imageStream, string fileName)
         {
-            using (var fileStream = File.Create(fileName))
+            var path = Path.Combine(_imagesDirectory, fileName);
+            using (var fileStream = File.Create(path))
             {
                 imageStream.Seek(0, SeekOrigin.Begin);
                 imageStream.CopyTo(fileStream);
