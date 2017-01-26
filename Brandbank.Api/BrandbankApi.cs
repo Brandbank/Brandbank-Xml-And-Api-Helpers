@@ -16,7 +16,8 @@ namespace Brandbank.Api
             Func<Xml.Models.Coverage.ReportType> coverageGetter,
             Func<byte[], int> coverageUploader)
         {
-            uploadCompressedData(coverageDirectory, xsdPath, validationEventHandler, coverageGetter, coverageUploader);
+            var ns = "http://www.brandbank.com/schemas/CoverageFeedback/2005/11";
+            uploadCompressedData(coverageDirectory, xsdPath, ns, validationEventHandler, coverageGetter, coverageUploader);
         }
 
         public static void UploadCompressedFeedback(
@@ -27,7 +28,8 @@ namespace Brandbank.Api
             Func<byte[], int> feedbackUploader,
             Action feedbackCallback)
         {
-            uploadCompressedData(feedbackDirectory, xsdPath, validationEventHandler, feedbackGetter, feedbackUploader);
+            var ns = "http://www.brandbank.com/schemas/rpf/2005/11";
+            uploadCompressedData(feedbackDirectory, xsdPath, ns, validationEventHandler, feedbackGetter, feedbackUploader);
             feedbackCallback();
         }
 
@@ -42,7 +44,7 @@ namespace Brandbank.Api
         {
             while (
                 messageDownloader()
-                    .ValidateXml(xsdPath, validationEventHandler)
+                    .ValidateXml(xsdPath, "", validationEventHandler)
                     .ConvertTo<MessageType>()
                     .Then(productProcessor)
                     .Then(feedbackProcessor)
@@ -54,6 +56,7 @@ namespace Brandbank.Api
         private static void uploadCompressedData<T>(
             string directory,
             string xsdPath,
+            string nameSpace,
             Func<ValidationEventHandler> validationEventHandler,
             Func<T> productGetter,
             Func<byte[], int> uploader)
@@ -62,7 +65,7 @@ namespace Brandbank.Api
             var newDirectory = Path.Combine(directory, DateTime.Now.ToString("yyyyMMddHHmmss"));
             productGetter()
                 .ConvertToXml()
-                .ValidateXml(xsdPath, validationEventHandler)
+                .ValidateXml(xsdPath, nameSpace, validationEventHandler)
                 .CreateDirectory(newDirectory)
                 .SaveToDirectory(newDirectory, "BrandbankData.xml")
                 .CompressFolder()

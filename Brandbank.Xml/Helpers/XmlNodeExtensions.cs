@@ -9,11 +9,11 @@ namespace Brandbank.Xml.Helpers
 {
     public static class XmlNodeExtensions
     {
-        public static XmlNode ValidateXml(this XmlNode xmlNode, string schemaPath, Func<ValidationEventHandler> validationEventHandler)
+        public static XmlNode ValidateXml(this XmlNode xmlNode, string schemaPath, string nameSpace, Func<ValidationEventHandler> validationEventHandler)
         {
             XmlSchemaSet schemas = new XmlSchemaSet();
             using (var sr = new StreamReader(schemaPath))
-                schemas.Add("", XmlReader.Create(sr));
+                schemas.Add(nameSpace, XmlReader.Create(sr));
 
             var settings = new XmlReaderSettings
             {

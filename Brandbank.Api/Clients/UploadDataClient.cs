@@ -30,7 +30,7 @@ namespace Brandbank.Api.Clients
 
             return messageBuilder()
                 .ConvertToXml()
-                .ValidateXml("", validationEventHandler)
+                .ValidateXml("", "", validationEventHandler)
                 .CreateDirectory(newDirectory)
                 .SaveToDirectory(newDirectory, "BrandbankMessage.xml")
                 .CompressFolder();
