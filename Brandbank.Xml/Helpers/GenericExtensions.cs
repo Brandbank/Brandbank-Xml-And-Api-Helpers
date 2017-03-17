@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,6 +33,16 @@ namespace Brandbank.Xml.Helpers
             }
         }
 
+        public static T ConvertJsonStringTo<T>(this Stream stream) where T : class
+        {
+            var serializer = new JsonSerializer();
+            using (var sr = new StreamReader(stream))
+            using (var jsonTextReader = new JsonTextReader(sr))
+            {
+                return serializer.Deserialize<T>(jsonTextReader);
+            }
+        }
+
         public static float ConvertToFloat(this string item)
         {
             float retVal;
@@ -58,6 +69,11 @@ namespace Brandbank.Xml.Helpers
         public static IEnumerable<T> NewIfNull<T>(this IEnumerable<T> obj) where T : class
         {
             return obj ?? Enumerable.Empty<T>();
+        }
+
+        public static IEnumerable<decimal> NewIfNull(this IEnumerable<decimal> obj)
+        {
+            return obj ?? Enumerable.Empty<decimal>();
         }
 
         public static T FirstOrNewIfNull<T>(this IEnumerable<T> obj, Func<T, bool> fn) where T : class, new()

@@ -9,7 +9,7 @@ namespace Brandbank.Xml.Helpers
 {
     public static class XmlNodeExtensions
     {
-        public static XmlNode ValidateXml(this XmlNode xmlNode, string schemaPath, string nameSpace, Func<ValidationEventHandler> validationEventHandler)
+        public static XmlNode ValidateXml(this XmlNode xmlNode, string schemaPath, string nameSpace, ValidationEventHandler validationEventHandler)
         {
             XmlSchemaSet schemas = new XmlSchemaSet();
             using (var sr = new StreamReader(schemaPath))
@@ -21,7 +21,7 @@ namespace Brandbank.Xml.Helpers
                 Schemas = schemas,
                 ValidationFlags = XmlSchemaValidationFlags.ReportValidationWarnings,
             };
-            settings.ValidationEventHandler += validationEventHandler();
+            settings.ValidationEventHandler += validationEventHandler;
 
             using (var xmlStream = new StringReader(xmlNode.OuterXml))
             using (var validator = XmlReader.Create(xmlStream, settings))

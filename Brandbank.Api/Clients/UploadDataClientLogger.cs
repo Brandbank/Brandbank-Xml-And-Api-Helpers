@@ -2,7 +2,6 @@
 using Brandbank.Xml.Models.Message;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 
 namespace Brandbank.Api.Clients
 {
@@ -35,7 +34,7 @@ namespace Brandbank.Api.Clients
             }
         }
 
-        public UploadResponse UploadMessageToBrandbank(Stream message)
+        public UploadResponse UploadMessageToBrandbank(byte[] message)
         {
             _logger.LogDebug($"Uploading message to Brandbank");
             try
@@ -63,7 +62,7 @@ namespace Brandbank.Api.Clients
             switch (response.Status)
             {
                 case UploadResponse.UploadStatuses.Success:
-                    _logger.LogInformation($"Successfully uploaded message {response.ReceiptId} to Brandbank with {response.FilesReceivedCount} products");
+                    _logger.LogInformation($"Successfully uploaded message {response.ReceiptId} to Brandbank with {response.FilesReceivedCount} file");
                     break;
                 case UploadResponse.UploadStatuses.Fail:
                     _logger.LogError($"Failed to uploaded message {response.ReceiptId} to Brandbank");

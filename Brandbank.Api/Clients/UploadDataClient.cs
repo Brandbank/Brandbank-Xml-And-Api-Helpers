@@ -11,8 +11,11 @@ namespace Brandbank.Api.Clients
     {
         private readonly UploadClient _uploadClient;
         private readonly UserCredentialHeader _header;
+        private readonly string _xsdSchema;
+        private readonly string _nameSpace;
+        private readonly ValidationEventHandler _validationEventHandler;
 
-        public UploadDataClient(Guid guid)
+        public UploadDataClient(Guid guid, string xsdSchema, string nameSpace, ValidationEventHandler validationEventHandler)
         {
             if (guid == null)
                 throw new NullReferenceException("Guid cannot be null");
@@ -22,27 +25,26 @@ namespace Brandbank.Api.Clients
             {
                 UserCredential = guid
             };
+            _xsdSchema = xsdSchema;
+            _nameSpace = nameSpace;
+            _validationEventHandler = validationEventHandler;
         }
 
         public byte[] PrepareMessage(Func<MessageType> messageBuilder, string uploadDirectory)
         {
-            var newDirectory = Path.Combine(uploadDirectory, DateTime.Now.ToString("yyyyMMddHHmmss"));
-
             return messageBuilder()
                 .ConvertToXml()
-                .ValidateXml("", "", validationEventHandler)
-                .CreateDirectory(newDirectory)
-                .SaveToDirectory(newDirectory, "BrandbankMessage.xml")
+                .ValidateXml(_xsdSchema, _nameSpace, _validationEventHandler)
+                .SaveToDirectory(uploadDirectory, "BrandbankMessage.xml")
                 .CompressFolder();
         }
 
-        public UploadResponse UploadMessageToBrandbank(Stream message) => _uploadClient.UploadZip(_header, message);
+        public UploadResponse UploadMessageToBrandbank(byte[] message)
+        {
+            using (var data = new MemoryStream(message))
+               return _uploadClient.UploadZip(_header, data);
+        } 
 
         public UploadResponse GetUploadResponse(Guid receiptId) => _uploadClient.GetUploadResponse(_header, receiptId);
-
-        private ValidationEventHandler validationEventHandler()
-        {
-            return (o, e) => { };
-        }
     }
 }

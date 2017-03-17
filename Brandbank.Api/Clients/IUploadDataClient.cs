@@ -8,7 +8,7 @@ namespace Brandbank.Api.Clients
     public interface IUploadDataClient
     {
         byte[] PrepareMessage(Func<MessageType> messageBuilder, string tempDirectory);
-        UploadResponse UploadMessageToBrandbank(Stream message);
+        UploadResponse UploadMessageToBrandbank(byte[] message);
         UploadResponse GetUploadResponse(Guid receiptId);
     }
 }

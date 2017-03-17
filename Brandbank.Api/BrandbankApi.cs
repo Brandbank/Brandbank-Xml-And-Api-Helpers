@@ -1,73 +1,69 @@
-﻿using Brandbank.Xml.Helpers;
+﻿using Brandbank.Api.Clients;
+using Brandbank.Xml.Helpers;
 using Brandbank.Xml.Models.Message;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using System.Xml;
 using System.Xml.Schema;
 
 namespace Brandbank.Api
 {
     public class BrandbankApi
     {
-        public static void UploadCompressedCoverage(
-            string coverageDirectory,
-            string xsdPath,
-            Func<ValidationEventHandler> validationEventHandler,
-            Func<Xml.Models.Coverage.ReportType> coverageGetter,
-            Func<byte[], int> coverageUploader)
+        private readonly Guid _authGuid;
+        private readonly string _directory;
+        private readonly ValidationEventHandler _validationEventHandler;
+
+        public BrandbankApi(Guid authGuid, ValidationEventHandler validationEventHandler, string directory, int historyToKeep = 30)
         {
-            var ns = "http://www.brandbank.com/schemas/CoverageFeedback/2005/11";
-            uploadCompressedData(coverageDirectory, xsdPath, ns, validationEventHandler, coverageGetter, coverageUploader);
+            _authGuid = authGuid;
+            _directory = directory;
+            _validationEventHandler = validationEventHandler;
         }
 
-        public static void UploadCompressedFeedback(
-            string feedbackDirectory,
-            string xsdPath,
-            Func<ValidationEventHandler> validationEventHandler,
-            Func<Xml.Models.Feedback.ReportType> feedbackGetter,
-            Func<byte[], int> feedbackUploader,
-            Action feedbackCallback)
+        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, ILogger<IGetUnsentClient> logger)
         {
-            var ns = "http://www.brandbank.com/schemas/rpf/2005/11";
-            uploadCompressedData(feedbackDirectory, xsdPath, ns, validationEventHandler, feedbackGetter, feedbackUploader);
-            feedbackCallback();
+            GetUnsent(productProcessor, logger, Path.Combine("Schemas", "BrandbankXML_v6.xsd"), string.Empty);
         }
 
-        public static void GetUnsent(
-            string xsdPath,
-            Func<ValidationEventHandler> validationEventHandler,
-            Func<XmlNode> messageDownloader,
-            Func<MessageType, IBrandbankMessageSummary> productProcessor,
-            Func<IBrandbankMessageSummary, IBrandbankMessageSummary> feedbackProcessor,
-            Func<IBrandbankMessageSummary, IBrandbankMessageSummary> messageAcknowledger
-            )
+        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, ILogger<IGetUnsentClient> logger, string xsdPath, string nameSpace)
         {
-            while (
-                messageDownloader()
-                    .ValidateXml(xsdPath, "", validationEventHandler)
-                    .ConvertTo<MessageType>()
-                    .Then(productProcessor)
-                    .Then(feedbackProcessor)
-                    .Then(messageAcknowledger)
-                    .MessageHadProducts
+            using (var unsentClient = new GetUnsentClientLogger(logger, new GetUnsentClient(_authGuid)))
+                while (
+                    unsentClient.GetUnsentProductData()
+                        .ValidateXml(xsdPath, nameSpace, _validationEventHandler)
+                        .ConvertTo<MessageType>()
+                        .Then(productProcessor)
+                        .Then(unsentClient.AcknowledgeMessage)
+                        .MessageHadProducts
                     );
         }
 
-        private static void uploadCompressedData<T>(
+        public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter, ILogger<ICoverageClient> logger)
+        {
+            UploadCoverage(coverageGetter, logger, Path.Combine("Schemas", "CoverageReportv2a.xsd"), "http://www.brandbank.com/schemas/CoverageFeedback/2005/11");
+        }
+
+        public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter, ILogger<ICoverageClient> logger, string xsdPath, string nameSpace)
+        {
+            using (var coverageClient = new CoverageClientLogger(logger,new CoverageClient(_authGuid)))
+            {
+                var dir = Path.Combine(_directory, "Coverage", DateTime.Now.ToString("yyyyMMddHHmmssfff")).CreateDirectory();
+                uploadCompressedData(dir, xsdPath, nameSpace, coverageGetter, coverageClient.UploadCompressedCoverage);
+            }
+        }
+        private void uploadCompressedData<T>(
             string directory,
             string xsdPath,
             string nameSpace,
-            Func<ValidationEventHandler> validationEventHandler,
             Func<T> productGetter,
             Func<byte[], int> uploader)
             where T : class, new()
         {
-            var newDirectory = Path.Combine(directory, DateTime.Now.ToString("yyyyMMddHHmmss"));
             productGetter()
                 .ConvertToXml()
-                .ValidateXml(xsdPath, nameSpace, validationEventHandler)
-                .CreateDirectory(newDirectory)
-                .SaveToDirectory(newDirectory, "BrandbankData.xml")
+                .ValidateXml(xsdPath, nameSpace, _validationEventHandler)
+                .SaveToDirectory(directory, "BrandbankData.xml")
                 .CompressFolder()
                 .Then(uploader);
         }

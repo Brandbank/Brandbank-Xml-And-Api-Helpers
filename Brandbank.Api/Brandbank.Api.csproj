@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Brandbank.Xml, Version=0.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Brandbank.Xml.0.0.8\lib\net452\Brandbank.Xml.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
@@ -86,6 +82,7 @@
     <Compile Include="Clients\IUploadDataClient.cs" />
     <Compile Include="Clients\UploadDataClient.cs" />
     <Compile Include="Clients\UploadDataClientLogger.cs" />
+    <Compile Include="Extensions\UploadDataClientExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ExtractData\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -109,6 +106,18 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\System.Xml.XmlNode.datasource" />
+    <None Include="Schemas\BrandbankXML_v6.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\CoverageReportv2a.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ExtractionFeedback.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Service References\ExtractData\Brandbank.Api.ExtractData.AcknowledgeMessageResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -201,6 +210,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Brandbank.Xml\Brandbank.Xml.csproj">
+      <Project>{a131b9c8-66fb-4d34-8568-b540fa477c63}</Project>
+      <Name>Brandbank.Xml</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

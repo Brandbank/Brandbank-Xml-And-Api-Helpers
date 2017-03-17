@@ -204,7 +204,7 @@ namespace Brandbank.Xml.MessageHelpers
                         UnitId = valueGroupDefinition.AmountTotal.Key.ToString(),
                         Value = valueGroupDefinition.AmountTotal.Value,
                     },
-                    ReferenceIntakeHeader = valueGroupDefinition.ReferenceIntakeHeaders.ToArray()
+                    ReferenceIntakeHeader = valueGroupDefinition.ReferenceIntakeHeaders.NewIfNull().ToArray()
                 });
             }
 
@@ -229,7 +229,7 @@ namespace Brandbank.Xml.MessageHelpers
                             Value = vg.Value,
                             ValueSpecified = true,
                         },
-                        ReferenceIntake = vg.ReferenceIntakeValue.Select(riv => new ReferenceIntakeType
+                        ReferenceIntake = vg.ReferenceIntakeValue.NewIfNull().Select(riv => new ReferenceIntakeType
                         {
                             Value = riv,
                             ValueSpecified = true

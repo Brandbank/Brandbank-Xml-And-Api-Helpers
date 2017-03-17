@@ -2,8 +2,8 @@
 using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.IO;
+using System.Linq;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace Brandbank.Xml.Helpers
 {
@@ -17,11 +17,11 @@ namespace Brandbank.Xml.Helpers
             return path;
         }
 
-        public static T CreateDirectory<T>(this T returnItem, string path)
+        public static string CreateDirectory(this string path)
         {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            return returnItem;
+            return path;
         }
 
         public static string SaveToDirectory(this XmlNode xmlNode, string path, string name)
@@ -33,7 +33,8 @@ namespace Brandbank.Xml.Helpers
 
         public static byte[] CompressFolder(this string pathToFolder)
         {
-            using (var outputMemStream = new MemoryStream())
+            var outputMemStream = new MemoryStream();
+
             using (var zipStream = new ZipOutputStream(outputMemStream))
             {
                 zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
@@ -49,7 +50,7 @@ namespace Brandbank.Xml.Helpers
 
         private static void AddFilesToZip(this ZipOutputStream zipStream, string path, int folderOffset)
         {
-            var files = Directory.GetFiles(path);
+            var files = Directory.GetFiles(path).Where(f => !f.EndsWith(".log"));
             foreach (string file in files)
             {
                 var fileInfo = new FileInfo(file);

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="ExtractionFeedback" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.brandbank.com/schemas/rpf/2005/11" xmlns="http://www.brandbank.com/schemas/rpf/2005/11">
+	<xs:element name="RetailerProcessFeedback" type="ReportType"></xs:element>
+	<xs:complexType name="ReportType">
+		<xs:sequence>
+			<xs:element name="Message" type="MessageType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Item" type="ItemType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageType">
+		<xs:sequence />
+		<xs:attribute name="DateTime" type="xs:dateTime" />
+		<xs:attribute name="Domain" type="DomainType" />
+	</xs:complexType>
+	<xs:complexType name="ItemType">
+		<xs:sequence>
+			<!-- Retailers Product ID -->
+			<xs:element name="RetailerID" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<!-- guid that identifies the message where the product data came from -->
+			<xs:element name="MessageGUID" type="GUID" minOccurs="1" maxOccurs="1" />
+			<!-- Brandbank Product ID-->
+			<xs:element name="BrandbankID" type="xs:integer" minOccurs="1" maxOccurs="1" />
+			<!-- Product Description - this is required for resolution of support issues -->
+			<xs:element name="Description" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<!-- Retailer Supplied Comment -->
+			<xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="Status" type="StatusType" />
+	</xs:complexType>
+	<xs:simpleType name="DomainType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="3" />
+			<!-- 'TES'=Tesco, 'TWW'=Tesco Wine Warehouse, 'I_L'=Brandbank -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StatusType">
+		<xs:restriction base="xs:string">
+			<!-- input product matched to retailers product -->
+			<xs:enumeration value="Matched" />
+			<!-- input product not sold at retailer -->
+			<xs:enumeration value="Not Sold" />
+			<!-- input product needs manual processing by retailer -->
+			<xs:enumeration value="Manual" />
+			<!-- processing of input product failed for internal reason -->
+			<xs:enumeration value="Failed" />
+			<!-- This product has been deleted from retailers systems as it has been delisted on Brandbank -->
+			<xs:enumeration value="Deleted" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GUID">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

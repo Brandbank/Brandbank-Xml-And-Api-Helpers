@@ -35,7 +35,17 @@ namespace Brandbank.Api.Clients
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _logger.LogDebug($"Disposing coverage client");
+            try
+            {
+                _coverageClient.Dispose();
+                _logger.LogDebug($"Disposed coverage client");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(new EventId(), e, $"Disposing coverage client failed: {e.Message}");
+                throw new Exception("Disposing coverage client failed", e);
+            }
         }
     }
 }

@@ -428,12 +428,18 @@ namespace Brandbank.Xml.MessageHelpers
             .Unit
             .NewIfNull();
 
+        public static IEnumerable<StructuredNutrientType> GetStructuredNutritionNutrients(
+            this LanguageType languageType,
+            string id) => languageType
+            .GetStructuredNutrition(id)
+            .Nutrients
+            .NewIfNull();
+
         public static StructuredNutrientType GetStructuredNutritionNutrient(
             this LanguageType languageType,
             string id,
             string nutrientId) => languageType
-            .GetStructuredNutrition(id)
-            .Nutrients
+            .GetStructuredNutritionNutrients(id)
             .FirstOrNewIfNull(n => n.Id.Equals(nutrientId));
 
         public static ValueGroupDefinitionType GetStructuredNutritionValueGroupDefinition(
