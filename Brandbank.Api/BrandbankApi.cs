@@ -14,13 +14,21 @@ namespace Brandbank.Api
         private readonly string _directory;
         private readonly ValidationEventHandler _validationEventHandler;
 
-        public BrandbankApi(Guid authGuid, ValidationEventHandler validationEventHandler, string directory, int historyToKeep = 30)
+        public BrandbankApi(Guid authGuid, string directory) : this(authGuid, directory, createValidationEventHandler())
+        {
+        }
+
+        public BrandbankApi(Guid authGuid, string directory, ValidationEventHandler validationEventHandler)
         {
             _authGuid = authGuid;
             _directory = directory;
             _validationEventHandler = validationEventHandler;
         }
 
+        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor)
+        {
+            GetUnsent(productProcessor, createLogger<IGetUnsentClient>());
+        }
         public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, ILogger<IGetUnsentClient> logger)
         {
             GetUnsent(productProcessor, logger, Path.Combine("Schemas", "BrandbankXML_v6.xsd"), string.Empty);
@@ -36,9 +44,14 @@ namespace Brandbank.Api
                         .Then(productProcessor)
                         .Then(unsentClient.AcknowledgeMessage)
                         .MessageHadProducts
-                    );
+                    ) ;
         }
 
+        public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter)
+        {
+            UploadCoverage(coverageGetter, createLogger<ICoverageClient>());
+
+        }
         public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter, ILogger<ICoverageClient> logger)
         {
             UploadCoverage(coverageGetter, logger, Path.Combine("Schemas", "CoverageReportv2a.xsd"), "http://www.brandbank.com/schemas/CoverageFeedback/2005/11");
@@ -46,7 +59,7 @@ namespace Brandbank.Api
 
         public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter, ILogger<ICoverageClient> logger, string xsdPath, string nameSpace)
         {
-            using (var coverageClient = new CoverageClientLogger(logger,new CoverageClient(_authGuid)))
+            using (var coverageClient = new CoverageClientLogger(logger, new CoverageClient(_authGuid)))
             {
                 var dir = Path.Combine(_directory, "Coverage", DateTime.Now.ToString("yyyyMMddHHmmssfff")).CreateDirectory();
                 uploadCompressedData(dir, xsdPath, nameSpace, coverageGetter, coverageClient.UploadCompressedCoverage);
@@ -66,6 +79,21 @@ namespace Brandbank.Api
                 .SaveToDirectory(directory, "BrandbankData.xml")
                 .CompressFolder()
                 .Then(uploader);
+        }
+
+        private static ILogger<T> createLogger<T>()
+        {
+            var loggerFactory = new LoggerFactory();
+            return loggerFactory.CreateLogger<T>();
+        }
+
+        private static ValidationEventHandler createValidationEventHandler()
+        {
+            return (o, e) =>
+            {
+                var message = $"{e.Severity}: {e.Message} [Line {e.Exception.LineNumber}, Pos {e.Exception.LinePosition}]";
+                Console.WriteLine(message);
+            };
         }
     }
 }
