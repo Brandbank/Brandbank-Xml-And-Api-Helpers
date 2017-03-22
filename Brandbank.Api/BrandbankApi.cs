@@ -29,6 +29,7 @@ namespace Brandbank.Api
         {
             GetUnsent(productProcessor, createLogger<IGetUnsentClient>());
         }
+
         public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, ILogger<IGetUnsentClient> logger)
         {
             GetUnsent(productProcessor, logger, Path.Combine("Schemas", "BrandbankXML_v6.xsd"), string.Empty);
