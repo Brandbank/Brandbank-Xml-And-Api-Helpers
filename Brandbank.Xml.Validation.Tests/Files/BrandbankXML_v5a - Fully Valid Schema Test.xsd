@@ -1,0 +1,580 @@
+<Message Id="282862b6-81b7-400d-8208-dceeb612eda5" DateTime="2014-10-10T14:40:22Z" DataVersion="2.00.00">
+  <Product VersionDateTime="2014-06-30T15:07:57Z">
+    <Identity>
+      <TargetMarkets>
+        <TargetMarket Code="GB" />
+        <TargetMarket Code="IE" />
+        <TargetMarket Code="CZ" />
+        <TargetMarket Code="PL" />
+        <TargetMarket Code="DE" />
+        <TargetMarket Code="SK" />
+        <TargetMarket Code="TH" />
+        <TargetMarket Code="MY" />
+        <TargetMarket Code="HU" />
+        <TargetMarket Code="NL" />
+        <TargetMarket Code="CN" />
+        <TargetMarket Code="TR" />
+        <TargetMarket Code="AT" />
+        <TargetMarket Code="US" />
+        <TargetMarket Code="IT" />
+        <TargetMarket Code="FR" />
+        <TargetMarket Code="BE" />
+        <TargetMarket Code="LU" />
+        <TargetMarket Code="LV" />
+      </TargetMarkets>
+      <ProductCodes>
+        <Code Scheme="GTIN">5039023015901</Code>
+        <Code Scheme="BRANDBANK:PVID">1651886</Code>
+      </ProductCodes>
+      <Subscription Id="54400" Code="OBBD001">Brandbank Demo (Grocery)</Subscription>
+      <DiagnosticDescription Code="en-GB">Kinder Bueno Milk and Hazelnuts Bar 4 x 43g</DiagnosticDescription>
+      <DefaultLanguage>en-GB</DefaultLanguage>
+      <Compliance>
+        <EU1169_2011>SupplierStatedCompliant</EU1169_2011>
+      </Compliance>
+    </Identity>
+    <Assets>
+      <Image ShotTypeId="1" ShotType="ID Shot" MimeType="image/jpeg">
+        <Specification>
+          <RequestedDimensions Units="Pixels">
+            <Width>250</Width>
+            <Height>250</Height>
+          </RequestedDimensions>
+          <Quality>85</Quality>
+          <Resolution>72</Resolution>
+          <IsCropped>false</IsCropped>
+          <CropPadding>0</CropPadding>
+          <MaxSizeInBytes>0</MaxSizeInBytes>
+        </Specification>
+        <Url>http://productimages.brandbank.com/snapshotimagehandler.ashx?id=00c4c3e5-00d8-1571-8700-299aff000f1b</Url>
+        <Thumbprint>AFyRtNm+1+ELOvwBtYO4iw==</Thumbprint>
+      </Image>
+    </Assets>
+    <Data>
+      <Language Code="en-GB" Source="OffPack" GroupingSetId="0" GroupingSetName="No Grouping">
+        <Description>Kinder Bueno Milk and Hazelnuts Bar 4 x 43g</Description>
+        <Categorisations>
+          <Categorisation Scheme="BRANDBANK">
+            <Level Code="07">Grocery</Level>
+            <Level Code="15">Confectionery</Level>
+            <Level Code="03">Snacksize Chocolate Bars</Level>
+          </Categorisation>
+        </Categorisations>
+        <ItemTypeGroup Id="0" Name="All Attributes">
+          <Statements Id="1" Name="Third Party Logos">
+            <Statement Id="1">Approved Organic Standard IOFGA</Statement>
+            <Statement Id="20">Canada Flag</Statement>
+            <Statement Id="225">CE Mark - European Conformance</Statement>
+            <Statement Id="49">Controllo Biologico (Italian organic logo)</Statement>
+          </Statements>
+          <Statements Id="99" Name="Lifestyle">
+            <Statement Id="64">Dietetic</Statement>
+            <Statement Id="65">Halal</Statement>
+            <Statement Id="66">Kosher</Statement>
+            <Statement Id="67">Organic</Statement>
+            <Statement Id="68">Suitable for Vegans</Statement>
+            <Statement Id="69">Suitable for Vegetarians</Statement>
+            <Statement Id="70">Free From Pork</Statement>
+            <Statement Id="71">Free From Beef</Statement>
+            <Statement Id="72">Suitable for Diabetics</Statement>
+            <Statement Id="73">Not Tested on Animals</Statement>
+            <Statement Id="74">No Added Salt</Statement>
+            <Statement Id="75">No Added Sugar</Statement>
+            <Statement Id="198">Suitable for Coeliacs</Statement>
+            <Statement Id="1794">Suitable for Sufferers of Lactose Intolerance</Statement>
+          </Statements>
+          <Memo Id="3" Name="Other Information" xml:space="preserve">Factual information about the product which doesn't have its own field, this includes GDA Information / recycling etc.
+Example - Per bar Calories 123 6% GDA*
+*GDA = Guideline Daily Amount for an adult based on an average daily diet of 2000 kcal. The nutritional needs of individuals may be higher or lower, based on gender, age, level of physical activity and other factors.</Memo>
+          <NameLookups Id="4" Name="Allergy Advice">
+            <NameValue>
+              <Name Id="103">Carrot</Name>
+              <Value Id="1">Contains</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="104">Celeriac</Name>
+              <Value Id="2">May Contain</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="105">Celery</Name>
+              <Value Id="3">Free From</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="106">Cereals Containing Gluten</Name>
+              <Value Id="1">Contains</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="162">Barley</Name>
+              <Value Id="2">May Contain</Value>
+            </NameValue>
+          </NameLookups>
+          <NameLookups Id="555" Name="Additives">
+            <NameValue>
+              <Name Id="130">BHA/BHT (antioxidants)</Name>
+              <Value Id="4">Contains</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="131">AZO Colours</Name>
+              <Value Id="5">May Contain</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="132">MSG (Glutamate)</Name>
+              <Value Id="6">Free From</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="133">Benzoate</Name>
+              <Value Id="4">Contains</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="134">Additives</Name>
+              <Value Id="5">May Contain</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="135">Aspartame</Name>
+              <Value Id="6">Free From</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="136">Yeast</Name>
+              <Value Id="4">Contains</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="137">Genetically Modified Ingredients</Name>
+              <Value Id="5">May Contain</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="138">Artificial Colours</Name>
+              <Value Id="6">Free From</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="139">Artificial Sweeteners</Name>
+              <Value Id="4">Contains</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="140">Artificial Flavours</Name>
+              <Value Id="5">May Contain</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="141">Artificial Preservatives</Name>
+              <Value Id="6">Free From</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="142">Tartrazine</Name>
+              <Value Id="4">Contains</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="143">HVP (Hydrolised Vegetable Protein)</Name>
+              <Value Id="5">May Contain</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="144">Sucrose</Name>
+              <Value Id="6">Free From</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="1790">GM Protein/DNA</Name>
+              <Value Id="4">Contains</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="1791">Artificial Antioxidants</Name>
+              <Value Id="5">May Contain</Value>
+            </NameValue>
+            <NameValue>
+              <Name Id="1792">Flavour Enhancers</Name>
+              <Value Id="6">Free From</Value>
+            </NameValue>
+          </NameLookups>
+          <NameTextItems Id="6" Name="Nappy Size">
+            <NameText>
+              <Name Id="146">Nappy Size (age)</Name>
+              <Text xml:space="preserve">12mths-18mths</Text>
+            </NameText>
+            <NameText>
+              <Name Id="147">Nappy Size (weight)</Name>
+              <Text xml:space="preserve">6kg-12kg</Text>
+            </NameText>
+          </NameTextItems>
+          <NameTextLookups Id="1" Name="Cooking Guidelines">
+            <NameValueText>
+              <Name Id="1">Cooking Instructions</Name>
+              <Value Id="1">General</Value>
+              <Text xml:space="preserve">General Information explaining how the product should be cooked
+Example - For best results cook from frozen.</Text>
+            </NameValueText>
+            <NameValueText>
+              <Name Id="145">Oven cook</Name>
+              <Value Id="10772">From Ambient</Value>
+              <Text xml:space="preserve">Information explaining how the product should be cooked in the Oven from Ambient
+Example - Pre-heat the oven.
+200°C / 400°F / Gas 6 12-14 mins.</Text>
+            </NameValueText>
+
+          </NameTextLookups>
+          <NameTextItems Id="8" Name="Nut Statement">
+            <NameText>
+              <Name Id="148">Recipe</Name>
+              <Text xml:space="preserve">Can not guarantee nut free</Text>
+            </NameText>
+            <NameText>
+              <Name Id="149">Ingredients</Name>
+              <Text xml:space="preserve">Can not guarantee nut free</Text>
+            </NameText>
+            <NameText>
+              <Name Id="150">Factory</Name>
+              <Text xml:space="preserve">Made on a production line which has previously used nuts</Text>
+            </NameText>
+          </NameTextItems>
+          <LongTextItems Id="12" Name="Allergy Other Text">
+            <Text xml:space="preserve">A standardised list of allergens with drop-down menus that indicate whether the product contains, may contain or is free from a given allergen</Text>
+            <Text xml:space="preserve">Any information relating to the Allergy fields which can't be captured in the defined fields Example - May contain traces of Nuts</Text>
+          </LongTextItems>
+          <LongTextItems Id="13" Name="Additives Other Text">
+            <Text xml:space="preserve">A standardised list of additives with drop-down menus that indicate whether the product contains, may contain or is free from a given additive</Text>
+            <Text xml:space="preserve">Any information relating to the Additives fields which can't be captured in the defined fields - Example: Contains natural preservatives</Text>
+          </LongTextItems>
+          <LongTextItems Id="14" Name="Lifestyle Other Text">
+            <Text xml:space="preserve">Standardised statements relating to the lifestyle implications of a product</Text>
+            <Text xml:space="preserve">Any information relating to the Lifestyle fields which can't be captured in the defined fields - example Not suitable for vegetarians</Text>
+          </LongTextItems>
+          <Memo Id="15" Name="Manufacturers Address" xml:space="preserve">The address of the product's manufacturer
+Example - 
+Ferrero UK Ltd,
+7 Croxley Green Business Park,
+Herts.,
+WD18 8PA,
+UK.</Memo>
+          <NameTextLookups Id="24" Name="Lower Age Limit">
+            <NameValueText>
+              <Name Id="188">Advisory</Name>
+              <Value Id="268">Years</Value>
+              <Text xml:space="preserve">1</Text>
+            </NameValueText>
+            <NameValueText>
+              <Name Id="189">Statutory</Name>
+              <Value Id="268">Years</Value>
+              <Text xml:space="preserve">3</Text>
+            </NameValueText>
+          </NameTextLookups>
+          <Memo Id="26" Name="Return To" xml:space="preserve">The address to which the product can be returned along with carelines, email addresses, general aftercare information
+Example -
+Ferrero UK Ltd,
+7 Croxley Green Business Park,
+Herts.,
+WD18 8PA,
+UK.</Memo>
+          <TextualNutrition Id="85" Name="Nutrition">
+            <Headings>
+              <Heading>per 100g</Heading>
+              <Heading>per bar (21.5g)</Heading>
+            </Headings>
+            <Nutrient>
+              <Name>Energy </Name>
+              <Values>
+                <Value>575kcal</Value>
+                <Value>123kJ</Value>
+              </Values>
+            </Nutrient>
+            <Nutrient>
+              <Name />
+              <Values>
+                <Value>2394kJ</Value>
+                <Value>513kJ</Value>
+              </Values>
+            </Nutrient>
+            <Nutrient>
+              <Name>Protein </Name>
+              <Values>
+                <Value>9.2g</Value>
+                <Value>2g</Value>
+              </Values>
+            </Nutrient>
+            <Nutrient>
+              <Name>Carbohydrate </Name>
+              <Values>
+                <Value>49.5g</Value>
+                <Value>10.6g</Value>
+              </Values>
+            </Nutrient>
+            <Nutrient>
+              <Name>of which sugars </Name>
+              <Values>
+                <Value>41.3g</Value>
+                <Value>8.9g</Value>
+              </Values>
+            </Nutrient>
+            <Nutrient>
+              <Name>Fat </Name>
+              <Values>
+                <Value>37.3g</Value>
+                <Value>8g</Value>
+              </Values>
+            </Nutrient>
+            <Nutrient>
+              <Name>of which saturates </Name>
+              <Values>
+                <Value>17.3g</Value>
+                <Value>3.7g</Value>
+              </Values>
+            </Nutrient>
+            <Nutrient>
+              <Name>Fibre </Name>
+              <Values>
+                <Value>2g</Value>
+                <Value>0.4g</Value>
+              </Values>
+            </Nutrient>
+            <Nutrient>
+              <Name>Sodium </Name>
+              <Values>
+                <Value>0.107g</Value>
+                <Value>0.023g</Value>
+              </Values>
+            </Nutrient>
+          </TextualNutrition>
+          <NumericNutrition Id="86" Name="Calculated Nutrition">
+            <Per100Unit>g</Per100Unit>
+            <Per100Heading>per 100</Per100Heading>
+            <PerServingHeading>per bar (21.5g)</PerServingHeading>
+            <NutrientValues Id="1182" Name="Energy (kJ)">
+              <Per100>
+                <Value>2394.00000</Value>
+              </Per100>
+              <PerServing>
+                <Value>513.00000</Value>
+              </PerServing>
+            </NutrientValues>
+            <NutrientValues Id="1183" Name="Energy (kcal)">
+              <Per100>
+                <Value>575.00000</Value>
+              </Per100>
+              <PerServing>
+                <Value>123.00000</Value>
+              </PerServing>
+            </NutrientValues>
+            <NutrientValues Id="1189" Name="Fat (g)">
+              <Per100>
+                <Value>37.30000</Value>
+              </Per100>
+              <PerServing>
+                <Value>8.00000</Value>
+              </PerServing>
+            </NutrientValues>
+            <NutrientValues Id="1190" Name=" of which saturates (g)">
+              <Per100>
+                <Value>17.30000</Value>
+              </Per100>
+              <PerServing>
+                <Value>3.70000</Value>
+              </PerServing>
+            </NutrientValues>
+            <NutrientValues Id="1191" Name=" of which mono-unsaturates (g)">
+              <Per100>
+                <Value>1.00000</Value>
+              </Per100>
+              <PerServing>
+                <Value>1.00000</Value>
+              </PerServing>
+            </NutrientValues>
+          </NumericNutrition>
+          <TaggedMemo Id="176" Name="Taggable Information">
+            <Content xml:space="preserve">Free text information about the allergens listed above.</Content>
+            <Tags>
+              <Tag StartIndex="32" Length="9" TagTypeId="2" TagType="Allergen Highlighting Method" />
+              <Tag StartIndex="32" Length="9" TagTypeId="99" TagType="Allergen Highlighting Method" />
+            </Tags>
+          </TaggedMemo>
+          <TaggedMemo Id="177" Name="Taggable Information">
+            <Content xml:space="preserve">Free text information about the allergens listed above.</Content>
+            <Tags>
+              <Tag StartIndex="32" Length="9" TagTypeId="2" TagType="Allergen Highlighting Method" />
+            </Tags>
+          </TaggedMemo>
+          <TaggedLongTextItems Id="177" Name="Taggable Ingredients">
+            <Text xml:space="preserve">The Ingredients of the product</Text>
+            <Text xml:space="preserve">Milk Chocolate 31.5% (Sugar, Cocoa Butter, Cocoa Mass, Skimmed Milk Powder, Concentrated Butter, Emulsifier: Lecithins (Soya); Vanillin)</Text>
+            <Text xml:space="preserve">Sugar</Text>
+            <Text xml:space="preserve">Vegetable Oil</Text>
+            <Text xml:space="preserve">Wheat Flour</Text>
+            <Text xml:space="preserve">Hazelnuts (10.8%)</Text>
+            <Text xml:space="preserve">Skimmed Milk Powder</Text>
+            <Text xml:space="preserve">Whole Milk Powder</Text>
+            <Text xml:space="preserve">Chocolate (Sugar, Cocoa Mass, Cocoa Butter, Emulsifier: Lecithins (Soya), Vanillin)</Text>
+            <Text xml:space="preserve">Fat-Reduced Cocoa</Text>
+            <Text xml:space="preserve">Emulsifier: Lecithins (Soya)</Text>
+            <Text xml:space="preserve">Raising Agents (Sodium Hydrogen Carbonate, Ammonium Carbonate)</Text>
+            <Text xml:space="preserve">Salt</Text>
+            <Text xml:space="preserve">Vanillin</Text>
+            <Text xml:space="preserve">Total Milk Solids: 19.5%</Text>
+            <Tags>
+              <Tag TextIndex="1" StartIndex="55" Length="19" TagTypeId="1" TagType="Allergen As On Pack" />
+              <Tag TextIndex="4" StartIndex="0" Length="11" TagTypeId="1" TagType="Allergen As On Pack" />
+              <Tag TextIndex="4" StartIndex="0" Length="11" TagTypeId="9" TagType="Allergen As On Pack" />
+            </Tags>
+          </TaggedLongTextItems>
+          <TaggedLongTextItems Id="178" Name="Taggable Ingredients">
+            <Text xml:space="preserve">The Ingredients of the product</Text>
+            <Text xml:space="preserve">Milk Chocolate 31.5% (Sugar, Cocoa Butter, Cocoa Mass, Skimmed Milk Powder, Concentrated Butter, Emulsifier: Lecithins (Soya); Vanillin)</Text>
+            <Text xml:space="preserve">Sugar</Text>
+            <Text xml:space="preserve">Vegetable Oil</Text>
+            <Text xml:space="preserve">Wheat Flour</Text>
+            <Text xml:space="preserve">Hazelnuts (10.8%)</Text>
+            <Text xml:space="preserve">Skimmed Milk Powder</Text>
+            <Text xml:space="preserve">Whole Milk Powder</Text>
+            <Text xml:space="preserve">Chocolate (Sugar, Cocoa Mass, Cocoa Butter, Emulsifier: Lecithins (Soya), Vanillin)</Text>
+            <Text xml:space="preserve">Fat-Reduced Cocoa</Text>
+            <Text xml:space="preserve">Emulsifier: Lecithins (Soya)</Text>
+            <Text xml:space="preserve">Raising Agents (Sodium Hydrogen Carbonate, Ammonium Carbonate)</Text>
+            <Text xml:space="preserve">Salt</Text>
+            <Text xml:space="preserve">Vanillin</Text>
+            <Text xml:space="preserve">Total Milk Solids: 19.5%</Text>
+            <Tags>
+              <Tag TextIndex="1" StartIndex="55" Length="19" TagTypeId="1" TagType="Allergen As On Pack" />
+              <Tag TextIndex="4" StartIndex="0" Length="11" TagTypeId="1" TagType="Allergen As On Pack" />
+            </Tags>
+          </TaggedLongTextItems>
+          <FrontOfPackGDA Id="178" Name="Front of Pack Nutrition">
+            <Reference Id="4" Description="Per Portion">
+              <Headers>
+                <Header>Each serving (30g) contains:</Header>
+              </Headers>
+              <Lozenges>
+                <Lozenge Id="1906" Name="Energy">
+                  <Quantities>
+                    <Quantity>
+                      <Value>100</Value>
+                      <Unit Id="3" Name="kcal" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>10.00</Value>
+                  </Percentage>
+                  <Rating Id="1" Name="Low" />
+                </Lozenge>
+                <Lozenge Id="1907" Name="Fat">
+                  <Quantities>
+                    <Quantity>
+                      <Value>1</Value>
+                      <Unit Id="1" Name="g" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>15.00</Value>
+                  </Percentage>
+                  <Rating Id="2" Name="Medium" />
+                </Lozenge>
+                <Lozenge Id="1908" Name="Saturates">
+                  <Quantities>
+                    <Quantity>
+                      <Value>3.5</Value>
+                      <Unit Id="1" Name="g" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>10.00</Value>
+                  </Percentage>
+                  <Rating Id="3" Name="High" />
+                </Lozenge>
+                <Lozenge Id="1909" Name="Sugars">
+                  <Quantities>
+                    <Quantity>
+                      <Value>0</Value>
+                      <Unit Id="1" Name="g" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>20.00</Value>
+                  </Percentage>
+                </Lozenge>
+                <Lozenge Id="1910" Name="Salt">
+                  <Quantities>
+                    <Quantity>
+                      <Value>0.1</Value>
+                      <Unit Id="1" Name="g" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>30.00</Value>
+                  </Percentage>
+                  <Rating Id="1" Name="Low" />
+                </Lozenge>
+              </Lozenges>
+              <Footers>
+                <Footer>Of your GDA*</Footer>
+                <Footer>*Guideline Daily Amount of an average 2000kcal Diet</Footer>
+              </Footers>
+            </Reference>
+            <Reference Id="5" Description="Per 100g/ml">
+              <Headers>
+                <Header>Each serving (100g) contains:</Header>
+              </Headers>
+              <Lozenges>
+                <Lozenge Id="1906" Name="Energy">
+                  <Quantities>
+                    <Quantity>
+                      <Value>300</Value>
+                      <Unit Id="3" Name="kcal" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>20.00</Value>
+                  </Percentage>
+                  <Rating Id="2" Name="Medium" />
+                </Lozenge>
+                <Lozenge Id="1907" Name="Fat">
+                  <Quantities>
+                    <Quantity>
+                      <Value>10</Value>
+                      <Unit Id="1" Name="g" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>30.00</Value>
+                  </Percentage>
+                  <Rating Id="2" Name="Medium" />
+                </Lozenge>
+                <Lozenge Id="1908" Name="Saturates">
+                  <Quantities>
+                    <Quantity>
+                      <Value>15</Value>
+                      <Unit Id="1" Name="g" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>40.00</Value>
+                  </Percentage>
+                  <Rating Id="1" Name="Low" />
+                </Lozenge>
+                <Lozenge Id="1909" Name="Sugars">
+                  <Quantities>
+                    <Quantity>
+                      <Value>90</Value>
+                      <Unit Id="1" Name="g" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>50.00</Value>
+                  </Percentage>
+                  <Rating Id="3" Name="High" />
+                </Lozenge>
+                <Lozenge Id="1910" Name="Salt">
+                  <Quantities>
+                    <Quantity>
+                      <Value>100</Value>
+                      <Unit Id="1" Name="g" />
+                    </Quantity>
+                  </Quantities>
+                  <Percentage>
+                    <Value>10.00</Value>
+                  </Percentage>
+                  <Rating Id="3" Name="High" />
+                </Lozenge>
+              </Lozenges>
+              <Footers>
+                <Footer>Of your GDA*</Footer>
+                <Footer>*Guideline Daily Amount of an average 2000kcal Diet</Footer>
+              </Footers>
+            </Reference>
+          </FrontOfPackGDA>
+        </ItemTypeGroup>
+      </Language>
+    </Data>
+  </Product>
+</Message>

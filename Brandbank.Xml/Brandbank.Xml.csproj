@@ -75,6 +75,7 @@
     <Compile Include="Helpers\DirectoryExtensions.cs" />
     <Compile Include="Helpers\ExtendArrayExtensions.cs" />
     <Compile Include="Helpers\GenericExtensions.cs" />
+    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\XmlNodeExtensions.cs" />
     <Compile Include="ImageDownloader\BrandbankImageDownloaderLogger.cs" />
     <Compile Include="ImageDownloader\IBrandbankImageDownloader.cs" />

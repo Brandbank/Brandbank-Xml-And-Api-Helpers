@@ -1,0 +1,875 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BrandbankXml" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified">
+  <!-- 00/00/2011 - 4  - Initial Release -->
+
+  <!-- 14/07/2011 - 4a - Added background colour support for image specifications -->
+
+  <!-- 03/10/2011 - 4b - Corrected Per100UseHeading -> Per100UsedHeading -->
+  <!--                 - Allow Numeric Nutrition Headings with no values (to support partially entered data in PCM) -->
+  <!--                 - Added constraint to ensure that a given language code is unique: eg Cannot supply a language with en-GB more than once -->
+  <!--                 - Removed the constraint that required textual nutrition names to be unique -->
+
+  <!-- 13/10/2011      - Add DefaultLanguage element to Identity -->
+
+  <!-- 17/10/2011      - TextualNutrition\Nutrient: Allow 0 elements (where only headings exist) -->
+
+  <!-- 20/10/2011      - Make sure DefaultLanguage refers to one of the supplied languages -->
+
+  <!-- 15/12/2011 - 4c - Allow TextualNutrition items with no values -->
+
+  <!-- 04/05/2012 - 4d - Allow status on products -->
+  <!--                 - Allows size on assets -->
+
+  <!-- 30/08/2013 - 4e - Hashes on images and assets -->
+  <!--                 - DAM Asset inclusion -->
+  <!--                 - Image overlay details -->
+
+  <!-- 09/09/2013 - 5  - EU1169 Additional Data Structures -->
+  <!--                 - GDA Base Type -->
+  <!--                 - TaggedLongText -->
+  <!--                 - TaggedMemo -->
+
+  <!-- 31/07/2014 - 5a - Identity\Compliance element & EU Compliance Flags -->
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <!-- external validators may require the following (.Net includes xml.xsd automatically when validating)
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd" />
+  -->
+
+  <!-- root element -->
+  <xs:element name="Message" type="MessageType">
+  </xs:element>
+
+  <!-- complex types -->
+  <xs:complexType name="MessageType">
+    <xs:sequence>
+      <xs:element name="Product" type="ProductType" minOccurs="0" maxOccurs="unbounded">
+        <!--
+            ensure that the DefaultLanguage that can be present under Identity refers
+            to one of the Code attributes on the Language elements under Data
+        -->
+        <xs:keyref name="UniqueLanguageCodeRef" refer="UniqueLanguageCode">
+          <xs:selector xpath="Identity" />
+          <xs:field xpath="DefaultLanguage" />
+        </xs:keyref>
+        <xs:key name="UniqueLanguageCode">
+          <xs:selector xpath="Data/Language"/>
+          <xs:field xpath="@Code"/>
+        </xs:key>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Id" type="MessageId" use="required" />
+    <xs:attribute name="DateTime" type="xs:dateTime" use="required" />
+    <xs:attribute name="DataVersion" type="DataVersionRestrictionType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="ProductType">
+    <xs:sequence>
+      <xs:element name="Identity" type="IdentityType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Availability" type="AvailabilityType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Assets" type="AssetsType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Data" type="DataType" minOccurs="0" maxOccurs="1">
+        <!-- ensure language codes are unique -->
+        <xs:unique name="LanguageCodeIsUniqueConstraint">
+          <xs:selector xpath="Language"/>
+          <xs:field xpath="@Code"/>
+        </xs:unique>
+      </xs:element>
+      <!-- This provides an insertion point for consumer-specific product level extensions -->
+      <xs:element name="ExtendedData" type="ExtendedDataType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="UpdateType" type="UpdateTypeType" use="optional" />
+    <xs:attribute name="VersionDateTime" type="xs:dateTime" use="optional" />
+    <xs:attribute name="Status" type="StatusType" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="IdentityType">
+    <xs:sequence>
+      <xs:element name="TargetMarkets" type="TargetMarketsType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="ProductCodes" type="ProductCodesType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Subscription" type="SubscriptionType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="DiagnosticDescription" type="DiagnosticDescriptionType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="DefaultLanguage" type="xs:language" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Compliance" type="ComplianceType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TargetMarketsType">
+    <xs:sequence>
+      <xs:element name="TargetMarket" type="TargetMarketType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TargetMarketType">
+    <xs:attribute name="Code" type="CountryCodeType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="ProductCodesType">
+    <xs:sequence>
+      <xs:element name="Code" type="ProductCodeType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProductCodeType">
+    <xs:simpleContent>
+      <xs:extension base="ProductCodeContentType">
+        <xs:attribute name="Scheme" type="SchemeType" use="required" />
+        <!-- Used to express modifications such as (removed check digit/price digits etc.) -->
+        <xs:attribute name="Qualifier" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="SubscriptionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+        <xs:attribute name="Code" type="SubscriptionCodeType" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="DiagnosticDescriptionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Code" type="xs:language" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ComplianceType">
+    <xs:sequence>
+      <xs:element name="EU1169_2011" type="EU1169_2011ComplianceType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="AvailabilityType">
+    <xs:attribute name="StartDateTime" type="xs:dateTime" use="optional" />
+    <xs:attribute name="EndDateTime" type="xs:dateTime" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="AssetsType">
+    <xs:sequence>
+      <!-- product assets -->
+      <xs:element name="Image" type="ImageType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="Document" type="DocumentType" minOccurs="0" maxOccurs="unbounded" />
+      <!-- DAM assets linked to product -->
+      <xs:element name="AssociatedImage" type="AssociatedImageType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="AssociatedDocument" type="AssociatedDocumentType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ImageType">
+    <xs:sequence>
+      <xs:element name="Language" type="AssetLanguageType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="Specification" type="ImageSpecificationType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Url" type="ExpiringUrlType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Thumbprint" type="ThumbprintType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="ShotTypeId" type="xs:int" use="required" />
+    <xs:attribute name="ShotType" type="xs:string" use="required" />
+    <xs:attribute name="MimeType" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="ImageSpecificationType">
+    <xs:sequence>
+      <xs:element name="Filename" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="RequestedDimensions" type="DimensionsType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Quality" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Resolution" type="xs:positiveInteger" minOccurs="0" maxOccurs="1" />
+      <xs:element name="IsCropped" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CropPadding" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="IsProhibitUpscale" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="MaxSizeInBytes" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="IsBestAvailable" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="IsTransparent" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="BackgroundColour" type="ColourType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Overlays" type="OverlaysType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DimensionsType">
+    <xs:sequence>
+      <xs:element name="Width" type="DimensionsValueType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Height" type="DimensionsValueType" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Units" type="DimensionsUnitsType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="OverlaysType">
+    <xs:sequence>
+      <xs:element name="Overlay" type="OverlayType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="OverlayType">
+    <xs:sequence>
+      <xs:element name="Specification" type="OverlaySpecificationType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:int" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="OverlaySpecificationType">
+    <xs:sequence>
+      <xs:element name="Position" type="OverlayPositionType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Width" type="OverlaySizeType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Height" type="OverlaySizeType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Margin" type="OverlaySizeType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="IsNoOverlap" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ExpiringUrlType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="ExpiryDateTime" type="xs:dateTime" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="DocumentType">
+    <xs:sequence>
+      <xs:element name="Language" type="AssetLanguageType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="Specification" type="DocumentSpecificationType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Url" type="ExpiringUrlType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Thumbprint" type="ThumbprintType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="DocumentTypeId" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="DocumentType" type="xs:string" use="required" />
+    <xs:attribute name="MimeType" type="xs:string" use="required" />
+    <xs:attribute name="SizeInBytes" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="AssetLanguageType">
+    <xs:attribute name="Code" type="xs:language" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="DocumentSpecificationType">
+    <xs:sequence>
+      <xs:element name="Filename" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AssociatedImageType">
+    <xs:sequence>
+      <xs:element name="Availability" type="AvailabilityType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Url" type="ExpiringUrlType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Thumbprint" type="ThumbprintType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <!-- Asset version Id -->
+    <xs:attribute name="Id" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="MimeType" type="xs:string" use="required" />
+    <xs:attribute name="Filename" type="xs:string" use="required" />
+    <xs:attribute name="SizeInBytes" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="AssociatedDocumentType">
+    <xs:sequence>
+      <xs:element name="Availability" type="AvailabilityType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Url" type="ExpiringUrlType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Thumbprint" type="ThumbprintType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <!-- Asset version Id -->
+    <xs:attribute name="Id" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="MimeType" type="xs:string" use="required" />
+    <xs:attribute name="Filename" type="xs:string" use="required" />
+    <xs:attribute name="SizeInBytes" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="DataType">
+    <xs:sequence>
+      <xs:element name="Language" type="LanguageType" minOccurs="1" maxOccurs="unbounded">
+        <!-- ensure only one of each group type occurs in a language -->
+        <xs:unique name="GroupConstraint">
+          <xs:selector xpath="ItemTypeGroup" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+        <!-- ensure only one of each nutrition type occurs across any group in a language -->
+        <xs:unique name="TextualNutritionConstraint">
+          <xs:selector xpath="ItemTypeGroup/TextualNutrition" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+        <xs:unique name="NumericNutritionConstraint">
+          <xs:selector xpath="ItemTypeGroup/NumericNutrition" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+        <xs:unique name="FrontOfPackGDAConstraint">
+          <xs:selector xpath="ItemTypeGroup/FrontOfPackGDA" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LanguageType">
+    <xs:sequence>
+      <xs:element name="Description" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Categorisations" type="CategorisationsType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Part" type="PartType" minOccurs="0" maxOccurs="unbounded">
+        <!-- ensure only one of each group type occurs in a part -->
+        <xs:unique name="PartGroupConstraint">
+          <xs:selector xpath="ItemTypeGroup" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+        <!-- ensure only one of each nutrition type occurs across any group in a part -->
+        <xs:unique name="PartTextualNutritionConstraint">
+          <xs:selector xpath="TextualNutrition" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+        <xs:unique name="PartNumericNutritionConstraint">
+          <xs:selector xpath="NumericNutrition" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+        <xs:unique name="PartFrontOfPackGDAConstraint">
+          <xs:selector xpath="ItemTypeGroup/FrontOfPackGDA" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+      </xs:element>
+      <xs:element name="ItemTypeGroup" type="ItemTypeGroupType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Code" type="xs:language" use="required" />
+    <xs:attribute name="Source" type="LanguageSourceType" use="required" />
+    <xs:attribute name="GroupingSetId" type="xs:int" use="required" />
+    <xs:attribute name="GroupingSetName" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="CategorisationsType">
+    <xs:sequence>
+      <xs:element name="Categorisation" type="CategorisationType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CategorisationType">
+    <xs:sequence>
+      <xs:element name="Level" type="LevelType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Scheme" type="SchemeType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="LevelType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Code" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="PartType">
+    <xs:sequence>
+      <xs:element name="Description" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="ItemTypeGroup" type="ItemTypeGroupType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ItemTypeGroupType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:element name="LongTextItems" type="LongTextItemsType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="NameLookups" type="NameLookupsType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="Memo" type="MemoType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="Statements" type="StatementsType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="NameTextItems" type="NameTextItemsType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="NameTextLookups" type="NameTextLookupsType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="TextualNutrition" type="TextualNutritionType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="NumericNutrition" type="NumericNutritionType" minOccurs="0" maxOccurs="1">
+        <xs:unique name="NutrientValuesConstraint">
+          <xs:selector xpath="NutrientValues" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+      </xs:element>
+      <xs:element name="FrontOfPackGDA" type="FrontOfPackGDAType" minOccurs="0" maxOccurs="1">
+        <xs:unique name="FrontOfPackGDAReferenceConstraint">
+          <xs:selector xpath="Reference" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+      </xs:element>
+      <xs:element name="TaggedLongTextItems" type="TaggedLongTextItemsType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="TaggedMemo" type="TaggedMemoType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:int" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAType">
+    <xs:sequence>
+      <xs:element name="Reference" type="FrontOfPackGDAReferenceType" minOccurs="1" maxOccurs="unbounded" >
+        <xs:unique name="FrontOfPackGDAReferenceLozengeConstraint">
+          <xs:selector xpath="Lozenges/Lozenge" />
+          <xs:field xpath="@Id" />
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceType">
+    <xs:sequence>
+      <xs:element name="Headers" type="FrontOfPackGDAReferenceHeadersType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Lozenges" type="FrontOfPackGDAReferenceLozengesType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Footers" type="FrontOfPackGDAReferenceFootersType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Description" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceHeadersType">
+    <xs:sequence>
+      <xs:element name="Header" type="TextType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceLozengesType">
+    <xs:sequence>
+      <xs:element name="Lozenge" type="FrontOfPackGDAReferenceLozengeType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceFootersType">
+    <xs:sequence>
+      <xs:element name="Footer" type="TextType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceLozengeType">
+    <xs:sequence>
+      <xs:element name="Quantities" type="FrontOfPackGDAReferenceLozengeQuantitiesType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Percentage" type="FrontOfPackGDAReferenceLozengePercentageType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Rating" type="FrontOfPackGDALookupType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceLozengeQuantitiesType">
+    <xs:sequence>
+      <xs:element name="Quantity" type="FrontOfPackGDAReferenceLozengeQuantityType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceLozengeQuantityType">
+    <xs:sequence>
+      <xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Unit" type="FrontOfPackGDALookupType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDALookupType">
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceLozengePercentageType">
+    <xs:sequence>
+      <xs:element name="Value" type="NumericNutritionValueType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Qualifier" type="FrontOfPackGDAReferenceLozengePercentageQualifierType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FrontOfPackGDAReferenceLozengePercentageQualifierType">
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Text" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="TaggedLongTextItemsType">
+    <xs:sequence>
+      <xs:element name="Text" type="TextType" minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="Tags" type="TaggedLongTextTagsType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="MimeType" type="xs:string" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="TaggedLongTextTagsType">
+    <xs:sequence>
+      <xs:element name="Tag" type="TaggedLongTextTagType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TaggedLongTextTagType">
+    <xs:complexContent>
+      <xs:extension base="TagType">
+        <xs:attribute name="TextIndex" type="xs:int" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TagType">
+    <xs:attribute name="StartIndex" type="xs:int" use="required" />
+    <xs:attribute name="Length" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="TagTypeId" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="TagType" type="xs:string" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="TaggedMemoType">
+    <xs:sequence>
+      <xs:element name="Content" type="TaggedMemoContentType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Tags" type="TaggedMemoTagsType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="MimeType" type="xs:string" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="TaggedMemoContentType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="xml:specialAttrs" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="TaggedMemoTagsType">
+    <xs:sequence>
+      <xs:element name="Tag" type="TagType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LongTextItemsType">
+    <xs:sequence>
+      <xs:element name="Text" type="TextType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="MimeType" type="xs:string" use="optional" default="text/plain" />
+  </xs:complexType>
+
+  <xs:complexType name="TextType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="xml:specialAttrs" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="NameLookupsType">
+    <xs:sequence>
+      <xs:element name="NameValue" type="NameValueType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="NameValueType">
+    <xs:sequence>
+      <xs:element name="Name" type="LookupType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Value" type="LookupWithCodeType" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LookupType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="LookupWithCodeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+        <xs:attribute name="Code" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="MemoType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+        <xs:attribute name="Name" type="xs:string" use="required" />
+        <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+
+        <!-- For textual content other than text/plain (the default) a mime type should be present 
+        and content may be enclosed in a CDATA section. This allows the transmission of markup based text formats (eg HTML, RTF, XML). -->
+        <xs:attribute name="MimeType" type="xs:string" use="optional" default="text/plain" />
+        <xs:attributeGroup ref="xml:specialAttrs" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="StatementsType">
+    <xs:sequence>
+      <xs:element name="Statement" type="LookupWithCodeType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="NameTextItemsType">
+    <xs:sequence>
+      <xs:element name="NameText" type="NameTextType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="NameTextType">
+    <xs:sequence>
+      <xs:element name="Name" type="LookupWithCodeType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Text" type="TextType" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NameTextLookupsType">
+    <xs:sequence>
+      <xs:element name="NameValueText" type="NameValueTextType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="NameValueTextType">
+    <xs:sequence>
+      <xs:element name="Name" type="LookupType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Value" type="LookupWithCodeType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Text" type="TextType" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TextualNutritionType">
+    <xs:sequence>
+      <xs:element name="Headings" type="HeadingsType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Nutrient" type="NutrientType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="TextualNutritionRestrictionType" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="HeadingsType">
+    <xs:sequence>
+      <xs:element name="Heading" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NutrientType">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="Values" type="ValuesType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ValuesType">
+    <xs:sequence>
+      <xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NumericNutritionType">
+    <xs:sequence>
+      <xs:element name="Per100Unit" type="Per100UnitType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Per100Heading" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Per100UsedHeading" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="PerServingHeading" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="NutrientValues" type="NutrientValuesType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="NumericNutritionRestrictionType" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="DisplayOrder" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="NutrientValuesType">
+    <xs:sequence>
+      <xs:element name="Per100" type="NutrientValueType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Per100Used" type="NutrientValueType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="PerServing" type="NutrientValueType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="NutrientValueType">
+    <xs:sequence>
+      <xs:element name="Qualifier" type="QualifierType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Value" type="NumericNutritionValueType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="QualifierType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Id" type="xs:positiveInteger" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ExtendedDataType">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- simple types -->
+  <xs:simpleType name="MessageId">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\{{0,1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}{0,1}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="UpdateTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AddOrUpdate" />
+      <xs:enumeration value="Delete" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="StatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Live" />
+      <xs:enumeration value="AwaitingApproval" />
+      <xs:enumeration value="OutstandingRejected" />
+      <xs:enumeration value="QA" />
+      <xs:enumeration value="InProgress" />
+      <xs:enumeration value="BookedIn" />
+      <xs:enumeration value="OnConfirmedOrder" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CountryCodeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SchemeType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2" />
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProductCodeContentType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\S+" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SubscriptionCodeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[O|A][A-Z0-9]{3}[0-9]{3}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DimensionsValueType">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="3" />
+      <xs:minExclusive value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="NumericNutritionValueType">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="5" />
+      <xs:minInclusive value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DimensionsUnitsType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pixels" />
+      <xs:enumeration value="Inches" />
+      <xs:enumeration value="Millimetres" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LanguageCodeType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2"/>
+      <xs:maxLength value="6"/>
+      <xs:pattern value="[a-z]{2}(-[A-Z]{2,3})?" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ColourType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8"/>
+      <xs:maxLength value="8"/>
+      <xs:pattern value="[0-9A-Fa-f]{8}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DataVersionRestrictionType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="2\.00\.00" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="TextualNutritionRestrictionType">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="85" />
+      <xs:maxInclusive value="85" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="NumericNutritionRestrictionType">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="86" />
+      <xs:maxInclusive value="86" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LanguageSourceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OffPack" />
+      <xs:enumeration value="ImplicitTranslation" />
+      <xs:enumeration value="ExplicitTranslation" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Per100UnitType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ml" />
+      <xs:enumeration value="g" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ThumbprintType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="OverlayPositionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NW" />
+      <xs:enumeration value="N" />
+      <xs:enumeration value="NE" />
+      <xs:enumeration value="W" />
+      <xs:enumeration value="C" />
+      <xs:enumeration value="E" />
+      <xs:enumeration value="SW" />
+      <xs:enumeration value="S" />
+      <xs:enumeration value="SE" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="OverlaySizeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d+(%|px)" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EU1169_2011ComplianceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SupplierStatedCompliant" />
+      <xs:enumeration value="SupplierStatedNonCompliant" />
+      <xs:enumeration value="SupplierStatedNotApplicable" />
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
