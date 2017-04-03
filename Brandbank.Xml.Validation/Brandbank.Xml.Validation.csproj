@@ -61,6 +61,7 @@
     <Compile Include="Models\ValidationItemLookupType.cs" />
     <Compile Include="Models\ValidationItemNameType.cs" />
     <Compile Include="Models\ValidationItemType.cs" />
+    <Compile Include="Models\ValidationItemTypeWithSourceItemType.cs" />
     <Compile Include="Models\ValidationProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

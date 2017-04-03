@@ -1,10 +1,7 @@
 ﻿using Brandbank.Xml.Models.Message;
 using Brandbank.Xml.Validation.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Brandbank.Xml.Validation.Helpers
 {
@@ -36,7 +33,7 @@ namespace Brandbank.Xml.Validation.Helpers
         {
             var validationProducts = model.GetProductsForValidation();
 
-            var errors = (productValidationData.GetInvalidData(validationProducts))
+            var errors = productValidationData.GetInvalidData(validationProducts)
                                                .SelectMany(ipd => ipd.GetErrors());
 
             return errors;
@@ -82,7 +79,7 @@ namespace Brandbank.Xml.Validation.Helpers
                 {
                     ShotType = i.ShotType,
                     ShotTypeId = i.ShotTypeId
-                }),
+                }) ?? Enumerable.Empty<Image>(),
                 Languages = p.Data?.Select(lang => new Language()
                 {
                     Code = lang.Code,
@@ -97,7 +94,7 @@ namespace Brandbank.Xml.Validation.Helpers
                                       .Concat(messageType.GetTaggedMemosForLanguage(lang))
                                       .Concat(messageType.GetTaggedLongTextForLanguage(lang))
 
-                })
+                }) ?? Enumerable.Empty<Language>()
             });
         }
 
@@ -105,29 +102,29 @@ namespace Brandbank.Xml.Validation.Helpers
         {
             var itemTypes = nameTextLookups
                                     .GroupBy(nameTextLookup => nameTextLookup.ItemTypeId)
-                                        .Select(nameTextLookup => new ValidationItemType()
-                                        {
-                                            ItemTypeId = nameTextLookup.Key.ToString(),
-                                            ItemBaseTypeId = nameTextLookup.First().BaseTypeId,
-                                            ItemTypeDescription = nameTextLookup.First().ItemTypeDescription,
-                                            NameTypes = nameTextLookup.Where(nameType => nameType.ItemTypeId == nameTextLookup.Key.ToString() && nameType.NameTypeId != null)
+                                    .Select(nameTextLookup => new ValidationItemType()
+                                    {
+                                        ItemTypeId = nameTextLookup.Key.ToString(),
+                                        ItemBaseTypeId = nameTextLookup.First().BaseTypeId,
+                                        ItemTypeDescription = nameTextLookup.First().ItemTypeDescription,
+                                        NameTypes = nameTextLookup.Where(nameType => nameType.ItemTypeId == nameTextLookup.Key.ToString() && nameType.NameTypeId != null)
+                                                                    .Select(nameType => new IdValue()
+                                                                    {
+                                                                        Id = nameType.NameTypeId,
+                                                                        Value = nameType.NameTextValue,
+                                                                        Text = nameType.NameTextText
+                                                                    }),
+                                        LookupTypes = nameTextLookup.Where(nameType => nameType.ItemTypeId == nameTextLookup.Key.ToString() && nameType.LookupId != null)
                                                                         .Select(nameType => new IdValue()
                                                                         {
-                                                                            Id = nameType.NameTypeId,
-                                                                            Value = nameType.NameTextValue,
-                                                                            Text = nameType.NameTextText
+                                                                            Id = nameType.LookupId,
+                                                                            Value = nameType.LookupTextValue
                                                                         }),
-                                            LookupTypes = nameTextLookup.Where(nameType => nameType.ItemTypeId == nameTextLookup.Key.ToString() && nameType.LookupId != null)
-                                                                            .Select(nameType => new IdValue()
-                                                                            {
-                                                                                Id = nameType.LookupId,
-                                                                                Value = nameType.LookupTextValue
-                                                                            }),
-                                            TagTypes = nameTextLookup.Where(nameType => nameType.ItemTypeId == nameTextLookup.Key.ToString() && nameType.Tags != null)
-                                                                            .SelectMany(ntl => ntl.Tags),
+                                        TagTypes = nameTextLookup.Where(nameType => nameType.ItemTypeId == nameTextLookup.Key.ToString() && nameType.Tags != null)
+                                                                        .SelectMany(ntl => ntl.Tags),
 
-                                            Occurrences = nameTextLookup.First().Occurrances
-                                        });
+                                        Occurrences = nameTextLookup.First().Occurrances
+                                    });
 
             return itemTypes;
         }
