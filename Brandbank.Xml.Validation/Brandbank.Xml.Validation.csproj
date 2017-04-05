@@ -44,6 +44,7 @@
     <Compile Include="Helpers\LanguageExtensions.cs" />
     <Compile Include="Helpers\MessageTypeExtensions.cs" />
     <Compile Include="Helpers\ValidationExtensions.cs" />
+    <Compile Include="IXmlValidator.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\IdValue.cs" />
     <Compile Include="Models\Image.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Models\ValidationItemTypeWithSourceItemType.cs" />
     <Compile Include="Models\ValidationProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Brandbank.Xml\Brandbank.Xml.csproj">
