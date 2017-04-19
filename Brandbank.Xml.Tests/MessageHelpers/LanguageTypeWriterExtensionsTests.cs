@@ -227,6 +227,24 @@ namespace Brandbank.Xml.Tests.MessageHelpers
                             
                         }
                     }
+                },
+                new StructuredNutrient
+                {
+                    Id = 1,
+                    UnitId = 1,
+                    ValueGroups = new List<ValueGroup>
+                    {
+                        new ValueGroup
+                        {
+                            Id = 1,
+                            Value = 16.00000m,
+                            ReferenceIntakeValue = new List<decimal>
+                            {
+                                0.00m
+                            }
+
+                        }
+                    }
                 }
             };
 
@@ -237,7 +255,8 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             });
             Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().Id, "256");
             Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().ValueGroupDefinitions.FirstOrDefault().Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().ValueGroupDefinitions.FirstOrDefault().AmountHeader, "Amount Header");
+            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().ValueGroupDefinitions.Count(), 1);
+            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().Nutrients.Count(), 1);
             //Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().TextualNutrition.FirstOrDefault().Headings.Count(), 3);
 
 

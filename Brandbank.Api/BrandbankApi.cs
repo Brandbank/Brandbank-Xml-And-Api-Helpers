@@ -27,25 +27,30 @@ namespace Brandbank.Api
 
         public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor)
         {
-            GetUnsent(productProcessor, createLogger<IGetUnsentClient>());
+            GetUnsent(productProcessor, createLogger<IGetUnsentClient>);
         }
 
-        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, ILogger<IGetUnsentClient> logger)
+        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, Func<ILogger<IGetUnsentClient>> logger)
         {
             GetUnsent(productProcessor, logger, Path.Combine("Schemas", "BrandbankXML_v6.xsd"), string.Empty);
         }
 
-        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, ILogger<IGetUnsentClient> logger, string xsdPath, string nameSpace)
+        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, Func<ILogger<IGetUnsentClient>> logger, string xsdPath, string nameSpace)
         {
-            using (var unsentClient = new GetUnsentClientLogger(logger, new GetUnsentClient(_authGuid)))
-                while (
-                    unsentClient.GetUnsentProductData()
-                        .ValidateXml(xsdPath, nameSpace, _validationEventHandler)
-                        .ConvertTo<MessageType>()
-                        .Then(productProcessor)
-                        .Then(unsentClient.AcknowledgeMessage)
-                        .MessageHadProducts
-                    ) ;
+            using (var unsentClient = new GetUnsentClientLogger(logger(), new GetUnsentClient(_authGuid)))
+                GetUnsent(unsentClient, productProcessor, xsdPath, nameSpace);
+        }
+
+        public void GetUnsent(IGetUnsentClient unsentClient, Func<MessageType, IBrandbankMessageSummary> productProcessor, string xsdPath, string nameSpace)
+        {
+            while (
+                unsentClient.GetUnsentProductData()
+                    .ValidateXml(xsdPath, nameSpace, _validationEventHandler)
+                    .ConvertTo<MessageType>()
+                    .Then(productProcessor)
+                    .Then(unsentClient.AcknowledgeMessage)
+                    .MessageHadProducts
+                );
         }
 
         public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter)

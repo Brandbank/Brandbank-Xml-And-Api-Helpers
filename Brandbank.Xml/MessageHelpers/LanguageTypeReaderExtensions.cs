@@ -44,9 +44,15 @@ namespace Brandbank.Xml.MessageHelpers
             this LanguageType languageType,
             string itemTypeId
             ) => languageType
-            .GetBaseTypeItems(itg => itg.Statements)
+            .GetStatements()
             .FirstOrNewIfNull(st => st.Id.Equals(itemTypeId))
             .Statement
+            .NewIfNull();
+
+        public static IEnumerable<StatementsType> GetStatements(
+            this LanguageType languageType
+            ) => languageType
+            .GetBaseTypeItems(itg => itg.Statements)
             .NewIfNull();
 
         #endregion

@@ -29,7 +29,7 @@ namespace Brandbank.Api.Clients
             catch (Exception e)
             {
                 _logger.LogError(new EventId(), e, $"Acknowledging brandbank message failed: {e.Message}");
-                throw new Exception();
+                throw;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Brandbank.Api.Clients
             catch (Exception e)
             {
                 _logger.LogError(new EventId(), e, $"Getting Unsent Brandbank data failed: {e.Message}");
-                throw new Exception("Getting Unsent Brandbank data failed", e);
+                throw;
             }
         }
 

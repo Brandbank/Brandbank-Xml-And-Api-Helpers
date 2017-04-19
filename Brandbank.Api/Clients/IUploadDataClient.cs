@@ -5,10 +5,9 @@ using System.IO;
 
 namespace Brandbank.Api.Clients
 {
-    public interface IUploadDataClient
+    public interface IUploadDataClient : IDisposable
     {
-        byte[] PrepareMessage(Func<MessageType> messageBuilder, string tempDirectory);
-        UploadResponse UploadMessageToBrandbank(byte[] message);
-        UploadResponse GetUploadResponse(Guid receiptId);
+        UploadResponse UploadMessage(byte[] message);
+        UploadResponse GetResponse(UploadResponse uploadResponse);
     }
 }

@@ -25,7 +25,7 @@ namespace Brandbank.Xml.MessageHelpers
             var category = languageType.Categorisations.FirstOrDefault(c => c.Scheme.Equals(scheme, StringComparison.CurrentCultureIgnoreCase));
             if (category == null)
             {
-                category = new CategorisationType { Scheme = scheme };
+                category = new CategorisationType { Scheme = scheme.ToUpperInvariant() };
                 languageType.Categorisations = languageType.Categorisations.ExtendArray(category);
             }
             
@@ -71,6 +71,9 @@ namespace Brandbank.Xml.MessageHelpers
         
         public static void AddNameLookup(this LanguageType languageType, int id, IEnumerable<KeyValuePair<int, int>> items)
         {
+            if (!items.Any())
+                return;
+
             var nameLookupsType = new NameLookupsType
             {
                 Id = id.ToString(),
@@ -94,13 +97,17 @@ namespace Brandbank.Xml.MessageHelpers
 
         public static void AddStatement(this LanguageType languageType, int id, IEnumerable<int> items)
         {
+            if (!items.Any())
+                return;
+            
             var StatementsType = new StatementsType
             {
                 Id = id.ToString(),
                 Name = "Item Name",
-                Statement = items.Select(i => new LookupWithCodeType { Id = i.ToString() }).ToArray()
+                Statement = items.Distinct().Select(i => new LookupWithCodeType { Id = i.ToString() }).ToArray()
             };
             languageType.ItemTypeGroup.FirstOrDefault().Statements = languageType.ItemTypeGroup.FirstOrDefault().Statements.ExtendArray(StatementsType, s => s.Id);
+            
         }
 
         public static void AddNameText(this LanguageType languageType, int id, IEnumerable<KeyValuePair<int, string>> items)
@@ -211,31 +218,32 @@ namespace Brandbank.Xml.MessageHelpers
             var structuredNutrientTypes = new List<StructuredNutrientType>();
             foreach (var structuredNutrient in structuredNutrition.StructuredNutrients)
             {
-                structuredNutrientTypes.Add(new StructuredNutrientType
-                {
-                    Id = structuredNutrient.Id.ToString(),
-                    Name = $"Structured Nutrient {structuredNutrient.Id}",
-                    Unit = new StructuredNutritionUnitType
+                if (!structuredNutrientTypes.Any(s => s.Id == structuredNutrient.Id.ToString()))
+                    structuredNutrientTypes.Add(new StructuredNutrientType
                     {
-                        Id = structuredNutrient.UnitId.ToString(),
-                        Name = $"Unit {structuredNutrient.UnitId}"
-                    },
-                    ValueGroup = structuredNutrient.ValueGroups.Select(vg => new ValueGroupType
-                    {
-                        Id = vg.Id.ToString(),
-                        Name = $"Value Group {vg.Id}",
-                        Amount = new AmountType
+                        Id = structuredNutrient.Id.ToString(),
+                        Name = $"Structured Nutrient {structuredNutrient.Id}",
+                        Unit = new StructuredNutritionUnitType
                         {
-                            Value = vg.Value,
-                            ValueSpecified = true,
+                            Id = structuredNutrient.UnitId.ToString(),
+                            Name = $"Unit {structuredNutrient.UnitId}"
                         },
-                        ReferenceIntake = vg.ReferenceIntakeValue.NewIfNull().Select(riv => new ReferenceIntakeType
+                        ValueGroup = structuredNutrient.ValueGroups.Select(vg => new ValueGroupType
                         {
-                            Value = riv,
-                            ValueSpecified = true
+                            Id = vg.Id.ToString(),
+                            Name = $"Value Group {vg.Id}",
+                            Amount = new AmountType
+                            {
+                                Value = vg.Value,
+                                ValueSpecified = true,
+                            },
+                            ReferenceIntake = vg.ReferenceIntakeValue.NewIfNull().Select(riv => new ReferenceIntakeType
+                            {
+                                Value = riv,
+                                ValueSpecified = true
+                            }).ToArray()
                         }).ToArray()
-                    }).ToArray()
-                });
+                    });
             }
 
             var structuredNutrientType = new StructuredNutritionType

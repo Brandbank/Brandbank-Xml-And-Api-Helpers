@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -67,6 +68,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BbHttpClientResponseConverter\BbHttpClientResponseConverter.cs" />
+    <Compile Include="BbHttpClientResponseConverter\BbHttpClientResponseConverterLogger.cs" />
+    <Compile Include="BbHttpClientResponseConverter\IBbHttpClientResponseConverter.cs" />
+    <Compile Include="BbHttpClient\IBbHttpClient.cs" />
+    <Compile Include="BbHttpClient\BbHttpClient.cs" />
+    <Compile Include="BbHttpClient\BbHttpClientLogger.cs" />
+    <Compile Include="BbHttpClientResponseReader\BbHttpClientResponseReader.cs" />
+    <Compile Include="BbHttpClientResponseReader\BbHttpClientResponseReaderLogger.cs" />
+    <Compile Include="BbHttpClientResponseReader\IBbHttpClientResponseReader.cs" />
     <Compile Include="Downloader\DownloaderLogger.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Helpers\BrandbankCoverageExtensions.cs" />
@@ -75,7 +85,8 @@
     <Compile Include="Helpers\DirectoryExtensions.cs" />
     <Compile Include="Helpers\ExtendArrayExtensions.cs" />
     <Compile Include="Helpers\GenericExtensions.cs" />
-    <Compile Include="Helpers\StringHelpers.cs" />
+    <Compile Include="Helpers\StreamExtensions.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\XmlNodeExtensions.cs" />
     <Compile Include="ImageDownloader\BrandbankImageDownloaderLogger.cs" />
     <Compile Include="ImageDownloader\IBrandbankImageDownloader.cs" />
@@ -83,6 +94,9 @@
     <Compile Include="ImageWriter\IImageWriter.cs" />
     <Compile Include="ImageWriter\ImageWriter.cs" />
     <Compile Include="ImageWriter\ImageWriterLogger.cs" />
+    <Compile Include="Logger\FileLogger.cs" />
+    <Compile Include="Logger\FileLoggerExtensions.cs" />
+    <Compile Include="Logger\FileLoggerProvider.cs" />
     <Compile Include="MessageHelpers\IdentityTypeReaderExtensions.cs" />
     <Compile Include="MessageHelpers\IdentityTypeWriterExtensions.cs" />
     <Compile Include="MessageHelpers\ImageTypeReaderExtensions.cs" />

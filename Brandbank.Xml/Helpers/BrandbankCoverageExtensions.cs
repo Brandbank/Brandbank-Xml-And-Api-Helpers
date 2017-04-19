@@ -1,5 +1,4 @@
-﻿using Brandbank.Xml.Models;
-using Brandbank.Xml.Models.Coverage;
+﻿using Brandbank.Xml.Models.Coverage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +52,6 @@ namespace Brandbank.Xml.Helpers
                     }
                 };
             }
-            
         }
 
         private static IEnumerable<CategoryType> GetCategories(this IEnumerable<KeyValuePair<string, string>> categories)

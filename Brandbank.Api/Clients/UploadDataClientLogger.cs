@@ -1,7 +1,7 @@
 ﻿using Brandbank.Api.UploadData;
-using Brandbank.Xml.Models.Message;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Brandbank.Api.Clients
 {
@@ -18,29 +18,13 @@ namespace Brandbank.Api.Clients
             _responseCount = 1;
         }
 
-        public byte[] PrepareMessage(Func<MessageType> messageBuilder, string tempDirectory)
-        {
-            _logger.LogDebug($"Preparing Brandbank message");
-            try
-            {
-                var result = _uploadClient.PrepareMessage(messageBuilder, tempDirectory);
-                _logger.LogDebug($"Prepared Brandbank message");
-                return result;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(new EventId(), e, "Preparing brandbank message failed");
-                throw new Exception();
-            }
-        }
-
-        public UploadResponse UploadMessageToBrandbank(byte[] message)
+        public UploadResponse UploadMessage(byte[] message)
         {
             _logger.LogDebug($"Uploading message to Brandbank");
             try
             {
                 _responseCount = 1;
-                var response = _uploadClient.UploadMessageToBrandbank(message);
+                var response = _uploadClient.UploadMessage(message);
                 return Log(response);
             }
             catch (Exception e)
@@ -50,10 +34,10 @@ namespace Brandbank.Api.Clients
             }
         }
 
-        public UploadResponse GetUploadResponse(Guid receiptId)
+        public UploadResponse GetResponse(UploadResponse uploadResponse)
         {
-            _logger.LogDebug($"Getting upload response for message {receiptId}");
-            var response = _uploadClient.GetUploadResponse(receiptId);
+            _logger.LogDebug($"Getting upload response for message {uploadResponse.ReceiptId}");
+            var response = _uploadClient.GetResponse(uploadResponse);
             return Log(response);
         }
 
@@ -75,12 +59,42 @@ namespace Brandbank.Api.Clients
                     break;
                 default:
                     break;
-            }              
+            }
 
             foreach (var msg in response.Messages)
-                _logger.LogDebug($"{msg.MessageType} {msg.Code} {msg.Text}");
-
+            {
+                var logMessage = Regex.Replace($"{msg.MessageType} {msg.Code} {msg.Text}", @"\r\n?|\n|\t", " ");
+                switch (msg.MessageType)
+                {
+                    case Message.MessageTypes.Error:
+                        _logger.LogWarning(logMessage);
+                        break;
+                    case Message.MessageTypes.Warning:
+                        _logger.LogError(logMessage);
+                        break;
+                    case Message.MessageTypes.Information:
+                        _logger.LogDebug(logMessage);
+                        break;
+                    default:
+                        break;
+                }
+            }
             return response;
+        }
+
+        public void Dispose()
+        {
+            _logger.LogDebug($"Disposing upload client");
+            try
+            {
+                _uploadClient.Dispose();
+                _logger.LogDebug($"Disposed upload client");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(new EventId(), e, $"Disposing upload client failed: {e.Message}");
+                throw;
+            }
         }
     }
 }
