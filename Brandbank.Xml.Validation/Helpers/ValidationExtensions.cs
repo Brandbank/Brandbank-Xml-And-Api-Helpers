@@ -83,20 +83,31 @@ namespace Brandbank.Xml.Validation.Helpers
                 Languages = p.Data?.Select(lang => new Language()
                 {
                     Code = lang.Code,
-                    ItemTypes = (messageType.GetStatementsForLanguage(lang))
-                                      .Concat(messageType.GetNameLookupsForLanguage(lang))
-                                      .Concat(messageType.GetNameTextsForLanguage(lang))
-                                      .Concat(messageType.GetMemosForLanguage(lang))
-                                      .Concat(messageType.GetLongTextsForLanguage(lang))
-                                      .Concat(messageType.GetNameTextLookupsForLanguage(lang))
-                                      .Concat(messageType.GetTexturalNutritionsForLanguage(lang))
-                                      .Concat(messageType.GetCalculatedNutritionsForLanguage(lang))
-                                      .Concat(messageType.GetTaggedMemosForLanguage(lang))
-                                      .Concat(messageType.GetTaggedLongTextForLanguage(lang))
+                    ItemTypes = lang.GetValidationItemTypesFromMessage(messageType)
 
                 }) ?? Enumerable.Empty<Language>()
             });
         }
+
+        public static IEnumerable<ValidationItemType> GetValidationItemTypesFromMessage(this LanguageType language, MessageType messageType)
+        {
+            if(language.ItemTypeGroup != null)
+            {
+                return (messageType.GetStatementsForLanguage(language))
+                                      .Concat(messageType.GetNameLookupsForLanguage(language))
+                                      .Concat(messageType.GetNameTextsForLanguage(language))
+                                      .Concat(messageType.GetMemosForLanguage(language))
+                                      .Concat(messageType.GetLongTextsForLanguage(language))
+                                      .Concat(messageType.GetNameTextLookupsForLanguage(language))
+                                      .Concat(messageType.GetTexturalNutritionsForLanguage(language))
+                                      .Concat(messageType.GetCalculatedNutritionsForLanguage(language))
+                                      .Concat(messageType.GetTaggedMemosForLanguage(language))
+                                      .Concat(messageType.GetTaggedLongTextForLanguage(language));
+            }
+
+            return Enumerable.Empty<ValidationItemType>();
+        }
+
 
         public static IEnumerable<ValidationItemType> GetValidationItemTypes(this IEnumerable<NameTextLookup> nameTextLookups)
         {
