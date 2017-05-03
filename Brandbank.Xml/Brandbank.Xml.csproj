@@ -106,6 +106,9 @@
     <Compile Include="MessageHelpers\MessageTypeWriterExtensions.cs" />
     <Compile Include="MessageHelpers\ProductTypeReaderExtensions.cs" />
     <Compile Include="MessageHelpers\ProductTypeWriterExtensions.cs" />
+    <Compile Include="Messages\IMessageCreator.cs" />
+    <Compile Include="Messages\MessageCreator.cs" />
+    <Compile Include="Messages\MessageCreatorLogger.cs" />
     <Compile Include="Models\Coverage\BrandbankCoverage.cs" />
     <Compile Include="Models\Coverage\IBrandbankCoverage.cs" />
     <Compile Include="Models\Coverage\ReportType.cs" />
@@ -118,7 +121,6 @@
     <Compile Include="Models\Message\MessageTypePartial.cs" />
     <Compile Include="Models\Message\StructuredNutrition.cs" />
     <Compile Include="ProductConverter\IProductConverter.cs" />
-    <Compile Include="ProductConverter\ProductConverterLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

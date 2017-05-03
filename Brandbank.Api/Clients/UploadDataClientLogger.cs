@@ -57,8 +57,6 @@ namespace Brandbank.Api.Clients
                 case UploadResponse.UploadStatuses.Pending:
                     _logger.LogDebug($"Message {response.ReceiptId} pending; Attempt {_responseCount++}");
                     break;
-                default:
-                    break;
             }
 
             foreach (var msg in response.Messages)
@@ -67,15 +65,13 @@ namespace Brandbank.Api.Clients
                 switch (msg.MessageType)
                 {
                     case Message.MessageTypes.Error:
-                        _logger.LogWarning(logMessage);
-                        break;
-                    case Message.MessageTypes.Warning:
                         _logger.LogError(logMessage);
                         break;
-                    case Message.MessageTypes.Information:
-                        _logger.LogDebug(logMessage);
+                    case Message.MessageTypes.Warning:
+                        _logger.LogWarning(logMessage);
                         break;
-                    default:
+                    case Message.MessageTypes.Information:
+                        _logger.LogInformation(logMessage);
                         break;
                 }
             }

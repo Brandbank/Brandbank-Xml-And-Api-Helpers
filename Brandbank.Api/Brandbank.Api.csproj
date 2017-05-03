@@ -91,6 +91,7 @@
     <Compile Include="Clients\IUploadDataClient.cs" />
     <Compile Include="Clients\UploadDataClient.cs" />
     <Compile Include="Clients\UploadDataClientLogger.cs" />
+    <Compile Include="Log\IUploadLogApi.cs" />
     <Compile Include="NotifyClient\EmailClient.cs" />
     <Compile Include="NotifyClient\EmailClientLogger.cs" />
     <Compile Include="NotifyClient\INotifyClient.cs" />

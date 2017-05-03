@@ -23,6 +23,15 @@ namespace Brandbank.Api.Clients
             };
         }
 
+        public GetUnsentClient(Guid guid, DataExtractSoapClient client)
+        {
+            _dataExtractSoapClient = client;
+            _header = new ExternalCallerHeader
+            {
+                ExternalCallerId = guid
+            };
+        }
+
         public IBrandbankMessageSummary AcknowledgeMessage(IBrandbankMessageSummary messageInformation)
         {
             try

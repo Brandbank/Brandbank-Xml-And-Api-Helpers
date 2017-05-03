@@ -8,6 +8,13 @@ namespace Brandbank.Xml.MessageHelpers
 {
     public static class LanguageTypeWriterExtensions
     {
+        public static void AddCategories(this LanguageType languageType, string code, string scheme)
+        {
+            languageType.AddCategory(code.Substring(0, 2), scheme);
+            languageType.AddCategory(code.Substring(2, 2), scheme);
+            languageType.AddCategory(code.Substring(4, 2), scheme);
+        }
+
         public static void AddCategory(this LanguageType languageType, string code, string scheme)
         {
             if (string.IsNullOrWhiteSpace(code))
@@ -16,7 +23,7 @@ namespace Brandbank.Xml.MessageHelpers
             var levelType = new LevelType
             {
                 Code = code.PadLeft(2, '0'),
-                Value = ""
+                Value = string.Empty
             };
 
             if (languageType.Categorisations == null)
@@ -250,8 +257,8 @@ namespace Brandbank.Xml.MessageHelpers
             {
                 Id = id.ToString(),
                 Name = "Structured Nutrition",
-                ValueGroupDefinitions = valueGroupDefinitions.ToArray(),
-                Nutrients = structuredNutrientTypes.ToArray()
+                ValueGroupDefinitions = valueGroupDefinitions.OrderBy(v => v.Id).ToArray(),
+                Nutrients = structuredNutrientTypes.OrderBy(n => n.Id).ToArray()
             };
             languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition = languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.ExtendArray(structuredNutrientType);
         }

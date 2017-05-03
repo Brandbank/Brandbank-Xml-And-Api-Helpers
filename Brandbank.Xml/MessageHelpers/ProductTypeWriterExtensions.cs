@@ -1,6 +1,7 @@
 ﻿using Brandbank.Xml.Helpers;
 using Brandbank.Xml.Models.Message;
-using System.Linq;
+using System.Drawing;
+using System.IO;
 
 namespace Brandbank.Xml.MessageHelpers
 {
@@ -9,6 +10,17 @@ namespace Brandbank.Xml.MessageHelpers
         public static void AddIdentity(this ProductType productType, IdentityType identityType)
         {
             productType.Identity = identityType;
+        }
+        public static void AddImage(this ProductType product, string path, string imageName, int shotTypeId)
+        {
+            var filePath = Path.Combine(path, imageName);
+            if (File.Exists(filePath))
+                using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                using (var jpg = Image.FromStream(file, false, false))
+                {
+                    var image = new ImageType(shotTypeId, $"File://{imageName}", jpg.Size.Height, jpg.Size.Width);
+                    product.AddImage(image);
+                }
         }
 
         public static void AddImage(this ProductType productType, ImageType imageType)

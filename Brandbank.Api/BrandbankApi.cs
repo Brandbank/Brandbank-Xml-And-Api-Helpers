@@ -1,4 +1,5 @@
 ﻿using Brandbank.Api.Clients;
+using Brandbank.Api.ExtractData;
 using Brandbank.Xml.Helpers;
 using Brandbank.Xml.Models.Message;
 using Microsoft.Extensions.Logging;
@@ -25,6 +26,13 @@ namespace Brandbank.Api
             _validationEventHandler = validationEventHandler;
         }
 
+        public BrandbankApi(DataExtractSoapClient client, string directory, ValidationEventHandler validationEventHandler)
+        {
+            _authGuid = new Guid();
+            _directory = directory;
+            _validationEventHandler = validationEventHandler;
+        }
+
         public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor)
         {
             GetUnsent(productProcessor, createLogger<IGetUnsentClient>);
@@ -41,11 +49,17 @@ namespace Brandbank.Api
                 GetUnsent(unsentClient, productProcessor, xsdPath, nameSpace);
         }
 
+        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, Func<ILogger<IGetUnsentClient>> logger, DataExtractSoapClient client, string xsdPath, string nameSpace)
+        {
+            using (var unsentClient = new GetUnsentClientLogger(logger(), new GetUnsentClient(_authGuid, client)))
+                GetUnsent(unsentClient, productProcessor, xsdPath, nameSpace);
+        }
+
         public void GetUnsent(IGetUnsentClient unsentClient, Func<MessageType, IBrandbankMessageSummary> productProcessor, string xsdPath, string nameSpace)
         {
             while (
                 unsentClient.GetUnsentProductData()
-                    .ValidateXml(xsdPath, nameSpace, _validationEventHandler)
+                    //.ValidateXml(xsdPath, nameSpace, _validationEventHandler)
                     .ConvertTo<MessageType>()
                     .Then(productProcessor)
                     .Then(unsentClient.AcknowledgeMessage)
