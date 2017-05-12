@@ -6,8 +6,8 @@ namespace Brandbank.Xml.ImageDownloader
 {
     public class BrandbankImageDownloaderLogger : IBrandbankImageDownloader
     {
-        ILogger<IBrandbankImageDownloader> _logger;
-        IBrandbankImageDownloader _downloader;
+        readonly ILogger<IBrandbankImageDownloader> _logger;
+        readonly IBrandbankImageDownloader _downloader;
 
         public BrandbankImageDownloaderLogger(ILogger<IBrandbankImageDownloader> logger, IBrandbankImageDownloader downloader)
         {
@@ -31,10 +31,9 @@ namespace Brandbank.Xml.ImageDownloader
             try
             {
                 var item = fn(url);
-                if (item != null)
-                    _logger.LogDebug($"Downloaded image as {type} from {url}", url);
-                else
-                    _logger.LogDebug($"Failed to download data {type} as tream from {url}", url);
+                _logger.LogDebug(item != null
+                                     ? $"Downloaded image as {type} from {url}"
+                                     : $"Failed to download data {type} as tream from {url}", url);
                 return item;
             }
             catch (Exception e)

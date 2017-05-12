@@ -12,7 +12,10 @@ namespace Brandbank.Xml.Messages
 
         public MessageCreator(IProductConverter<T> productConverter)
         {
-            _productConverter = productConverter ?? throw new ArgumentNullException("productConverter");
+            if (productConverter == null)
+                throw new ArgumentNullException(nameof(productConverter));
+
+            _productConverter = productConverter;
         }
 
         public MessageType CreateMessage(Guid messageGuid, IEnumerable<T> products)

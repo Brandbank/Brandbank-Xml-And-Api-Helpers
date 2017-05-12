@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Brandbank.Xml.Models.Message
+﻿namespace Brandbank.Xml.Models.Message
 {
     public class BrandbankMessageSummaryProduct : IBrandbankMessageSummaryProduct
     {

@@ -44,13 +44,15 @@ namespace Brandbank.Xml.Helpers
 
         public static byte[] CompressMemoryStream(this MemoryStream memStreamIn, string zipEntryName)
         {
-            MemoryStream outputMemStream = new MemoryStream();
-            ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+            var outputMemStream = new MemoryStream();
+            var zipStream = new ZipOutputStream(outputMemStream);
 
             zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
 
-            ZipEntry newEntry = new ZipEntry(zipEntryName);
-            newEntry.DateTime = DateTime.Now;
+            var newEntry = new ZipEntry(zipEntryName)
+            {
+                DateTime = DateTime.Now
+            };
 
             zipStream.PutNextEntry(newEntry);
 
@@ -84,20 +86,22 @@ namespace Brandbank.Xml.Helpers
         private static void AddFilesToZip(this ZipOutputStream zipStream, string path, int folderOffset)
         {
             var files = Directory.GetFiles(path).Where(f => !f.EndsWith(".log"));
-            foreach (string file in files)
+            foreach (var file in files)
             {
                 var fileInfo = new FileInfo(file);
 
                 var entryName = file.Substring(folderOffset); // Makes the name in zip based on the folder
                 entryName = ZipEntry.CleanName(entryName); // Removes drive from name and fixes slash direction
 
-                var newEntry = new ZipEntry(entryName);
-                newEntry.DateTime = fileInfo.LastWriteTime; // Note the zip format stores 2 second granularity
-                newEntry.Size = fileInfo.Length;
+                var newEntry = new ZipEntry(entryName)
+                {
+                    DateTime = fileInfo.LastWriteTime, // Note the zip format stores 2 second granularity
+                    Size = fileInfo.Length
+                };
 
                 zipStream.PutNextEntry(newEntry);
 
-                using (FileStream streamReader = File.OpenRead(file))
+                using (var streamReader = File.OpenRead(file))
                 {
                     StreamUtils.Copy(streamReader, zipStream, new byte[4096]);
                 }

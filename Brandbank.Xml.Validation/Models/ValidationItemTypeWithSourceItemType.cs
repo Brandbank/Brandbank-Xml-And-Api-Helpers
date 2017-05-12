@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Brandbank.Xml.Validation.Models
 {
@@ -54,7 +51,7 @@ namespace Brandbank.Xml.Validation.Models
                                         && nts.SourceNameTexts.First().RegEx != null
                                         && !nts.SourceNameTexts.First().PassesRegex(nts.NameType.Text)
                                     )
-                                    .Select(nts => new TextConstraint()
+                                    .Select(nts => new TextConstraint
                                     {
                                         NameType = nts.NameType,
                                         RegExErrorMessage = nts.SourceNameTexts.First().RegExErrorMessage

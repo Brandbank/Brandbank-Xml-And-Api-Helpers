@@ -1,21 +1,19 @@
 ﻿using Brandbank.Xml.MessageHelpers;
 using Brandbank.Xml.Models.Message;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class ImageTypeReaderExtensionsTests
     {
-        private ImageType _imageType;
+        private readonly ImageType _imageType;
 
         public ImageTypeReaderExtensionsTests()
         {
-            _imageType = new ImageType(1, "URL", 200, 200);
-            _imageType.Specification.Filename = "Filename";
+            _imageType = new ImageType(1, "URL", 200, 200)
+            {
+                Specification = { Filename = "Filename" }
+            };
         }
 
         [Fact]

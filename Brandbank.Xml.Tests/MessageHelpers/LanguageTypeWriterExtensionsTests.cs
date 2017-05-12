@@ -8,7 +8,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class LanguageTypeWriterExtensionsTests
     {
-        private LanguageType _languageType;
+        private readonly LanguageType _languageType;
         public LanguageTypeWriterExtensionsTests()
         {
             _languageType = new LanguageType("Product Description", "en-gb");
@@ -44,16 +44,16 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             _languageType.AddLongText(4, items2);
             _languageType.AddLongText(5, "    ");
 
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().LongTextItems[0].Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().LongTextItems[0].Id, "1");
             Assert.Equal(_languageType.GetLongTextItems("1").Count(), 3);
             Assert.Equal(_languageType.GetLongTextItems("1", ", "), "Item 1, Item 2, Item 3");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().LongTextItems[1].Id, "2");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().LongTextItems[1].Text.Length, 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().LongTextItems[1].Id, "2");
+            Assert.Equal(_languageType.ItemTypeGroup.First().LongTextItems[1].Text.Length, 3);
             Assert.Equal(_languageType.GetLongTextItems("3").First(), "Single Item String");
             Assert.Equal(_languageType.GetLongTextItems("4", ", "), "Item 1, Item 3");
             Assert.Equal(_languageType.GetLongTextItems("5", ", "), string.Empty);
 
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.Length, 4);
+            Assert.Equal(_languageType.ItemTypeGroup.First().LongTextItems.Length, 4);
         }
 
         [Fact]
@@ -66,10 +66,10 @@ namespace Brandbank.Xml.Tests.MessageHelpers
                 "Item 3",
             };
             _languageType.AddLongText(1, items);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.Length, 1);
+            Assert.Equal(_languageType.ItemTypeGroup.First().LongTextItems.Length, 1);
 
             _languageType.RemoveLongText(1);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.Length, 0);
+            Assert.Equal(_languageType.ItemTypeGroup.First().LongTextItems.Length, 0);
         }
 
         [Fact]
@@ -79,11 +79,11 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             _languageType.AddMemo(2, null);
             _languageType.AddMemo(3, "          ");
 
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().Memo[0].Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().Memo[0].Id, "1");
             Assert.Equal(_languageType.GetMemo("1"), "Memo Value");
             Assert.Equal(_languageType.GetMemo("2"), string.Empty);
             Assert.Equal(_languageType.GetMemo("3"), string.Empty);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().Memo.Length, 1);
+            Assert.Equal(_languageType.ItemTypeGroup.First().Memo.Length, 1);
         }
 
         [Fact]
@@ -98,13 +98,13 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             _languageType.AddNameLookup(1, items);
             _languageType.AddNameLookup(2, items);
 
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameLookups[0].Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameLookups[0].NameValue.Length, 3);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameLookups[0].NameValue[0].Name.Id, "10");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameLookups[0].NameValue[0].Value.Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameLookups[1].Id, "2");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameLookups[1].NameValue.Length, 3);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameLookups.Length, 2);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameLookups[0].Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameLookups[0].NameValue.Length, 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameLookups[0].NameValue[0].Name.Id, "10");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameLookups[0].NameValue[0].Value.Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameLookups[1].Id, "2");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameLookups[1].NameValue.Length, 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameLookups.Length, 2);
         }
 
         [Fact]
@@ -117,12 +117,12 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             _languageType.AddStatement(1, items);
             _languageType.AddStatement(2, items);
 
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().Statements[0].Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().Statements[0].Statement.Length, 3);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().Statements[0].Statement[0].Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().Statements[1].Id, "2");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().Statements[1].Statement.Length, 3);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().Statements.Length, 2);
+            Assert.Equal(_languageType.ItemTypeGroup.First().Statements[0].Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().Statements[0].Statement.Length, 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().Statements[0].Statement[0].Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().Statements[1].Id, "2");
+            Assert.Equal(_languageType.ItemTypeGroup.First().Statements[1].Statement.Length, 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().Statements.Length, 2);
         }
 
         [Fact]
@@ -144,13 +144,13 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             _languageType.AddNameText(2, items2);
             _languageType.AddNameText(3, new Dictionary<int, string>());
 
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextItems[0].Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextItems[0].NameText.Length, 3);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextItems[0].NameText[0].Name.Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextItems[0].NameText[0].Text.Value, "10");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextItems[1].Id, "2");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextItems[1].NameText.Length, 2);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextItems.Length, 2);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextItems[0].Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextItems[0].NameText.Length, 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextItems[0].NameText[0].Name.Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextItems[0].NameText[0].Text.Value, "10");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextItems[1].Id, "2");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextItems[1].NameText.Length, 2);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextItems.Length, 2);
         }
 
         [Fact]
@@ -172,17 +172,17 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             _languageType.AddNameTextLookup(2, item2);
             _languageType.AddNameTextLookup(3, new Dictionary<int, KeyValuePair<int, string>>());
 
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[0].Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[0].NameValueText.Length, 3);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[0].NameValueText[0].Name.Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[0].NameValueText[0].Value.Id, "10");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[0].NameValueText[0].Text.Value, "text 1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[1].Id, "2");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[1].NameValueText.Length, 2);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[1].NameValueText[1].Name.Id, "3");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[1].NameValueText[1].Value.Id, "30");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups[1].NameValueText[1].Text.Value, "text 3");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups.Length, 2);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[0].Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[0].NameValueText.Length, 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[0].NameValueText[0].Name.Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[0].NameValueText[0].Value.Id, "10");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[0].NameValueText[0].Text.Value, "text 1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[1].Id, "2");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[1].NameValueText.Length, 2);
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[1].NameValueText[1].Name.Id, "3");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[1].NameValueText[1].Value.Id, "30");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups[1].NameValueText[1].Text.Value, "text 3");
+            Assert.Equal(_languageType.ItemTypeGroup.First().NameTextLookups.Length, 2);
         }
 
         [Fact]
@@ -203,8 +203,8 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             };
 
             _languageType.AddTextualNutrition(85, nutritionitems);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().TextualNutrition.FirstOrDefault().Nutrient.Count(), 9);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().TextualNutrition.FirstOrDefault().Headings.Count(), 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().TextualNutrition.First().Nutrient.Length, 9);
+            Assert.Equal(_languageType.ItemTypeGroup.First().TextualNutrition.First().Headings.Length, 3);
         }
 
         [Fact]
@@ -269,16 +269,16 @@ namespace Brandbank.Xml.Tests.MessageHelpers
                 ValueGroupDefinitions = valueGroupDefinitions,
                 StructuredNutrients = structuredNutrients
             });
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().Id, "256");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().ValueGroupDefinitions.FirstOrDefault().Id, "1");
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().ValueGroupDefinitions.Count(), 1);
-            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.FirstOrDefault().Nutrients.Count(), 1);
-            //Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().TextualNutrition.FirstOrDefault().Headings.Count(), 3);
+            Assert.Equal(_languageType.ItemTypeGroup.First().StructuredNutrition.First().Id, "256");
+            Assert.Equal(_languageType.ItemTypeGroup.First().StructuredNutrition.First().ValueGroupDefinitions.First().Id, "1");
+            Assert.Equal(_languageType.ItemTypeGroup.First().StructuredNutrition.First().ValueGroupDefinitions.Length, 1);
+            Assert.Equal(_languageType.ItemTypeGroup.First().StructuredNutrition.First().Nutrients.Length, 1);
+            //Assert.Equal(_languageType.ItemTypeGroup.First().TextualNutrition.First().Headings.Count(), 3);
 
 
         }
 
-        
+
 
     }
 }

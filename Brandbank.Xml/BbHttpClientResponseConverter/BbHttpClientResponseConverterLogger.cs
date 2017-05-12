@@ -1,8 +1,8 @@
 ﻿using Brandbank.Xml.Helpers;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Drawing;
+using System.IO;
 
 namespace Brandbank.Xml.BbHttpClientResponseConverter
 {
@@ -19,7 +19,7 @@ namespace Brandbank.Xml.BbHttpClientResponseConverter
 
         public T ConvertJsonTo<T>(Stream stream) where T : class
         {
-            _logger.LogDebug($"Converting data stream");
+            _logger.LogDebug("Converting data stream");
             try
             {
                 var response = _converter.ConvertJsonTo<T>(stream);
@@ -35,11 +35,11 @@ namespace Brandbank.Xml.BbHttpClientResponseConverter
 
         public Bitmap ConvertToBitmap(Stream stream)
         {
-            _logger.LogDebug($"Converting image stream to Bitmap");
+            _logger.LogDebug("Converting image stream to Bitmap");
             try
             {
                 var response = _converter.ConvertToBitmap(stream);
-                _logger.LogDebug($"Converted image stream to Bitmap");
+                _logger.LogDebug("Converted image stream to Bitmap");
                 return response;
             }
             catch (Exception e)

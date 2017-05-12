@@ -19,7 +19,7 @@ namespace Brandbank.Xml.MessageHelpers
 
         public static int GetPvid(this IdentityType identityType)
         {
-            var pvid = 0;
+            int pvid;
             if (!int.TryParse(identityType.GetProductCode("BRANDBANK:PVID"), out pvid)) return pvid;
             return pvid;
         }

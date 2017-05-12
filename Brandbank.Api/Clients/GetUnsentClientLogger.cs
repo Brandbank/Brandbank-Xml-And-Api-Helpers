@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace Brandbank.Api.Clients
 {
@@ -19,11 +18,11 @@ namespace Brandbank.Api.Clients
 
         public IBrandbankMessageSummary AcknowledgeMessage(IBrandbankMessageSummary messageInformation)
         {
-            _logger.LogDebug($"Acknowledging Brandbank message");
+            _logger.LogDebug("Acknowledging Brandbank message");
             try
             {
                 var result = _getUnsentClient.AcknowledgeMessage(messageInformation);
-                _logger.LogDebug($"Acknowledged Brandbank message");
+                _logger.LogDebug("Acknowledged Brandbank message");
                 return result;
             }
             catch (Exception e)
@@ -35,11 +34,11 @@ namespace Brandbank.Api.Clients
 
         public XmlNode GetUnsentProductData()
         {
-            _logger.LogDebug($"Getting Unsent Brandbank data");
+            _logger.LogDebug("Getting Unsent Brandbank data");
             try
             {
                 var result = _getUnsentClient.GetUnsentProductData();
-                _logger.LogDebug($"Got Unsent Brandbank data");
+                _logger.LogDebug("Got Unsent Brandbank data");
                 return result;
             }
             catch (Exception e)
@@ -51,11 +50,11 @@ namespace Brandbank.Api.Clients
 
         public void Dispose()
         {
-            _logger.LogDebug($"Disposing unsent client");
+            _logger.LogDebug("Disposing unsent client");
             try
             {
                 _getUnsentClient.Dispose();
-                _logger.LogDebug($"Disposed unsent client");
+                _logger.LogDebug("Disposed unsent client");
             }
             catch (Exception e)
             {

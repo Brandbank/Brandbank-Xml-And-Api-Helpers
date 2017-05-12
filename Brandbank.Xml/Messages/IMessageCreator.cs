@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Brandbank.Xml.Messages
 {
-    public interface IMessageCreator<T>
+    public interface IMessageCreator<in T>
     {
         MessageType CreateMessage(Guid messageGuid, IEnumerable<T> products);
     }

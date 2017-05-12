@@ -17,8 +17,11 @@ namespace Brandbank.Api.Logging
 
         public UploadLogger(IDownloadLog<T> log, INotifyClient notifyClient)
         {
-            _log = log ?? throw new ArgumentNullException("log");
-            _notifyClient = notifyClient ?? throw new ArgumentNullException("notifyClient");
+            if (log == null) throw new ArgumentNullException(nameof(log));
+            if (notifyClient == null) throw new ArgumentNullException(nameof(notifyClient));
+
+            _log = log;
+            _notifyClient = notifyClient;
         }
 
         public void UpdateAcknowledgeStatus(Expression<Func<MongoDownloadItem<T>, bool>> predicate)
@@ -70,13 +73,13 @@ namespace Brandbank.Api.Logging
                 var sb = new StringBuilder()
                     .AppendLine($"BatchDirectory: {batchDirectory}")
                     .AppendLine($"BatchId: {batchId}")
-                    .AppendLine($"---------Brandbank---------")
+                    .AppendLine("---------Brandbank---------")
                     .AppendLine($"ReceiptId: {uploadResponse.ReceiptId}")
                     .AppendLine($"Timestamp: {uploadResponse.Timestamp}")
-                    .AppendLine($"Status: {uploadResponse.Status.ToString()}")
+                    .AppendLine($"Status: {uploadResponse.Status}")
                     .AppendLine($"FilesReceivedCount: {uploadResponse.FilesReceivedCount}")
-                    .AppendLine($"---------Messages----------")
-                    .AppendLine($"Messages:");
+                    .AppendLine("---------Messages----------")
+                    .AppendLine("Messages:");
                 foreach (var message in uploadResponse.Messages)
                 {
                     sb.AppendLine($"Code: {message.Code}, MessageType: {message.MessageType}, Text: {message.Text}");

@@ -1,17 +1,15 @@
-﻿using Brandbank.Xml.Helpers;
-using Brandbank.Xml.MessageHelpers;
+﻿using Brandbank.Xml.MessageHelpers;
 using Brandbank.Xml.Models.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class MessageTypeWriterExtensionsTests
     {
-        private MessageType _message;
+        private readonly MessageType _message;
         public MessageTypeWriterExtensionsTests()
         {
             _message = new MessageType(Guid.NewGuid(), DateTime.UtcNow);

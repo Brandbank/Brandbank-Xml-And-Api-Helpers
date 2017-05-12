@@ -6,8 +6,8 @@ namespace Brandbank.Xml.ImageWriter
 {
     public class ImageWriterLogger : IImageWriter
     {
-        ILogger<IImageWriter> _logger;
-        IImageWriter _imageWriter;
+        readonly ILogger<IImageWriter> _logger;
+        readonly IImageWriter _imageWriter;
 
         public ImageWriterLogger(ILogger<IImageWriter> logger, IImageWriter imageWriter)
         {

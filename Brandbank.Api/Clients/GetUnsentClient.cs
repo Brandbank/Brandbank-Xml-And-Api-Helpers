@@ -13,9 +13,6 @@ namespace Brandbank.Api.Clients
 
         public GetUnsentClient(Guid guid)
         {
-            if (guid == null)
-                throw new NullReferenceException("Guid cannot be null");
-
             _dataExtractSoapClient = new DataExtractSoapClient();
             _header = new ExternalCallerHeader
             {

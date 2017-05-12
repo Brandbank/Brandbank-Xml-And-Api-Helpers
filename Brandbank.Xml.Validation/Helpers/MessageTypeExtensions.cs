@@ -15,7 +15,7 @@ namespace Brandbank.Xml.Validation.Helpers
                                             .Where(i => i.Statements != null)
                                             .SelectMany(itemTypeGroup => itemTypeGroup.Statements
                                                 .SelectMany(statement => statement.Statement
-                                                .Select(lookup => new NameTextLookup()
+                                                .Select(lookup => new NameTextLookup
                                                 {
                                                     BaseTypeId = ((int)BaseTypes.Statements).ToString(),
                                                     ItemTypeDescription = statement.Name,
@@ -35,7 +35,7 @@ namespace Brandbank.Xml.Validation.Helpers
                                             .Where(i => i.NameLookups != null)
                                             .SelectMany(itemTypeGroup => itemTypeGroup.NameLookups
                                             .SelectMany(itemType => itemType.NameValue
-                                            .Select(lookup => new NameTextLookup()
+                                            .Select(lookup => new NameTextLookup
                                             {
                                                 BaseTypeId = ((int)BaseTypes.NameLookup).ToString(),
                                                 ItemTypeDescription = itemType.Name,
@@ -57,7 +57,7 @@ namespace Brandbank.Xml.Validation.Helpers
                                             .Where(i => i.NameTextItems != null)
                                             .SelectMany(itemTypeGroup => itemTypeGroup.NameTextItems
                                             .SelectMany(itemType => itemType.NameText
-                                            .Select(nameText => new NameTextLookup()
+                                            .Select(nameText => new NameTextLookup
                                             {
                                                 BaseTypeId = ((int)BaseTypes.NameText).ToString(),
                                                 ItemTypeDescription = itemType.Name,
@@ -76,7 +76,7 @@ namespace Brandbank.Xml.Validation.Helpers
             var memos = languageType.ItemTypeGroup
                                         .Where(i => i.Memo != null)
                                         .SelectMany(itemTypeGroup => itemTypeGroup.Memo
-                                        .Select(memo => new NameTextLookup()
+                                        .Select(memo => new NameTextLookup
                                         {
                                             BaseTypeId = ((int)BaseTypes.Memo).ToString(),
                                             ItemTypeDescription = memo.Name,
@@ -92,7 +92,7 @@ namespace Brandbank.Xml.Validation.Helpers
             var longTexts = languageType.ItemTypeGroup
                                             .Where(i => i.LongTextItems != null)
                                             .SelectMany(itemTypeGroup => itemTypeGroup.LongTextItems
-                                            .Select(longText => new NameTextLookup()
+                                            .Select(longText => new NameTextLookup
                                             {
                                                 BaseTypeId = ((int)BaseTypes.LongText).ToString(),
                                                 ItemTypeDescription = longText.Name,
@@ -110,7 +110,7 @@ namespace Brandbank.Xml.Validation.Helpers
                                             .Where(i => i.NameTextLookups != null)
                                             .SelectMany(itemTypeGroup => itemTypeGroup.NameTextLookups
                                                 .SelectMany(nameTextLookup => nameTextLookup.NameValueText
-                                                    .Select(nameValueText => new NameTextLookup()
+                                                    .Select(nameValueText => new NameTextLookup
                                                     {
                                                         BaseTypeId = ((int)BaseTypes.NameTextLookup).ToString(),
                                                         ItemTypeDescription = nameTextLookup.Name,
@@ -132,7 +132,7 @@ namespace Brandbank.Xml.Validation.Helpers
             var texturalNutritions = languageType.ItemTypeGroup
                                     .Where(i => i.TextualNutrition != null)
                                     .SelectMany(itemTypeGroup => itemTypeGroup.TextualNutrition
-                                    .Select(nutrition => new NameTextLookup()
+                                    .Select(nutrition => new NameTextLookup
                                     {
                                         BaseTypeId = ((int)BaseTypes.Nutrition).ToString(),
                                         ItemTypeDescription = itemTypeGroup.Name,
@@ -150,7 +150,7 @@ namespace Brandbank.Xml.Validation.Helpers
                                         .Where(i => i.NumericNutrition != null)
                                         .SelectMany(itemTypeGroup => itemTypeGroup.NumericNutrition
                                         .SelectMany(numericNutrition => numericNutrition.NutrientValues
-                                        .Select(nutrientValue => new NameTextLookup()
+                                        .Select(nutrientValue => new NameTextLookup
                                         {
                                             BaseTypeId = ((int)BaseTypes.CalculatedNutrition).ToString(),
                                             ItemTypeDescription = numericNutrition.Name,
@@ -168,12 +168,12 @@ namespace Brandbank.Xml.Validation.Helpers
             var taggedMemos = languageType.ItemTypeGroup
                                 .Where(i => i.TaggedMemo != null)
                                 .SelectMany(itemTypeGroup => itemTypeGroup.TaggedMemo
-                                .Select(taggedMemo => new NameTextLookup()
+                                .Select(taggedMemo => new NameTextLookup
                                 {
                                     BaseTypeId = ((int)BaseTypes.TaggedMemo).ToString(),
                                     ItemTypeDescription = taggedMemo.Name,
                                     ItemTypeId = taggedMemo.Id,
-                                    Tags = taggedMemo.Tags?.Select(tag => new IdValue()
+                                    Tags = taggedMemo.Tags?.Select(tag => new IdValue
                                     {
                                         Id = tag.TagTypeId,
                                         Value = tag.TagType1
@@ -190,12 +190,12 @@ namespace Brandbank.Xml.Validation.Helpers
             var taggedLongTexts = languageType.ItemTypeGroup
                                 .Where(i => i.TaggedLongTextItems != null)
                                 .SelectMany(itemTypeGroup => itemTypeGroup.TaggedLongTextItems
-                                .Select(taggedLongText => new NameTextLookup()
+                                .Select(taggedLongText => new NameTextLookup
                                 {
                                     BaseTypeId = ((int)BaseTypes.TaggedLongText).ToString(),
                                     ItemTypeDescription = taggedLongText.Name,
                                     ItemTypeId = taggedLongText.Id,
-                                    Tags = taggedLongText.Tags?.Select(tag => new IdValue()
+                                    Tags = taggedLongText.Tags?.Select(tag => new IdValue
                                     {
                                         Id = tag.TagTypeId,
                                         Value = tag.TagType1

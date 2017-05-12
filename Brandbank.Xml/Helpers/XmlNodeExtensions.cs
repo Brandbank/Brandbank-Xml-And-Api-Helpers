@@ -10,7 +10,7 @@ namespace Brandbank.Xml.Helpers
     {
         public static XmlNode ValidateXml(this XmlNode xmlNode, string xsdSchema, string nameSpace, ValidationEventHandler validationEventHandler)
         {
-            XmlSchemaSet schemas = new XmlSchemaSet();
+            var schemas = new XmlSchemaSet();
             using (var sr = new StreamReader(xsdSchema.ConvertToStream()))
                 schemas.Add(nameSpace, XmlReader.Create(sr));
 
@@ -37,10 +37,12 @@ namespace Brandbank.Xml.Helpers
 
         public static XmlNode ConvertToXml<T>(this T obj) where T : class, new()
         {
-            var settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.NewLineOnAttributes = true;
-            settings.Encoding = Encoding.UTF8;
+            var settings = new XmlWriterSettings
+            {
+                Indent = true,
+                NewLineOnAttributes = true,
+                Encoding = Encoding.UTF8
+            };
 
             var xmlSerializer = new XmlSerializer(typeof(T));
             var stringWriter = new StringWriter();

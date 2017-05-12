@@ -5,7 +5,6 @@ using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading;
-using System.Xml;
 
 namespace Brandbank.Api.Clients
 {
@@ -17,9 +16,6 @@ namespace Brandbank.Api.Clients
 
         public UploadDataClient(Guid guid, int wait = 20)
         {
-            if (guid == null)
-                throw new ArgumentNullException("guid");
-
             _uploadClient = new UploadClient(
                 BrandbankHttpsBinding("BasicHttpBinding_IUpload"),
                 BrandbankEndpointAddress(guid, "https://api.brandbank.com/svc/DataImport/Upload.svc"));

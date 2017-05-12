@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Brandbank.Xml.Validation.Models
 {
@@ -18,7 +15,7 @@ namespace Brandbank.Xml.Validation.Models
             var languageDataErrors = InvalidLanguageData.SelectMany(ild => ild.GetErrors());
             var imageDuplicateErrors = GetDuplicateImageTypeErrors();
             var headerList = new List<string> { productErrorHeader };
-            if (languageDataErrors.Count() > 0 || imageDuplicateErrors.Count() > 0)
+            if (languageDataErrors.Any() || imageDuplicateErrors.Any())
             {
                 return headerList.Concat(imageDuplicateErrors)
                                  .Concat(languageDataErrors);

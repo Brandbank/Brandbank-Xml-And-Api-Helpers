@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Brandbank.Api.Logging
 {
@@ -19,19 +19,18 @@ namespace Brandbank.Api.Logging
 
         public IEnumerable<MongoDownloadItem<T>> Get(Expression<Func<MongoDownloadItem<T>, bool>> predicate)
         {
-            _logger.LogDebug($"Getting download log item [{predicate.Body.ToString()}]");
+            _logger.LogDebug($"Getting download log item [{predicate.Body}]");
             try
             {
                 var response = _downloadLog.Get(predicate);
-                if (response != null)
-                    _logger.LogDebug($"Got {response.Count()} download log item(s) [{predicate.Body.ToString()}]");
-                else
-                    _logger.LogDebug($"Got download log item [{predicate.Body.ToString()}] returned 0 results");
+                _logger.LogDebug(response != null
+                                     ? $"Got {response.Count()} download log item(s) [{predicate.Body}]"
+                                     : $"Got download log item [{predicate.Body}] returned 0 results");
                 return response;
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Getting download log item failed [{predicate.Body.ToString()}]");
+                _logger.LogError(new EventId(), e, $"Getting download log item failed [{predicate.Body}]");
                 throw;
             }
         }
@@ -53,45 +52,45 @@ namespace Brandbank.Api.Logging
 
         public void AddOrUpdate(Expression<Func<MongoDownloadItem<T>, bool>> predicate, MongoDownloadItem<T> data)
         {
-            _logger.LogDebug($"Adding or updating download log item {data.ProductCode} [{predicate.Body.ToString()}]");
+            _logger.LogDebug($"Adding or updating download log item {data.ProductCode} [{predicate.Body}]");
             try
             {
                 _downloadLog.AddOrUpdate(predicate, data);
-                _logger.LogDebug($"Adding or updating download log item {data.ProductCode} [{predicate.Body.ToString()}]");
+                _logger.LogDebug($"Adding or updating download log item {data.ProductCode} [{predicate.Body}]");
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Adding or updating download log item failed {data.ProductCode} [{predicate.Body.ToString()}]");
+                _logger.LogError(new EventId(), e, $"Adding or updating download log item failed {data.ProductCode} [{predicate.Body}]");
                 throw;
             }
         }
 
         public void Update(Expression<Func<MongoDownloadItem<T>, bool>> predicate, Guid receiptId, bool brandbankSuccessfullyImported, string messageText, string messageType)
         {
-            _logger.LogDebug($"Updating download log item {messageType} - {messageText} - {receiptId.ToString()} [{predicate.Body.ToString()}]");
+            _logger.LogDebug($"Updating download log item {messageType} - {messageText} - {receiptId} [{predicate.Body}]");
             try
             {
                 _downloadLog.Update(predicate, receiptId, brandbankSuccessfullyImported, messageText, messageType);
-                _logger.LogDebug($"Updated download log item {messageType} - {messageText} - {receiptId.ToString()} [{predicate.Body.ToString()}]");
+                _logger.LogDebug($"Updated download log item {messageType} - {messageText} - {receiptId} [{predicate.Body}]");
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Updating download log item failed {messageType} - {messageText} - {receiptId.ToString()} [{predicate.Body.ToString()}]");
+                _logger.LogError(new EventId(), e, $"Updating download log item failed {messageType} - {messageText} - {receiptId} [{predicate.Body}]");
                 throw;
             }
         }
 
         public void Update<TField>(Expression<Func<MongoDownloadItem<T>, bool>> predicate, Expression<Func<MongoDownloadItem<T>, TField>> field, TField value)
         {
-            _logger.LogDebug($"Updating download log item [{predicate.Body.ToString()}] [{value}]");
+            _logger.LogDebug($"Updating download log item [{predicate.Body}] [{value}]");
             try
             {
                 _downloadLog.Update(predicate, field, value);
-                _logger.LogDebug($"Updated download log item [{predicate.Body.ToString()}] [{value}]");
+                _logger.LogDebug($"Updated download log item [{predicate.Body}] [{value}]");
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Updating download log item failed [{predicate.Body.ToString()}] [{value}]");
+                _logger.LogError(new EventId(), e, $"Updating download log item failed [{predicate.Body}] [{value}]");
                 throw;
             }
         }

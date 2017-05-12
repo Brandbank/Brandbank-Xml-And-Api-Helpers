@@ -1,5 +1,4 @@
-﻿using Brandbank.Xml.Helpers;
-using Brandbank.Xml.Models.Message;
+﻿using Brandbank.Xml.Models.Message;
 using Brandbank.Xml.Validation.Helpers;
 using Brandbank.Xml.Validation.Models;
 using System.Collections.Generic;

@@ -2,15 +2,13 @@
 using Brandbank.Xml.Models.Message;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class ProductTypeWriterExtensionsTests
     {
-        private ProductType _productType;
+        private readonly ProductType _productType;
         public ProductTypeWriterExtensionsTests()
         {
             _productType = new ProductType(DateTime.Parse("2016-01-01 12:00:00"));
