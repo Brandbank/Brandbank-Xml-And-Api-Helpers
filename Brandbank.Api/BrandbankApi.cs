@@ -15,7 +15,7 @@ namespace Brandbank.Api
         private readonly string _directory;
         private readonly ValidationEventHandler _validationEventHandler;
 
-        public BrandbankApi(Guid authGuid, string directory) : this(authGuid, directory, createValidationEventHandler())
+        public BrandbankApi(Guid authGuid, string directory) : this(authGuid, directory, CreateValidationEventHandler())
         {
         }
 
@@ -35,7 +35,7 @@ namespace Brandbank.Api
 
         public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor)
         {
-            GetUnsent(productProcessor, createLogger<IGetUnsentClient>);
+            GetUnsent(productProcessor, CreateLogger<IGetUnsentClient>);
         }
 
         public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, Func<ILogger<IGetUnsentClient>> logger)
@@ -67,47 +67,13 @@ namespace Brandbank.Api
                 );
         }
 
-        public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter)
-        {
-            UploadCoverage(coverageGetter, createLogger<ICoverageClient>());
-
-        }
-        public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter, ILogger<ICoverageClient> logger)
-        {
-            UploadCoverage(coverageGetter, logger, Path.Combine("Schemas", "CoverageReportv2a.xsd"), "http://www.brandbank.com/schemas/CoverageFeedback/2005/11");
-        }
-
-        public void UploadCoverage(Func<Xml.Models.Coverage.ReportType> coverageGetter, ILogger<ICoverageClient> logger, string xsdPath, string nameSpace)
-        {
-            using (var coverageClient = new CoverageClientLogger(logger, new CoverageClient(_authGuid)))
-            {
-                var dir = Path.Combine(_directory, "Coverage", DateTime.Now.ToString("yyyyMMddHHmmssfff")).CreateDirectory();
-                uploadCompressedData(dir, xsdPath, nameSpace, coverageGetter, coverageClient.UploadCompressedCoverage);
-            }
-        }
-        private void uploadCompressedData<T>(
-            string directory,
-            string xsdPath,
-            string nameSpace,
-            Func<T> productGetter,
-            Func<byte[], int> uploader)
-            where T : class, new()
-        {
-            productGetter()
-                .ConvertToXml()
-                .ValidateXml(xsdPath, nameSpace, _validationEventHandler)
-                .SaveToDirectory(directory, "BrandbankData.xml")
-                .CompressFolder()
-                .Then(uploader);
-        }
-
-        private static ILogger<T> createLogger<T>()
+        private static ILogger<T> CreateLogger<T>()
         {
             var loggerFactory = new LoggerFactory();
             return loggerFactory.CreateLogger<T>();
         }
 
-        private static ValidationEventHandler createValidationEventHandler()
+        private static ValidationEventHandler CreateValidationEventHandler()
         {
             return (o, e) =>
             {

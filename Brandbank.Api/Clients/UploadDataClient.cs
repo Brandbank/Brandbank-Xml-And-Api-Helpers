@@ -1,7 +1,11 @@
-﻿using Brandbank.Api.UploadData;
+﻿using Brandbank.Api.ExtractData;
+using Brandbank.Api.UploadData;
 using System;
 using System.IO;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Threading;
+using System.Xml;
 
 namespace Brandbank.Api.Clients
 {
@@ -16,7 +20,10 @@ namespace Brandbank.Api.Clients
             if (guid == null)
                 throw new ArgumentNullException("guid");
 
-            _uploadClient = new UploadClient();
+            _uploadClient = new UploadClient(
+                BrandbankHttpsBinding("BasicHttpBinding_IUpload"),
+                BrandbankEndpointAddress(guid, "https://api.brandbank.com/svc/DataImport/Upload.svc"));
+
             _header = new UserCredentialHeader
             {
                 UserCredential = guid
@@ -44,6 +51,40 @@ namespace Brandbank.Api.Clients
         public void Dispose()
         {
             _uploadClient.Close();
+        }
+
+        private static BasicHttpsBinding BrandbankHttpsBinding(string name)
+        {
+            return new BasicHttpsBinding(BasicHttpsSecurityMode.Transport)
+            {
+                Name = name,
+                //MaxReceivedMessageSize = int.MaxValue,
+                //MaxBufferPoolSize = int.MaxValue,
+                //ReaderQuotas = new XmlDictionaryReaderQuotas
+                //{
+                //    MaxArrayLength = int.MaxValue,
+                //    MaxStringContentLength = int.MaxValue
+                //},
+                Security = new BasicHttpsSecurity
+                {
+                    Mode = BasicHttpsSecurityMode.Transport
+                }
+            };
+        }
+
+        private static EndpointAddress BrandbankEndpointAddress(Guid authenticationGuid, string endpointAddress, string ns = "http://www.i-label.net/Partners/WebServices/DataFeed/2005/11")
+        {
+            var endpointAddressBuilder = new EndpointAddressBuilder
+            {
+                Uri = new Uri(endpointAddress),
+            };
+            endpointAddressBuilder.Headers.Add(
+                AddressHeader.CreateAddressHeader(
+                    "UserCredentialHeader",
+                    ns,
+                    new ExternalCallerHeader { ExternalCallerId = authenticationGuid }
+                    ));
+            return endpointAddressBuilder.ToEndpointAddress();
         }
     }
 }

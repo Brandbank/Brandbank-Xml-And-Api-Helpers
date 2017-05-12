@@ -61,7 +61,12 @@ namespace Brandbank.Xml.MessageHelpers
             };
             languageType.ItemTypeGroup.FirstOrDefault().LongTextItems = languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.ExtendArray(longTextItemsType, lt => lt.Id);
         }
-        
+
+        public static void RemoveLongText(this LanguageType languageType, int id)
+        {
+            languageType.ItemTypeGroup.FirstOrDefault().LongTextItems = languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.Where(i => i.Id != id.ToString()).ToArray();
+        }
+
         public static void AddMemo(this LanguageType languageType, int id, string value)
         {
             if (string.IsNullOrWhiteSpace(value))

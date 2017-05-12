@@ -20,6 +20,18 @@ namespace Brandbank.Api.Clients
             };
         }
 
+        public CoverageClient(Guid guid, DataReportSoapClient client)
+        {
+            if (guid == null)
+                throw new NullReferenceException("Guid cannot be null");
+
+            _dataReportSoapClient = client ?? throw new NullReferenceException("client cannot be null");
+            _header = new ExternalCallerHeader
+            {
+                ExternalCallerId = guid
+            };
+        }
+
         public int UploadCompressedCoverage(byte[] compressedCoverage)
         {
             return _dataReportSoapClient.SupplyCompressedCoverageReport(_header, compressedCoverage);

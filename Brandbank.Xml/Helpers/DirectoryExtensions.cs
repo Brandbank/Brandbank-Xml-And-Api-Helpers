@@ -3,6 +3,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 
 namespace Brandbank.Xml.Helpers
@@ -29,6 +30,38 @@ namespace Brandbank.Xml.Helpers
             var fullPath = Path.Combine(path, name);
             File.WriteAllText(fullPath, xmlNode.OuterXml);
             return path;
+        }
+
+        public static MemoryStream ConvertXmlToStream(this XmlNode xmlNode)
+        {
+            return xmlNode.OuterXml.ConvertToStream();
+        }
+
+        public static MemoryStream ConvertToStream(this string value)
+        {
+            return new MemoryStream(Encoding.Default.GetBytes(value));
+        }
+
+        public static byte[] CompressMemoryStream(this MemoryStream memStreamIn, string zipEntryName)
+        {
+            MemoryStream outputMemStream = new MemoryStream();
+            ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+
+            zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
+
+            ZipEntry newEntry = new ZipEntry(zipEntryName);
+            newEntry.DateTime = DateTime.Now;
+
+            zipStream.PutNextEntry(newEntry);
+
+            StreamUtils.Copy(memStreamIn, zipStream, new byte[4096]);
+            zipStream.CloseEntry();
+
+            zipStream.IsStreamOwner = false;    // False stops the Close also Closing the underlying stream.
+            zipStream.Close();          // Must finish the ZipOutputStream before using outputMemStream.
+
+            outputMemStream.Position = 0;
+            return outputMemStream.ToArray();
         }
 
         public static byte[] CompressFolder(this string pathToFolder)

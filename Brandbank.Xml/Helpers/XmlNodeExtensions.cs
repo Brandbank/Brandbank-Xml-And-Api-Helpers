@@ -8,10 +8,10 @@ namespace Brandbank.Xml.Helpers
 {
     public static class XmlNodeExtensions
     {
-        public static XmlNode ValidateXml(this XmlNode xmlNode, string schemaPath, string nameSpace, ValidationEventHandler validationEventHandler)
+        public static XmlNode ValidateXml(this XmlNode xmlNode, string xsdSchema, string nameSpace, ValidationEventHandler validationEventHandler)
         {
             XmlSchemaSet schemas = new XmlSchemaSet();
-            using (var sr = new StreamReader(schemaPath))
+            using (var sr = new StreamReader(xsdSchema.ConvertToStream()))
                 schemas.Add(nameSpace, XmlReader.Create(sr));
 
             var settings = new XmlReaderSettings

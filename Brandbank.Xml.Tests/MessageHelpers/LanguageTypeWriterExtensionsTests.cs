@@ -57,6 +57,22 @@ namespace Brandbank.Xml.Tests.MessageHelpers
         }
 
         [Fact]
+        public void ShouldRemoveLongTextItem()
+        {
+            var items = new List<string>
+            {
+                "Item 1",
+                "Item 2",
+                "Item 3",
+            };
+            _languageType.AddLongText(1, items);
+            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.Length, 1);
+
+            _languageType.RemoveLongText(1);
+            Assert.Equal(_languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.Length, 0);
+        }
+
+        [Fact]
         public void ShouldAddMemoType()
         {
             _languageType.AddMemo(1, "Memo Value");

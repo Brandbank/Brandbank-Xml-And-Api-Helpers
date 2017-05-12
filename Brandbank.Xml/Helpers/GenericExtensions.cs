@@ -27,6 +27,11 @@ namespace Brandbank.Xml.Helpers
             return JsonConvert.SerializeObject(obj);
         }
 
+        public static T FromJson<T>(this string obj) where T : class
+        {
+            return JsonConvert.DeserializeObject<T>(obj);
+        }
+
         public static T NewIfNull<T>(this T obj) where T : class, new()
         {
             return obj ?? new T();
