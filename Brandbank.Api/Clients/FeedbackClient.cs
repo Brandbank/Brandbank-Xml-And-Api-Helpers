@@ -10,9 +10,6 @@ namespace Brandbank.Api.Clients
 
         public FeedbackClient(Guid guid, string endpointAddress)
         {
-            if (guid == null)
-                throw new NullReferenceException("Guid cannot be null");
-
             _dataReportSoapClient = new DataReportSoapClient();
             _header = new ExternalCallerHeader
             {
