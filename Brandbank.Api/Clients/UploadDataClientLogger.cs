@@ -20,7 +20,7 @@ namespace Brandbank.Api.Clients
 
         public UploadResponse UploadMessage(byte[] message)
         {
-            _logger.LogDebug($"Uploading message to Brandbank");
+            _logger.LogDebug("Uploading message to Brandbank");
             try
             {
                 _responseCount = 1;
@@ -52,7 +52,7 @@ namespace Brandbank.Api.Clients
                     _logger.LogError($"Failed to uploaded message {response.ReceiptId} to Brandbank");
                     break;
                 case UploadResponse.UploadStatuses.Unavailable:
-                    _logger.LogCritical($"Brandbank service unavilable");
+                    _logger.LogCritical("Brandbank service unavilable");
                     break;
                 case UploadResponse.UploadStatuses.Pending:
                     _logger.LogDebug($"Message {response.ReceiptId} pending; Attempt {_responseCount++}");
@@ -80,11 +80,11 @@ namespace Brandbank.Api.Clients
 
         public void Dispose()
         {
-            _logger.LogDebug($"Disposing upload client");
+            _logger.LogDebug("Disposing upload client");
             try
             {
                 _uploadClient.Dispose();
-                _logger.LogDebug($"Disposed upload client");
+                _logger.LogDebug("Disposed upload client");
             }
             catch (Exception e)
             {

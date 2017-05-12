@@ -59,12 +59,12 @@ namespace Brandbank.Xml.MessageHelpers
                 Name = "Item Name",
                 Text = cleanedItems.ToArray()
             };
-            languageType.ItemTypeGroup.FirstOrDefault().LongTextItems = languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.ExtendArray(longTextItemsType, lt => lt.Id);
+            languageType.ItemTypeGroup.First().LongTextItems = languageType.ItemTypeGroup.First().LongTextItems.ExtendArray(longTextItemsType, lt => lt.Id);
         }
 
         public static void RemoveLongText(this LanguageType languageType, int id)
         {
-            languageType.ItemTypeGroup.FirstOrDefault().LongTextItems = languageType.ItemTypeGroup.FirstOrDefault().LongTextItems.Where(i => i.Id != id.ToString()).ToArray();
+            languageType.ItemTypeGroup.First().LongTextItems = languageType.ItemTypeGroup.First().LongTextItems.Where(i => i.Id != id.ToString()).ToArray();
         }
 
         public static void AddMemo(this LanguageType languageType, int id, string value)
@@ -76,9 +76,9 @@ namespace Brandbank.Xml.MessageHelpers
             {
                 Id = id.ToString(),
                 Name = "Item Name",
-                Value = value ?? string.Empty
+                Value = value
             };
-            languageType.ItemTypeGroup.FirstOrDefault().Memo = languageType.ItemTypeGroup.FirstOrDefault().Memo.ExtendArray(memoType, mt => mt.Id);
+            languageType.ItemTypeGroup.First().Memo = languageType.ItemTypeGroup.First().Memo.ExtendArray(memoType, mt => mt.Id);
         }
         
         public static void AddNameLookup(this LanguageType languageType, int id, IEnumerable<KeyValuePair<int, int>> items)
@@ -104,7 +104,7 @@ namespace Brandbank.Xml.MessageHelpers
                     }
                 }).ToArray()
             };
-            languageType.ItemTypeGroup.FirstOrDefault().NameLookups = languageType.ItemTypeGroup.FirstOrDefault().NameLookups.ExtendArray(nameLookupsType, nt => nt.Id);
+            languageType.ItemTypeGroup.First().NameLookups = languageType.ItemTypeGroup.First().NameLookups.ExtendArray(nameLookupsType, nt => nt.Id);
         }
 
         public static void AddStatement(this LanguageType languageType, int id, IEnumerable<int> items)
@@ -112,13 +112,13 @@ namespace Brandbank.Xml.MessageHelpers
             if (!items.Any())
                 return;
             
-            var StatementsType = new StatementsType
+            var statementsType = new StatementsType
             {
                 Id = id.ToString(),
                 Name = "Item Name",
                 Statement = items.Distinct().Select(i => new LookupWithCodeType { Id = i.ToString() }).ToArray()
             };
-            languageType.ItemTypeGroup.FirstOrDefault().Statements = languageType.ItemTypeGroup.FirstOrDefault().Statements.ExtendArray(StatementsType, s => s.Id);
+            languageType.ItemTypeGroup.First().Statements = languageType.ItemTypeGroup.First().Statements.ExtendArray(statementsType, s => s.Id);
             
         }
 
@@ -148,7 +148,7 @@ namespace Brandbank.Xml.MessageHelpers
                 Name = "Item Name",
                 NameText = cleanedItems.ToArray()
             };
-            languageType.ItemTypeGroup.FirstOrDefault().NameTextItems = languageType.ItemTypeGroup.FirstOrDefault().NameTextItems.ExtendArray(nameTextItemsType, nt => nt.Id);
+            languageType.ItemTypeGroup.First().NameTextItems = languageType.ItemTypeGroup.First().NameTextItems.ExtendArray(nameTextItemsType, nt => nt.Id);
         }
 
         public static void AddNameTextLookup(this LanguageType languageType, int id, IEnumerable<KeyValuePair<int, KeyValuePair<int, string>>> items)
@@ -182,7 +182,7 @@ namespace Brandbank.Xml.MessageHelpers
                 Name = "Item Name",
                 NameValueText = cleanedItems.ToArray()
             };
-            languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups = languageType.ItemTypeGroup.FirstOrDefault().NameTextLookups.ExtendArray(nameTextLookupsType, ntl => ntl.Id);
+            languageType.ItemTypeGroup.First().NameTextLookups = languageType.ItemTypeGroup.First().NameTextLookups.ExtendArray(nameTextLookupsType, ntl => ntl.Id);
         }
 
         public static void AddTextualNutrition(this LanguageType languageType, int id, IEnumerable<string> items)
@@ -201,7 +201,7 @@ namespace Brandbank.Xml.MessageHelpers
                     Values = n.Split('|').Skip(1).Select(v => v).ToArray()
                 }).ToArray()
             };
-            languageType.ItemTypeGroup.FirstOrDefault().TextualNutrition = languageType.ItemTypeGroup.FirstOrDefault().TextualNutrition.ExtendArray(textualNutritionType);
+            languageType.ItemTypeGroup.First().TextualNutrition = languageType.ItemTypeGroup.First().TextualNutrition.ExtendArray(textualNutritionType);
         }
 
         public static void AddStructuredNutrition(this LanguageType languageType, int id, StructuredNutrition structuredNutrition)
@@ -265,7 +265,7 @@ namespace Brandbank.Xml.MessageHelpers
                 ValueGroupDefinitions = valueGroupDefinitions.OrderBy(v => v.Id).ToArray(),
                 Nutrients = structuredNutrientTypes.OrderBy(n => n.Id).ToArray()
             };
-            languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition = languageType.ItemTypeGroup.FirstOrDefault().StructuredNutrition.ExtendArray(structuredNutrientType);
+            languageType.ItemTypeGroup.First().StructuredNutrition = languageType.ItemTypeGroup.First().StructuredNutrition.ExtendArray(structuredNutrientType);
         }
     }
 }

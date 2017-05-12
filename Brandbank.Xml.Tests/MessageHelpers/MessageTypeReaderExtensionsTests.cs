@@ -7,7 +7,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class MessageTypeReaderExtensionsTests
     {
-        private MessageType _message;
+        private readonly MessageType _message;
 
         public MessageTypeReaderExtensionsTests()
         {

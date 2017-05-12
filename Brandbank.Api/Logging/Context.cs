@@ -14,12 +14,6 @@ namespace Brandbank.Api.Logging
             _collectionName = collectionName;
         }
 
-        public IMongoCollection<MongoDownloadItem<T>> LogData
-        {
-            get
-            {
-                return _database.GetCollection<MongoDownloadItem<T>>(_collectionName);
-            }
-        }
+        public IMongoCollection<MongoDownloadItem<T>> LogData => _database.GetCollection<MongoDownloadItem<T>>(_collectionName);
     }
 }

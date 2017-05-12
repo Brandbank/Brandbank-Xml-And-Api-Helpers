@@ -6,8 +6,8 @@ namespace Brandbank.Xml.Downloader
 {
     public class DownloaderLogger<T> : IDownloader<T>
     {
-        ILogger<IDownloader<T>> _logger;
-        IDownloader<T> _downloader;
+        readonly ILogger<IDownloader<T>> _logger;
+        readonly IDownloader<T> _downloader;
 
         public DownloaderLogger(ILogger<IDownloader<T>> logger, IDownloader<T> downloader)
         {
@@ -17,19 +17,18 @@ namespace Brandbank.Xml.Downloader
 
         public IEnumerable<T> DownloadData()
         {
-            _logger.LogDebug($"Downloading data");
+            _logger.LogDebug("Downloading data");
             try
             {
                 var item = _downloader.DownloadData();
-                if (item != null)
-                    _logger.LogDebug($"Downloaded data");
-                else
-                    _logger.LogDebug($"Failed to download data from");
+                _logger.LogDebug(item != null
+                                     ? "Downloaded data"
+                                     : "Failed to download data from");
                 return item;
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Failed to download data");
+                _logger.LogError(new EventId(), e, "Failed to download data");
                 throw new Exception("Downloader");
             }
         }

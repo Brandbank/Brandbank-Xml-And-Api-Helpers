@@ -5,7 +5,6 @@ using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading;
-using System.Xml;
 
 namespace Brandbank.Api.Clients
 {

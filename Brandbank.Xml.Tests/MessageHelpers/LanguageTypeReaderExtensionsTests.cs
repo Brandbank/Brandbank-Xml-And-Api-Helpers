@@ -8,7 +8,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class LanguageTypeReaderExtensionsTests
     {
-        private LanguageType _languageType;
+        private readonly LanguageType _languageType;
         public LanguageTypeReaderExtensionsTests()
         {
             _languageType = new LanguageType("Product Description", "en-gb");
@@ -37,7 +37,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
                 1,2,3
             };
             _languageType.AddStatement(1, items);
-            _languageType.ItemTypeGroup.FirstOrDefault().Statements.FirstOrDefault().Statement.FirstOrDefault().Value = "Statement Value";
+            _languageType.ItemTypeGroup.First().Statements.First().Statement.First().Value = "Statement Value";
 
             Assert.Equal(_languageType.GetStatementValue("1", "1"), "Statement Value");
             Assert.Equal(_languageType.GetStatementValue("1", "1000"), string.Empty);
@@ -99,8 +99,8 @@ namespace Brandbank.Xml.Tests.MessageHelpers
                 { 30, 3 },
             };
             _languageType.AddNameLookup(1, items);
-            _languageType.ItemTypeGroup.FirstOrDefault().NameLookups.FirstOrDefault().NameValue.FirstOrDefault().Value.Id = "Value Id";
-            _languageType.ItemTypeGroup.FirstOrDefault().NameLookups.FirstOrDefault().NameValue.FirstOrDefault().Value.Code = "Code";
+            _languageType.ItemTypeGroup.First().NameLookups.First().NameValue.First().Value.Id = "Value Id";
+            _languageType.ItemTypeGroup.First().NameLookups.First().NameValue.First().Value.Code = "Code";
 
             Assert.Equal(_languageType.GetNameLookupNameValue("1", "10"), "Name Value");
             Assert.Equal(_languageType.GetNameLookupValueValue("1", "10"), "Value Value");

@@ -8,8 +8,8 @@ namespace Brandbank.Xml.Messages
 {
     public class MessageCreatorLogger<T> : IMessageCreator<T>
     {
-        ILogger<IMessageCreator<T>> _logger;
-        IMessageCreator<T> _messageCreator;
+        readonly ILogger<IMessageCreator<T>> _logger;
+        readonly IMessageCreator<T> _messageCreator;
 
         public MessageCreatorLogger(ILogger<IMessageCreator<T>> logger, IMessageCreator<T> messageCreator)
         {

@@ -8,7 +8,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class IdentityTypeWriterExtensionsTests
     {
-        private IdentityType _identityType;
+        private readonly IdentityType _identityType;
         public IdentityTypeWriterExtensionsTests()
         {
             _identityType = new IdentityType("1234", "1234", new List<string> { "GB" });
@@ -19,7 +19,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
         {
             _identityType.AddProductCode("scheme", "123456");
 
-            var productCode = _identityType.ProductCodes.FirstOrDefault(pc => pc.Scheme.Equals("scheme"));
+            var productCode = _identityType.ProductCodes.First(pc => pc.Scheme.Equals("scheme"));
 
             Assert.Equal(productCode.Scheme, "scheme");
             Assert.Equal(productCode.Value, "123456");

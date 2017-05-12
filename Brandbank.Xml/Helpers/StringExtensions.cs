@@ -9,7 +9,7 @@ namespace Brandbank.Xml.Helpers
     {
         public static XmlNode ToXml(this string xmlContent)
         {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.LoadXml(xmlContent);
             return doc.DocumentElement;
         }

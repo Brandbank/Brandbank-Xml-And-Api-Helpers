@@ -11,11 +11,11 @@ namespace Brandbank.Xml.Validation.Helpers
         {
             var sourceItemTypes = productValidationData.GetItemTypes();
 
-            var invalidData = messageProducts.Select(product => new InvalidProductData()
+            var invalidData = messageProducts.Select(product => new InvalidProductData
             {
                 ProductCode = product.ProductCodes,
                 DuplicateImageTypes = product.GetImageShotsWithDuplicates(),
-                InvalidLanguageData = product?.Languages?.Select(lang => new InvalidLanguageData()
+                InvalidLanguageData = product.Languages?.Select(lang => new InvalidLanguageData
                 {
                     ProductCode = product.ProductCodes,
                     LanguageCode = lang.Code,
@@ -42,7 +42,7 @@ namespace Brandbank.Xml.Validation.Helpers
         public static IEnumerable<ValidationItemType> GetItemTypes(this ProductValidationData productValidationData)
         {
             var itemTypes = productValidationData.ItemTypes
-                    .Select(itemType => new ValidationItemType()
+                    .Select(itemType => new ValidationItemType
                     {
                         ItemTypeId = itemType.ItemTypeId,
                         ItemBaseTypeDescription = itemType.ItemBaseTypeDescription,
@@ -50,19 +50,19 @@ namespace Brandbank.Xml.Validation.Helpers
                         MaxOccurrences = itemType.MaxOccurrences,
                         NameTypes = productValidationData.ItemNameTypes
                             .Where(nameType => nameType.ItemTypeId == itemType.ItemTypeId)
-                            .Select(nameType => new IdValue()
+                            .Select(nameType => new IdValue
                             {
                                 Id = nameType.ItemNameTypeId,
                                 Value = nameType.ItemNameTypeDescription
                             }),
                         LookupTypes = productValidationData.ItemLookupTypes
                             .Where(lookupType => lookupType.ItemTypeId == itemType.ItemTypeId)
-                            .Select(lookupType => new IdValue()
+                            .Select(lookupType => new IdValue
                             {
                                 Id = lookupType.ItemLookupTypeId,
                                 Value = lookupType.ItemLookupTypeDescription
                             }),
-                        TagTypes = productValidationData.TagTypes?.Select(tagType => new IdValue()
+                        TagTypes = productValidationData.TagTypes?.Select(tagType => new IdValue
                         {
                             Id = tagType
                         })
@@ -72,15 +72,15 @@ namespace Brandbank.Xml.Validation.Helpers
 
         public static IEnumerable<ValidationProduct> GetProductsForValidation(this MessageType messageType)
         {
-            return messageType.Product.Select(p => new ValidationProduct()
+            return messageType.Product.Select(p => new ValidationProduct
             {
                 ProductCodes = string.Join(",", p.Identity.ProductCodes.Select(pc => pc.Value)),
-                Images = p.Assets?.Image?.Select(i => new Image()
+                Images = p.Assets?.Image?.Select(i => new Image
                 {
                     ShotType = i.ShotType,
                     ShotTypeId = i.ShotTypeId
                 }) ?? Enumerable.Empty<Image>(),
-                Languages = p.Data?.Select(lang => new Language()
+                Languages = p.Data?.Select(lang => new Language
                 {
                     Code = lang.Code,
                     ItemTypes = lang.GetValidationItemTypesFromMessage(messageType)
@@ -93,7 +93,7 @@ namespace Brandbank.Xml.Validation.Helpers
         {
             if(language.ItemTypeGroup != null)
             {
-                return (messageType.GetStatementsForLanguage(language))
+                return messageType.GetStatementsForLanguage(language)
                                       .Concat(messageType.GetNameLookupsForLanguage(language))
                                       .Concat(messageType.GetNameTextsForLanguage(language))
                                       .Concat(messageType.GetMemosForLanguage(language))
@@ -113,20 +113,20 @@ namespace Brandbank.Xml.Validation.Helpers
         {
             var itemTypes = nameTextLookups
                                     .GroupBy(nameTextLookup => nameTextLookup.ItemTypeId)
-                                    .Select(nameTextLookup => new ValidationItemType()
+                                    .Select(nameTextLookup => new ValidationItemType
                                     {
                                         ItemTypeId = nameTextLookup.Key.ToString(),
                                         ItemBaseTypeId = nameTextLookup.First().BaseTypeId,
                                         ItemTypeDescription = nameTextLookup.First().ItemTypeDescription,
                                         NameTypes = nameTextLookup.Where(nameType => nameType.ItemTypeId == nameTextLookup.Key.ToString() && nameType.NameTypeId != null)
-                                                                    .Select(nameType => new IdValue()
+                                                                    .Select(nameType => new IdValue
                                                                     {
                                                                         Id = nameType.NameTypeId,
                                                                         Value = nameType.NameTextValue,
                                                                         Text = nameType.NameTextText
                                                                     }),
                                         LookupTypes = nameTextLookup.Where(nameType => nameType.ItemTypeId == nameTextLookup.Key.ToString() && nameType.LookupId != null)
-                                                                        .Select(nameType => new IdValue()
+                                                                        .Select(nameType => new IdValue
                                                                         {
                                                                             Id = nameType.LookupId,
                                                                             Value = nameType.LookupTextValue

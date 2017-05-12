@@ -13,7 +13,7 @@ namespace Brandbank.Xml.Messages
         public MessageCreator(IProductConverter<T> productConverter)
         {
             if (productConverter == null)
-                throw new ArgumentNullException("productConverter");
+                throw new ArgumentNullException(nameof(productConverter));
 
             _productConverter = productConverter;
         }

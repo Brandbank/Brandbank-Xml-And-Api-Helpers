@@ -3,14 +3,13 @@ using Brandbank.Xml.Models.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class ProductTypeReaderExtensionsTests
     {
-        private ProductType _productType;
+        private readonly ProductType _productType;
         public ProductTypeReaderExtensionsTests()
         {
             _productType = new ProductType(DateTime.Parse("2016-01-01 12:00:00"));
@@ -47,7 +46,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
         public void ShouldReturnImagesWhenNoImagesExist()
         {
             var productType = new ProductType(DateTime.Parse("2016-01-01 12:00:00"));
-            var images = productType.GetImages(new[] { 1, 4 });
+            var images = productType.GetImages(1, 4);
             Assert.NotNull(images);
             Assert.Equal(images.Count(), 0);
         }
@@ -55,7 +54,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
         [Fact]
         public void ShouldReturnImagesWhenShotTypesSpecified()
         {
-            var images = _productType.GetImages(new[] { 1, 4 });
+            var images = _productType.GetImages(1, 4);
 
             Assert.Equal(images.ElementAt(0).GetShopTypeId(), 1);
             Assert.Equal(images.ElementAt(1).GetShopTypeId(), 1);

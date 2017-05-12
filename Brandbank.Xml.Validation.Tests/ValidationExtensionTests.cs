@@ -2,12 +2,9 @@
 using Brandbank.Xml.Validation.Helpers;
 using Brandbank.Xml.Validation.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Brandbank.Xml.Validation.Tests
 {
@@ -19,73 +16,79 @@ namespace Brandbank.Xml.Validation.Tests
         //Lookup - Value
         public ProductValidationData GetTestProductValidationDataForBaseType(string baseId)
         {
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeId = baseId,
                 ItemTypeId = "1"
             };
-            var itemType2 = new ValidationItemType()
+            var itemType2 = new ValidationItemType
             {
                 ItemBaseTypeId = baseId,
                 ItemTypeId = "2"
             };
-            var itemType3 = new ValidationItemType()
+            var itemType3 = new ValidationItemType
             {
                 ItemBaseTypeId = "3",
                 ItemTypeId = "3"
             };
-            var itemTypes = new List<ValidationItemType>();
-            itemTypes.Add(itemType);
-            itemTypes.Add(itemType2);
-            itemTypes.Add(itemType3);
+            var itemTypes = new List<ValidationItemType>
+            {
+                itemType,
+                itemType2,
+                itemType3
+            };
 
-            var nameType1 = new ValidationItemNameType()
+            var nameType1 = new ValidationItemNameType
             {
                 ItemBaseTypeId = baseId,
                 ItemTypeId = "1",
                 ItemNameTypeId = "1"
             };
-            var nameType2 = new ValidationItemNameType()
+            var nameType2 = new ValidationItemNameType
             {
                 ItemBaseTypeId = baseId,
                 ItemTypeId = "2",
                 ItemNameTypeId = "2"
             };
-            var nameType3 = new ValidationItemNameType()
+            var nameType3 = new ValidationItemNameType
             {
                 ItemBaseTypeId = "2",
                 ItemTypeId = "3",
                 ItemNameTypeId = "3"
             };
-            var nameTypes = new List<ValidationItemNameType>();
-            nameTypes.Add(nameType1);
-            nameTypes.Add(nameType2);
-            nameTypes.Add(nameType3);
+            var nameTypes = new List<ValidationItemNameType>
+            {
+                nameType1,
+                nameType2,
+                nameType3
+            };
 
-            var lookupType1 = new ValidationItemLookupType()
+            var lookupType1 = new ValidationItemLookupType
             {
                 ItemBaseTypeId = baseId,
                 ItemTypeId = "1",
                 ItemLookupTypeId = "1"
             };
-            var lookupType2 = new ValidationItemLookupType()
+            var lookupType2 = new ValidationItemLookupType
             {
                 ItemBaseTypeId = baseId,
                 ItemTypeId = "1",
                 ItemLookupTypeId = "2"
             };
-            var lookupType3 = new ValidationItemLookupType()
+            var lookupType3 = new ValidationItemLookupType
             {
                 ItemBaseTypeId = "2",
                 ItemTypeId = "3",
                 ItemLookupTypeId = "3"
             };
-            var lookupTypes = new List<ValidationItemLookupType>();
-            lookupTypes.Add(lookupType1);
-            lookupTypes.Add(lookupType2);
-            lookupTypes.Add(lookupType3);
+            var lookupTypes = new List<ValidationItemLookupType>
+            {
+                lookupType1,
+                lookupType2,
+                lookupType3
+            };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 TagTypes = tagTypes,
                 ItemTypes = itemTypes,
@@ -98,7 +101,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForStatements()
         {
             var baseTypeId = "1";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "1",
@@ -106,23 +109,23 @@ namespace Brandbank.Xml.Validation.Tests
                 ItemBaseTypeDescription = "Statement"
             };
 
-            var nameType1 = new ValidationItemNameType()
+            var nameType1 = new ValidationItemNameType
             {
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "1",
                 ItemNameTypeId = "1"
             };
 
-            var nameType2 = new ValidationItemNameType()
+            var nameType2 = new ValidationItemNameType
             {
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "1",
                 ItemNameTypeId = "2"
             };
             var itemTypes = new List<ValidationItemType> { itemType };
-            var nameTypes = new List<ValidationItemNameType>() { nameType1, nameType2 };
+            var nameTypes = new List<ValidationItemNameType> { nameType1, nameType2 };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 TagTypes = tagTypes,
                 ItemTypes = itemTypes,
@@ -135,7 +138,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForNameLookups()
         {
             var baseTypeId = "2";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "4",
@@ -143,14 +146,14 @@ namespace Brandbank.Xml.Validation.Tests
                 ItemTypeDescription = "Allergy Advice DB"
             };
 
-            var nameType1 = new ValidationItemNameType()
+            var nameType1 = new ValidationItemNameType
             {
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "4",
                 ItemNameTypeId = "103"
             };
 
-            var lookupType1 = new ValidationItemLookupType()
+            var lookupType1 = new ValidationItemLookupType
             {
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "4",
@@ -161,7 +164,7 @@ namespace Brandbank.Xml.Validation.Tests
             var nameTypes = new List<ValidationItemNameType> { nameType1 };
             var lookupTypes = new List<ValidationItemLookupType> { lookupType1 };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 TagTypes = tagTypes,
                 ItemTypes = itemTypes,
@@ -175,14 +178,14 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForNameTexts()
         {
             var baseTypeId = "3";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Name Text",
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "6"
             };
 
-            var nameType1 = new ValidationItemNameType()
+            var nameType1 = new ValidationItemNameType
             {
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "6",
@@ -192,7 +195,7 @@ namespace Brandbank.Xml.Validation.Tests
             var itemTypes = new List<ValidationItemType> { itemType };
             var nameTypes = new List<ValidationItemNameType> { nameType1 };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 TagTypes = tagTypes,
                 ItemTypes = itemTypes,
@@ -206,7 +209,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForMemos()
         {
             var baseTypeId = "4";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Memo",
                 ItemBaseTypeId = baseTypeId,
@@ -215,7 +218,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var itemTypes = new List<ValidationItemType> { itemType };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 TagTypes = tagTypes,
                 ItemTypes = itemTypes,
@@ -229,7 +232,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForLongTexts()
         {
             var baseTypeId = "5";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeDescription = "LongText",
                 ItemBaseTypeId = baseTypeId,
@@ -238,7 +241,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var itemTypes = new List<ValidationItemType> { itemType };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 TagTypes = tagTypes,
                 ItemTypes = itemTypes,
@@ -252,7 +255,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForNameTextLookups()
         {
             var baseTypeId = "6";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Name Text Lookups",
                 ItemBaseTypeId = baseTypeId,
@@ -261,14 +264,14 @@ namespace Brandbank.Xml.Validation.Tests
 
             var itemTypes = new List<ValidationItemType> { itemType };
 
-            var nameType1 = new ValidationItemNameType()
+            var nameType1 = new ValidationItemNameType
             {
                 ItemNameTypeId = "1",
                 ItemTypeId = "1",
                 ItemBaseTypeId = baseTypeId
             };
 
-            var lookupType1 = new ValidationItemLookupType()
+            var lookupType1 = new ValidationItemLookupType
             {
                 ItemLookupTypeId = "1",
                 ItemTypeId = "1",
@@ -278,7 +281,7 @@ namespace Brandbank.Xml.Validation.Tests
             var nameTypes = new List<ValidationItemNameType> { nameType1 };
             var lookupTypes = new List<ValidationItemLookupType> { lookupType1 };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 TagTypes = tagTypes,
                 ItemTypes = itemTypes,
@@ -293,7 +296,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForTexturalNutrition()
         {
             var baseTypeId = "7";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Textural Nutrition",
                 ItemBaseTypeId = baseTypeId,
@@ -302,7 +305,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var itemTypes = new List<ValidationItemType> { itemType };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 TagTypes = tagTypes,
                 ItemTypes = itemTypes,
@@ -316,14 +319,14 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForCalculatedNutrition()
         {
             var baseTypeId = "8";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Calculate Nutrition",
                 ItemBaseTypeId = baseTypeId,
                 ItemTypeId = "86"
             };
 
-            var nameType1 = new ValidationItemNameType()
+            var nameType1 = new ValidationItemNameType
             {
                 ItemBaseTypeId = baseTypeId,
                 ItemNameTypeId = "1182",
@@ -333,7 +336,7 @@ namespace Brandbank.Xml.Validation.Tests
             var itemTypes = new List<ValidationItemType> { itemType };
             var nameTypes = new List<ValidationItemNameType> { nameType1 };
             var tagTypes = new List<string> { "2" };
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 ItemTypes = itemTypes,
                 ItemNameTypes = nameTypes,
@@ -347,7 +350,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForTaggedMemos()
         {
             var baseTypeId = "9";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Tagged Memos",
                 ItemBaseTypeId = baseTypeId,
@@ -357,7 +360,7 @@ namespace Brandbank.Xml.Validation.Tests
             var itemTypes = new List<ValidationItemType> { itemType };
             var tagTypes = new List<string> { "2" };
 
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 ItemTypes = itemTypes,
                 ItemNameTypes = new List<ValidationItemNameType>(),
@@ -371,7 +374,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForTaggedLongTexts()
         {
             var baseTypeId = "10";
-            var itemType = new ValidationItemType()
+            var itemType = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Tagged Long Texts",
                 ItemBaseTypeId = baseTypeId,
@@ -381,7 +384,7 @@ namespace Brandbank.Xml.Validation.Tests
             var itemTypes = new List<ValidationItemType> { itemType };
             var tagTypes = new List<string> { "1" };
 
-            var productValidationData = new ProductValidationData()
+            var productValidationData = new ProductValidationData
             {
                 ItemTypes = itemTypes,
                 ItemNameTypes = new List<ValidationItemNameType>(),
@@ -395,7 +398,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForDuplicates()
         {
             var stateBaseTypeId = "1";
-            var itemTypeState = new ValidationItemType()
+            var itemTypeState = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Statements",
                 ItemBaseTypeId = stateBaseTypeId,
@@ -404,7 +407,7 @@ namespace Brandbank.Xml.Validation.Tests
                 MaxOccurrences = 1
             };
 
-            var itemTypeNameLookup = new ValidationItemType()
+            var itemTypeNameLookup = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Name Lookups",
                 ItemBaseTypeId = "2",
@@ -417,7 +420,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var itemTypes = new List<ValidationItemType> { itemTypeState, itemTypeNameLookup };
 
-            var productionData = new ProductValidationData()
+            var productionData = new ProductValidationData
             {
                 ItemTypes = itemTypes,
                 ItemLookupTypes = new List<ValidationItemLookupType>(),
@@ -431,7 +434,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForDuplicateLookups()
         {
             var data = GetTestProductValidationDataForNameTextLookups();
-            data.ItemNameTypes.Add(new ValidationItemNameType()
+            data.ItemNameTypes.Add(new ValidationItemNameType
             {
                 ItemBaseTypeId = "6",
                 ItemTypeDescription = "Cooking Guidelines",
@@ -440,7 +443,7 @@ namespace Brandbank.Xml.Validation.Tests
                 ItemNameTypeId = "145"
             });
 
-            data.ItemLookupTypes.Add(new ValidationItemLookupType()
+            data.ItemLookupTypes.Add(new ValidationItemLookupType
             {
                 ItemBaseTypeId = "6",
                 ItemTypeDescription = "Cooking Guidelines",
@@ -455,7 +458,7 @@ namespace Brandbank.Xml.Validation.Tests
         public ProductValidationData GetTestProductValidationDataForTextConstraints()
         {
             var nameTextBaseTypeId = "3";
-            var itemTypeNameText = new ValidationItemType()
+            var itemTypeNameText = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Name Texts",
                 ItemBaseTypeId = nameTextBaseTypeId,
@@ -463,7 +466,7 @@ namespace Brandbank.Xml.Validation.Tests
                 ItemTypeId = "6",
             };
 
-            var nameText1 = new ValidationItemNameType()
+            var nameText1 = new ValidationItemNameType
             {
                 ItemBaseTypeId = nameTextBaseTypeId,
                 ItemTypeId = "6",
@@ -474,7 +477,7 @@ namespace Brandbank.Xml.Validation.Tests
                 RegEx = @"^(([1-9][0-9]?(yrs|mths|kg))|newborn)(\-[1-9][0-9]?(yrs|mths|kg)|(\splus))$"
             };
 
-            var nameText2 = new ValidationItemNameType()
+            var nameText2 = new ValidationItemNameType
             {
                 ItemBaseTypeId = nameTextBaseTypeId,
                 ItemTypeId = "6",
@@ -486,7 +489,7 @@ namespace Brandbank.Xml.Validation.Tests
             };
 
             var nameTextLookupBaseTypeId = "6";
-            var itemTypeNameTextLookup = new ValidationItemType()
+            var itemTypeNameTextLookup = new ValidationItemType
             {
                 ItemBaseTypeDescription = "Name Text Lookup",
                 ItemBaseTypeId = nameTextLookupBaseTypeId,
@@ -494,7 +497,7 @@ namespace Brandbank.Xml.Validation.Tests
                 ItemTypeId = "7"
             };
 
-            var nameText3 = new ValidationItemNameType()
+            var nameText3 = new ValidationItemNameType
             {
                 ItemBaseTypeId = nameTextLookupBaseTypeId,
                 ItemTypeId = "7",
@@ -505,7 +508,7 @@ namespace Brandbank.Xml.Validation.Tests
                 RegEx = @"^[0-9]+(\.[0-9]+)?$",
             };
 
-            var nameText4 = new ValidationItemNameType()
+            var nameText4 = new ValidationItemNameType
             {
                 ItemBaseTypeId = nameTextLookupBaseTypeId,
                 ItemTypeId = "7",
@@ -519,7 +522,7 @@ namespace Brandbank.Xml.Validation.Tests
             var itemTypes = new List<ValidationItemType> { itemTypeNameText, itemTypeNameTextLookup };
             var tagTypes = new List<string> { "2" };
 
-            var productData = new ProductValidationData()
+            var productData = new ProductValidationData
             {
                 ItemTypes = itemTypes,
                 ItemLookupTypes = new List<ValidationItemLookupType>(),
@@ -620,7 +623,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var result = productValidationData.GetInvalidData(products);
 
-            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "1").Count());
+            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "1"));
             Assert.AreEqual(3, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.Count());
             Assert.AreEqual("Canada Flag", result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.First().Value);
         }
@@ -634,7 +637,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var result = productValidationData.GetInvalidData(products);
 
-            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "2").Count());
+            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "2"));
             Assert.AreEqual(4, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.Count());
             Assert.AreEqual(2, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().LookupTypes.Count());
             Assert.AreEqual("Celeriac", result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.First().Value);
@@ -649,7 +652,7 @@ namespace Brandbank.Xml.Validation.Tests
             var products = messageType.GetProductsForValidation();
             var result = productValidationData.GetInvalidData(products);
 
-            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "3").Count());
+            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "3"));
             Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.Count());
             Assert.AreEqual("Nappy Size (weight)", result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.First().Value);
         }
@@ -662,7 +665,7 @@ namespace Brandbank.Xml.Validation.Tests
             var products = messageType.GetProductsForValidation();
             var result = productValidationData.GetInvalidData(products);
 
-            Assert.AreEqual(2, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "4").Count());
+            Assert.AreEqual(2, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "4"));
         }
 
         [TestMethod]
@@ -673,7 +676,7 @@ namespace Brandbank.Xml.Validation.Tests
             var products = messageType.GetProductsForValidation();
             var result = productValidationData.GetInvalidData(products);
 
-            Assert.AreEqual(2, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "5").Count());
+            Assert.AreEqual(2, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "5"));
         }
 
         [TestMethod]
@@ -687,7 +690,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var result = productValidationData.GetInvalidData(products);
 
-            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "6").Count());
+            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "6"));
             Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().LookupTypes.Count());
             Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.Count());
             Assert.AreEqual("Oven cook", result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.First().Value);
@@ -703,7 +706,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var result = productValidationData.GetInvalidData(products);
 
-            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "7").Count());
+            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "7"));
         }
 
         [TestMethod]
@@ -715,7 +718,7 @@ namespace Brandbank.Xml.Validation.Tests
 
             var result = productValidationData.GetInvalidData(products);
 
-            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "8").Count());
+            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "8"));
             Assert.AreEqual(4, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.Count());
             Assert.AreEqual("Energy (kcal)", result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().NameTypes.First().Value);
         }
@@ -728,7 +731,7 @@ namespace Brandbank.Xml.Validation.Tests
             var products = messageType.GetProductsForValidation();
 
             var result = productValidationData.GetInvalidData(products);
-            Assert.AreEqual(2, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "9").Count());
+            Assert.AreEqual(2, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "9"));
             Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().TagTypes.Count());
         }
 
@@ -740,7 +743,7 @@ namespace Brandbank.Xml.Validation.Tests
             var products = messageType.GetProductsForValidation();
 
             var result = productValidationData.GetInvalidData(products);
-            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Where(it => it.ItemBaseTypeId == "10").Count());
+            Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidItemTypes.Count(it => it.ItemBaseTypeId == "10"));
             Assert.AreEqual(1, result.First().InvalidLanguageData.First().InvalidNameAndLookUps.First().TagTypes.Count());
         }
 

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Brandbank.Xml.Validation.Models
 {
@@ -27,7 +24,7 @@ namespace Brandbank.Xml.Validation.Models
     {
         public bool Equals(ValidationItemType x, ValidationItemType y)
         {
-            return (x.ItemTypeId == y.ItemTypeId) && (x.ItemBaseTypeId == y.ItemBaseTypeId);
+            return x.ItemTypeId == y.ItemTypeId && x.ItemBaseTypeId == y.ItemBaseTypeId;
         }
 
         public int GetHashCode(ValidationItemType obj)

@@ -43,7 +43,7 @@ namespace Brandbank.Xml.Helpers
                 yield return new GTINType
                 {
                     Value = gtin.Key.PadLeft(14, '0'),
-                    Suppliers = new SupplierType[]
+                    Suppliers = new []
                     {
                         new SupplierType
                         {

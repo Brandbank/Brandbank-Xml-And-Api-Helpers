@@ -19,7 +19,7 @@ namespace Brandbank.Api.Clients
 
         public CoverageClient(Guid guid, DataReportSoapClient client)
         {
-            if (client == null) throw new ArgumentNullException("client");
+            if (client == null) throw new ArgumentNullException(nameof(client));
 
             _dataReportSoapClient = client;
             _header = new ExternalCallerHeader

@@ -7,7 +7,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
 {
     public class IdentityTypeReaderExtensionsTests
     {
-        private IdentityType _identityType;
+        private readonly IdentityType _identityType;
         public IdentityTypeReaderExtensionsTests()
         {
             _identityType = new IdentityType("1234", "sub code", new List<string> { "GB", "IE" });

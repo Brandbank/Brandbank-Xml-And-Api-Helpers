@@ -32,7 +32,7 @@ namespace Brandbank.Xml.Helpers
                     DateTimeSpecified = true
                 },
                 Item = items.ToArray()
-            }; ;
+            };
         }
     }
 }

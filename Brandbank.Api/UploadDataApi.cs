@@ -17,8 +17,8 @@ namespace Brandbank.Api
 
         public UploadDataApi(Guid authGuid, ValidationEventHandler validator, ILogger<IUploadDataClient> logger)
         {
-            if (validator == null) throw new ArgumentNullException("validator");
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (validator == null) throw new ArgumentNullException(nameof(validator));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
 
             _authGuid = authGuid;
             _logger = logger;

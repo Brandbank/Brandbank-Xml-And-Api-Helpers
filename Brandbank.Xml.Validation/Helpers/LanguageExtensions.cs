@@ -11,8 +11,8 @@ namespace Brandbank.Xml.Validation.Helpers
             return language.ItemTypes
                                 .Where(messageTypeNameTextLookup => 
                                 validationItemTypes.FirstOrDefault(itemType => 
-                                    ((itemType.ItemBaseTypeId == messageTypeNameTextLookup.ItemBaseTypeId) 
-                                    && (itemType.ItemTypeId == messageTypeNameTextLookup.ItemTypeId))) == null)
+                                    itemType.ItemBaseTypeId == messageTypeNameTextLookup.ItemBaseTypeId 
+                                    && itemType.ItemTypeId == messageTypeNameTextLookup.ItemTypeId) == null)
                                 .Select(messageTypeNameTextLookup => new InvalidItemType
                                 {
                                     ItemBaseTypeId = messageTypeNameTextLookup.ItemBaseTypeId,
@@ -61,8 +61,8 @@ namespace Brandbank.Xml.Validation.Helpers
                                 .Where(itc => 
                                     itc.SourceItemType != null 
                                     && itc.SourceItemType.MaxOccurrences.HasValue 
-                                    && (itc.ItemType.Occurrences > itc.SourceItemType.MaxOccurrences))
-                                .Select(itc => new InvalidItemTypeOccurrences()
+                                    && itc.ItemType.Occurrences > itc.SourceItemType.MaxOccurrences)
+                                .Select(itc => new InvalidItemTypeOccurrences
                                 {
                                     ItemTypeId = itc.ItemType.ItemTypeId,
                                     ItemBaseTypeId = itc.ItemType.ItemBaseTypeId,
