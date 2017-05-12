@@ -17,8 +17,11 @@ namespace Brandbank.Api.Logging
 
         public UploadLogger(IDownloadLog<T> log, INotifyClient notifyClient)
         {
-            _log = log ?? throw new ArgumentNullException("log");
-            _notifyClient = notifyClient ?? throw new ArgumentNullException("notifyClient");
+            if (log == null) throw new ArgumentNullException("log");
+            if (notifyClient == null) throw new ArgumentNullException("notifyClient");
+
+            _log = log;
+            _notifyClient = notifyClient;
         }
 
         public void UpdateAcknowledgeStatus(Expression<Func<MongoDownloadItem<T>, bool>> predicate)

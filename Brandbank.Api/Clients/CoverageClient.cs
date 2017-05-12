@@ -24,8 +24,9 @@ namespace Brandbank.Api.Clients
         {
             if (guid == null)
                 throw new NullReferenceException("Guid cannot be null");
+            if (client == null) throw new ArgumentNullException("client");
 
-            _dataReportSoapClient = client ?? throw new NullReferenceException("client cannot be null");
+            _dataReportSoapClient = client;
             _header = new ExternalCallerHeader
             {
                 ExternalCallerId = guid
