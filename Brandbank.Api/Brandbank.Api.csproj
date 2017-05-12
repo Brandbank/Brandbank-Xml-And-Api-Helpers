@@ -91,17 +91,17 @@
     <Compile Include="Clients\UploadDataClient.cs" />
     <Compile Include="Clients\UploadDataClientLogger.cs" />
     <Compile Include="CoverageApi.cs" />
-    <Compile Include="Log\IUploadLogApi.cs" />
+    <Compile Include="Logging\IUploadLogApi.cs" />
     <Compile Include="NotifyClient\EmailClient.cs" />
     <Compile Include="NotifyClient\EmailClientLogger.cs" />
     <Compile Include="NotifyClient\INotifyClient.cs" />
-    <Compile Include="Log\Context.cs" />
-    <Compile Include="Log\DownloadItem.cs" />
-    <Compile Include="Log\DownloadLogRepository.cs" />
-    <Compile Include="Log\DownloadLogRepositoryLogger.cs" />
-    <Compile Include="Log\IDownloadItem.cs" />
-    <Compile Include="Log\IDownloadLog.cs" />
-    <Compile Include="Log\UploadLogApi.cs" />
+    <Compile Include="Logging\Context.cs" />
+    <Compile Include="Logging\DownloadItem.cs" />
+    <Compile Include="Logging\DownloadLogRepository.cs" />
+    <Compile Include="Logging\DownloadLogRepositoryLogger.cs" />
+    <Compile Include="Logging\IDownloadItem.cs" />
+    <Compile Include="Logging\IDownloadLog.cs" />
+    <Compile Include="Logging\UploadLogApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ExtractData\Reference.cs">
       <AutoGen>True</AutoGen>
