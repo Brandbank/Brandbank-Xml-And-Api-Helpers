@@ -73,7 +73,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BrandbankApi.cs" />
     <Compile Include="Clients\CoverageClient.cs" />
     <Compile Include="Clients\CoverageClientLogger.cs" />
     <Compile Include="Clients\FeedbackClient.cs" />
@@ -87,6 +86,7 @@
     <Compile Include="Clients\UploadDataClient.cs" />
     <Compile Include="Clients\UploadDataClientLogger.cs" />
     <Compile Include="CoverageApi.cs" />
+    <Compile Include="GetUnsentApi.cs" />
     <Compile Include="Logging\IUploadLogApi.cs" />
     <Compile Include="NotifyClient\EmailClient.cs" />
     <Compile Include="NotifyClient\EmailClientLogger.cs" />

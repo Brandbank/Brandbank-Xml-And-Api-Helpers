@@ -12,34 +12,35 @@ namespace Brandbank.Api
     public class CoverageApi
     {
         private readonly Guid _authGuid;
+        private readonly string _endpointAddress;
+        private readonly string _schema;
+        private readonly string _schemaNamespace;
         private readonly ValidationEventHandler _validationEventHandler;
-        private readonly DataReportSoapClient _dataReportSoapClient;
 
-        public CoverageApi(Guid authGuid, string endpointAddress, ValidationEventHandler validationEventHandler)
+        public CoverageApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ValidationEventHandler validationEventHandler)
         {
-            _dataReportSoapClient = new DataReportSoapClient(BrandbankHttpsBinding("Data ReportSoap"), BrandbankEndpointAddress(endpointAddress));
             _authGuid = authGuid;
+            _endpointAddress = endpointAddress;
+            _schema = schema;
+            _schemaNamespace = schemaNamespace;
             _validationEventHandler = validationEventHandler;
         }
 
-        public void UploadCoverage(ReportType coverage, ILogger<ICoverageClient> logger, string xsd, string nameSpace)
+        public void UploadCoverage(ReportType coverage, ILogger<ICoverageClient> logger)
         {
-            using (var coverageClient = new CoverageClientLogger(logger, new CoverageClient(_authGuid, _dataReportSoapClient)))
-            {
-                UploadCompressedData(xsd, nameSpace, coverage, coverageClient.UploadCompressedCoverage);
-            }
+            var client = new DataReportSoapClient(BrandbankHttpsBinding("Data ReportSoap"), BrandbankEndpointAddress(_endpointAddress));
+            using (var coverageClient = new CoverageClientLogger(logger, new CoverageClient(_authGuid, client)))
+                UploadCompressedData(coverage, coverageClient.UploadCompressedCoverage);
         }
 
         private void UploadCompressedData(
-            string xsd,
-            string nameSpace,
             ReportType coverage,
             Func<byte[], int> uploader)
         {
             coverage.ConvertToXml()
-                .ValidateXml(xsd, nameSpace, _validationEventHandler)
+                .ValidateXml(_schema, _schemaNamespace, _validationEventHandler)
                 .ConvertXmlToStream()
-                .CompressMemoryStream("Brandbank.Xml")
+                .CompressMemoryStream("BrandbankCoverage.xml")
                 .Then(uploader);
         }
 
@@ -55,10 +56,9 @@ namespace Brandbank.Api
             };
         }
 
-        private  EndpointAddress BrandbankEndpointAddress(string endpointAddress)
+        private EndpointAddress BrandbankEndpointAddress(string endpointAddress)
         {
             return new EndpointAddressBuilder { Uri = new Uri(endpointAddress) }.ToEndpointAddress();
         }
-
     }
 }

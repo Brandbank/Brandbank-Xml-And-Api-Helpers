@@ -11,15 +11,6 @@ namespace Brandbank.Api.Clients
         private readonly DataExtractSoapClient _dataExtractSoapClient;
         private readonly ExternalCallerHeader _header;
 
-        public GetUnsentClient(Guid guid)
-        {
-            _dataExtractSoapClient = new DataExtractSoapClient();
-            _header = new ExternalCallerHeader
-            {
-                ExternalCallerId = guid
-            };
-        }
-
         public GetUnsentClient(Guid guid, DataExtractSoapClient client)
         {
             _dataExtractSoapClient = client;

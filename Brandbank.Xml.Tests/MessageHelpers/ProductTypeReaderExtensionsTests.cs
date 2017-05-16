@@ -19,6 +19,7 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             _productType.AddImage(new ImageType(2, "http://imageurl.com", 200, 200));
             _productType.AddImage(new ImageType(3, "http://imageurl.com", 200, 200));
             _productType.AddImage(new ImageType(4, "http://imageurl.com", 200, 200));
+            _productType.AddDocument(new DocumentType("http://imageurl.com"));
             _productType.AddLanguage(new LanguageType("Product Description", "en-gb"));
         }
 
@@ -60,6 +61,24 @@ namespace Brandbank.Xml.Tests.MessageHelpers
             Assert.Equal(images.ElementAt(1).GetShopTypeId(), 1);
             Assert.Equal(images.ElementAt(2).GetShopTypeId(), 4);
             Assert.Equal(images.Count(), 3);
+        }
+
+
+        [Fact]
+        public void ShouldReturnDocuments()
+        {
+            var documents = _productType.GetDocuments();
+            Assert.NotNull(documents);
+            Assert.Equal(documents.Count(), 1);
+        }
+
+        [Fact]
+        public void ShouldReturnDocumentsWhenNoDocumentsExist()
+        {
+            var productType = new ProductType(DateTime.Parse("2016-01-01 12:00:00"));
+            var documents = productType.GetDocuments();
+            Assert.NotNull(documents);
+            Assert.Equal(documents.Count(), 0);
         }
 
         [Fact]

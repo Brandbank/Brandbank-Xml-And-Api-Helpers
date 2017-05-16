@@ -1,15 +1,16 @@
 ﻿using Brandbank.Api.Clients;
-using Brandbank.Api.UploadData;
+using Brandbank.Api.ExtractData;
 using Brandbank.Xml.Helpers;
 using Brandbank.Xml.Models.Message;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ServiceModel;
+using System.Xml;
 using System.Xml.Schema;
 
 namespace Brandbank.Api
 {
-    public class UploadDataApi
+    public class GetUnsentApi
     {
         private readonly Guid _authGuid;
         private readonly string _endpointAddress;
@@ -17,7 +18,7 @@ namespace Brandbank.Api
         private readonly string _schemaNamespace;
         private readonly ValidationEventHandler _validationEventHandler;
 
-        public UploadDataApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ValidationEventHandler validationEventHandler)
+        public GetUnsentApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ValidationEventHandler validationEventHandler)
         {
             _authGuid = authGuid;
             _endpointAddress = endpointAddress;
@@ -26,19 +27,23 @@ namespace Brandbank.Api
             _validationEventHandler = validationEventHandler;
         }
 
-        public UploadResponse UploadData(MessageType message, ILogger<IUploadDataClient> logger, string uploadDirectory)
+        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, ILogger<IGetUnsentClient> logger)
         {
-            var uploadClient = new UploadClient(BrandbankHttpsBinding("BasicHttpBinding_IUpload"), BrandbankEndpointAddress(_endpointAddress));
-            using (var uploadDataClient = new UploadDataClientLogger(logger, new UploadDataClient(_authGuid, uploadClient)))
-            {
-                return message
-                    .ConvertToXml()
+            var client = new DataExtractSoapClient(BrandbankHttpsBinding("Data ExtractSoap"), BrandbankEndpointAddress(_endpointAddress));
+            using (var unsentClient = new GetUnsentClientLogger(logger, new GetUnsentClient(_authGuid, client)))
+                GetUnsent(unsentClient, productProcessor);
+        }
+
+        public void GetUnsent(IGetUnsentClient unsentClient, Func<MessageType, IBrandbankMessageSummary> productProcessor)
+        {
+            while (
+                unsentClient.GetUnsentProductData()
                     .ValidateXml(_schema, _schemaNamespace, _validationEventHandler)
-                    .SaveToDirectory(uploadDirectory, "BrandbankMessage.xml")
-                    .CompressFolder()
-                    .Then(uploadDataClient.UploadMessage)
-                    .Then(uploadDataClient.GetResponse);
-            }
+                    .ConvertTo<MessageType>()
+                    .Then(productProcessor)
+                    .Then(unsentClient.AcknowledgeMessage)
+                    .MessageHadProducts
+                );
         }
 
         private BasicHttpsBinding BrandbankHttpsBinding(string name)
@@ -46,6 +51,13 @@ namespace Brandbank.Api
             return new BasicHttpsBinding(BasicHttpsSecurityMode.Transport)
             {
                 Name = name,
+                MaxReceivedMessageSize = int.MaxValue,
+                MaxBufferPoolSize = int.MaxValue,
+                ReaderQuotas = new XmlDictionaryReaderQuotas
+                {
+                    MaxArrayLength = int.MaxValue,
+                    MaxStringContentLength = int.MaxValue
+                },
                 Security = new BasicHttpsSecurity
                 {
                     Mode = BasicHttpsSecurityMode.Transport

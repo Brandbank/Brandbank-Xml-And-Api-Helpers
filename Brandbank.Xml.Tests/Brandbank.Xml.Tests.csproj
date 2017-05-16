@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageHelpers\DocumentTypeReaderExtensionsTests.cs" />
     <Compile Include="MessageHelpers\IdentityTypeReaderExtensionsTests.cs" />
     <Compile Include="MessageHelpers\IdentityTypeWriterExtensionsTests.cs" />
     <Compile Include="MessageHelpers\ImageTypeReaderExtensionsTests.cs" />

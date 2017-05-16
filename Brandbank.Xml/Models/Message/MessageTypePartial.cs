@@ -86,6 +86,19 @@ namespace Brandbank.Xml.Models.Message
         }
     }
 
+    public partial class DocumentType
+    {
+        public DocumentType() { }
+
+        public DocumentType(string documentUrl)
+        {
+            Url = new ExpiringUrlType
+            {
+                Value = documentUrl
+            };
+        }
+    }
+
     public partial class LanguageType
     {
         public LanguageType() { }

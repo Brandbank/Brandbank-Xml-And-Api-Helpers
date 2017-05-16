@@ -7,6 +7,16 @@ namespace Brandbank.Xml.MessageHelpers
 {
     public static class ProductTypeReaderExtensions
     {
+        public static IEnumerable<DocumentType> GetDocuments(this ProductType productType)
+        {
+            return productType.Assets
+                .NewIfNull()
+                .Document
+                .NewIfNull()
+                .OrderBy(i => i.Id)
+                .ThenBy(i => i.MimeType);
+        }
+
         public static IEnumerable<ImageType> GetImages(this ProductType productType)
         {
             return productType.Assets
