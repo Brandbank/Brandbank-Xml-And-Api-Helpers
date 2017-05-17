@@ -40,7 +40,7 @@ namespace Brandbank.Api.Clients
             catch (Exception e)
             {
                 _dataExtractSoapClient.Abort();
-                throw new Exception("TimeoutException", e);
+                throw new Exception("Exception", e);
             }
         }
 

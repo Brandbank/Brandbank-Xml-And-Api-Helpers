@@ -11,6 +11,7 @@ namespace Brandbank.Xml.MessageHelpers
         {
             productType.Identity = identityType;
         }
+
         public static void AddImage(this ProductType product, string path, string imageName, int shotTypeId)
         {
             var filePath = Path.Combine(path, imageName);

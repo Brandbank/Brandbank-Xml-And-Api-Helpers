@@ -1,5 +1,6 @@
 ﻿using Brandbank.Api.ReportData;
 using System;
+using System.ServiceModel;
 
 namespace Brandbank.Api.Clients
 {
@@ -8,19 +9,8 @@ namespace Brandbank.Api.Clients
         private readonly DataReportSoapClient _dataReportSoapClient;
         private readonly ExternalCallerHeader _header;
 
-        public CoverageClient(Guid guid)
-        {
-            _dataReportSoapClient = new DataReportSoapClient();
-            _header = new ExternalCallerHeader
-            {
-                ExternalCallerId = guid
-            };
-        }
-
         public CoverageClient(Guid guid, DataReportSoapClient client)
         {
-            if (client == null) throw new ArgumentNullException(nameof(client));
-
             _dataReportSoapClient = client;
             _header = new ExternalCallerHeader
             {
@@ -30,7 +20,25 @@ namespace Brandbank.Api.Clients
 
         public int UploadCompressedCoverage(byte[] compressedCoverage)
         {
-            return _dataReportSoapClient.SupplyCompressedCoverageReport(_header, compressedCoverage);
+            try
+            {
+                return _dataReportSoapClient.SupplyCompressedCoverageReport(_header, compressedCoverage);
+            }
+            catch (CommunicationException e)
+            {
+                _dataReportSoapClient.Abort();
+                throw new CommunicationException("CommunicationException", e);
+            }
+            catch (TimeoutException e)
+            {
+                _dataReportSoapClient.Abort();
+                throw new TimeoutException("TimeoutException", e);
+            }
+            catch (Exception e)
+            {
+                _dataReportSoapClient.Abort();
+                throw new Exception("Exception", e);
+            }
         }
 
         public void Dispose()

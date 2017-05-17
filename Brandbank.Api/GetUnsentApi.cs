@@ -16,21 +16,23 @@ namespace Brandbank.Api
         private readonly string _endpointAddress;
         private readonly string _schema;
         private readonly string _schemaNamespace;
+        private readonly ILogger<IGetUnsentClient> _logger;
         private readonly ValidationEventHandler _validationEventHandler;
 
-        public GetUnsentApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ValidationEventHandler validationEventHandler)
+        public GetUnsentApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ILogger<IGetUnsentClient> logger, ValidationEventHandler validationEventHandler)
         {
             _authGuid = authGuid;
             _endpointAddress = endpointAddress;
             _schema = schema;
             _schemaNamespace = schemaNamespace;
+            _logger = logger;
             _validationEventHandler = validationEventHandler;
         }
 
-        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, ILogger<IGetUnsentClient> logger)
+        public void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor)
         {
             var client = new DataExtractSoapClient(BrandbankHttpsBinding("Data ExtractSoap"), BrandbankEndpointAddress(_endpointAddress));
-            using (var unsentClient = new GetUnsentClientLogger(logger, new GetUnsentClient(_authGuid, client)))
+            using (var unsentClient = new GetUnsentClientLogger(_logger, new GetUnsentClient(_authGuid, client)))
                 GetUnsent(unsentClient, productProcessor);
         }
 

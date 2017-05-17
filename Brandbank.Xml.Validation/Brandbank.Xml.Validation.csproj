@@ -67,11 +67,5 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlValidator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Brandbank.Xml\Brandbank.Xml.csproj">
-      <Project>{A131B9C8-66FB-4D34-8568-B540FA477C63}</Project>
-      <Name>Brandbank.Xml</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

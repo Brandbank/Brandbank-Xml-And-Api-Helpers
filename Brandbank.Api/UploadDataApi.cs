@@ -15,27 +15,29 @@ namespace Brandbank.Api
         private readonly string _endpointAddress;
         private readonly string _schema;
         private readonly string _schemaNamespace;
+        private readonly ILogger<IUploadDataClient> _logger;
         private readonly ValidationEventHandler _validationEventHandler;
 
-        public UploadDataApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ValidationEventHandler validationEventHandler)
+        public UploadDataApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ILogger<IUploadDataClient> logger, ValidationEventHandler validationEventHandler)
         {
             _authGuid = authGuid;
             _endpointAddress = endpointAddress;
             _schema = schema;
             _schemaNamespace = schemaNamespace;
+            _logger = logger;
             _validationEventHandler = validationEventHandler;
         }
 
-        public UploadResponse UploadData(MessageType message, ILogger<IUploadDataClient> logger, string uploadDirectory)
+        public UploadResponse UploadData(MessageType message)
         {
             var uploadClient = new UploadClient(BrandbankHttpsBinding("BasicHttpBinding_IUpload"), BrandbankEndpointAddress(_endpointAddress));
-            using (var uploadDataClient = new UploadDataClientLogger(logger, new UploadDataClient(_authGuid, uploadClient)))
+            using (var uploadDataClient = new UploadDataClientLogger(_logger, new UploadDataClient(_authGuid, uploadClient)))
             {
                 return message
                     .ConvertToXml()
                     .ValidateXml(_schema, _schemaNamespace, _validationEventHandler)
-                    .SaveToDirectory(uploadDirectory, "BrandbankMessage.xml")
-                    .CompressFolder()
+                    .ConvertXmlToStream()
+                    .CompressMemoryStream("BrandbankCoverage.xml")
                     .Then(uploadDataClient.UploadMessage)
                     .Then(uploadDataClient.GetResponse);
             }

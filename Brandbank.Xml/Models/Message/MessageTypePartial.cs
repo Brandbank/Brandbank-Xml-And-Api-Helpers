@@ -58,6 +58,7 @@ namespace Brandbank.Xml.Models.Message
         public AssetsType()
         {
             Image = new List<ImageType>().ToArray();
+            Document = new List<DocumentType>().ToArray();
         }
     }
 

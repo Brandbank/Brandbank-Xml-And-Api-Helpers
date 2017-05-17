@@ -15,29 +15,32 @@ namespace Brandbank.Api
         private readonly string _endpointAddress;
         private readonly string _schema;
         private readonly string _schemaNamespace;
+        private readonly ILogger<ICoverageClient> _logger;
         private readonly ValidationEventHandler _validationEventHandler;
 
-        public CoverageApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ValidationEventHandler validationEventHandler)
+        public CoverageApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ILogger<ICoverageClient> logger, ValidationEventHandler validationEventHandler)
         {
             _authGuid = authGuid;
             _endpointAddress = endpointAddress;
             _schema = schema;
             _schemaNamespace = schemaNamespace;
+            _logger = logger;
             _validationEventHandler = validationEventHandler;
         }
 
-        public void UploadCoverage(ReportType coverage, ILogger<ICoverageClient> logger)
+        public void UploadCoverage(ReportType coverage)
         {
             var client = new DataReportSoapClient(BrandbankHttpsBinding("Data ReportSoap"), BrandbankEndpointAddress(_endpointAddress));
-            using (var coverageClient = new CoverageClientLogger(logger, new CoverageClient(_authGuid, client)))
+            using (var coverageClient = new CoverageClientLogger(_logger, new CoverageClient(_authGuid, client)))
                 UploadCompressedData(coverage, coverageClient.UploadCompressedCoverage);
         }
 
-        private void UploadCompressedData(
+        private int UploadCompressedData(
             ReportType coverage,
             Func<byte[], int> uploader)
         {
-            coverage.ConvertToXml()
+            return coverage
+                .ConvertToXml()
                 .ValidateXml(_schema, _schemaNamespace, _validationEventHandler)
                 .ConvertXmlToStream()
                 .CompressMemoryStream("BrandbankCoverage.xml")
