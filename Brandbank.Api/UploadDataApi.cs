@@ -9,7 +9,7 @@ using System.Xml.Schema;
 
 namespace Brandbank.Api
 {
-    public class UploadDataApi
+    public class UploadDataApi : IBrandbankMessageUploader
     {
         private readonly Guid _authGuid;
         private readonly string _endpointAddress;
@@ -32,15 +32,18 @@ namespace Brandbank.Api
         {
             var uploadClient = new UploadClient(BrandbankHttpsBinding("BasicHttpBinding_IUpload"), BrandbankEndpointAddress(_endpointAddress));
             using (var uploadDataClient = new UploadDataClientLogger(_logger, new UploadDataClient(_authGuid, uploadClient)))
-            {
-                return message
-                    .ConvertToXml()
-                    .ValidateXml(_schema, _schemaNamespace, _validationEventHandler)
-                    .ConvertXmlToStream()
-                    .CompressMemoryStream("BrandbankCoverage.xml")
-                    .Then(uploadDataClient.UploadMessage)
-                    .Then(uploadDataClient.GetResponse);
-            }
+                return UploadData(message, uploadDataClient);
+        }
+
+        private UploadResponse UploadData(MessageType message, IUploadDataClient uploadDataClient)
+        {
+            return message
+                .ConvertToXml()
+                .ValidateXml(_schema, _schemaNamespace, _validationEventHandler)
+                .ConvertXmlToStream()
+                .CompressMemoryStream("BrandbankCoverage.xml")
+                .Then(uploadDataClient.UploadMessage)
+                .Then(uploadDataClient.GetResponse);
         }
 
         private BasicHttpsBinding BrandbankHttpsBinding(string name)

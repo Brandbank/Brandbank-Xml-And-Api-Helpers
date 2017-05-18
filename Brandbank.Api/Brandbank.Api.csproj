@@ -87,6 +87,9 @@
     <Compile Include="Clients\UploadDataClientLogger.cs" />
     <Compile Include="CoverageApi.cs" />
     <Compile Include="GetUnsentApi.cs" />
+    <Compile Include="IBrandbankMessageUploader.cs" />
+    <Compile Include="ICoverageUploader.cs" />
+    <Compile Include="IGetUnsentDownloader.cs" />
     <Compile Include="Logging\IUploadLogApi.cs" />
     <Compile Include="NotifyClient\EmailClient.cs" />
     <Compile Include="NotifyClient\EmailClientLogger.cs" />

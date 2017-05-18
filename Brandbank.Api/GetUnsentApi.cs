@@ -10,7 +10,7 @@ using System.Xml.Schema;
 
 namespace Brandbank.Api
 {
-    public class GetUnsentApi
+    public class GetUnsentApi : IGetUnsentDownloader
     {
         private readonly Guid _authGuid;
         private readonly string _endpointAddress;
@@ -33,10 +33,10 @@ namespace Brandbank.Api
         {
             var client = new DataExtractSoapClient(BrandbankHttpsBinding("Data ExtractSoap"), BrandbankEndpointAddress(_endpointAddress));
             using (var unsentClient = new GetUnsentClientLogger(_logger, new GetUnsentClient(_authGuid, client)))
-                GetUnsent(unsentClient, productProcessor);
+                GetUnsent(productProcessor, unsentClient);
         }
 
-        public void GetUnsent(IGetUnsentClient unsentClient, Func<MessageType, IBrandbankMessageSummary> productProcessor)
+        private void GetUnsent(Func<MessageType, IBrandbankMessageSummary> productProcessor, IGetUnsentClient unsentClient)
         {
             while (
                 unsentClient.GetUnsentProductData()

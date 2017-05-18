@@ -9,7 +9,7 @@ using System.Xml.Schema;
 
 namespace Brandbank.Api
 {
-    public class CoverageApi
+    public class CoverageApi : ICoverageUploader
     {
         private readonly Guid _authGuid;
         private readonly string _endpointAddress;
@@ -28,23 +28,21 @@ namespace Brandbank.Api
             _validationEventHandler = validationEventHandler;
         }
 
-        public void UploadCoverage(ReportType coverage)
+        public int UploadCoverage(ReportType coverage)
         {
             var client = new DataReportSoapClient(BrandbankHttpsBinding("Data ReportSoap"), BrandbankEndpointAddress(_endpointAddress));
             using (var coverageClient = new CoverageClientLogger(_logger, new CoverageClient(_authGuid, client)))
-                UploadCompressedData(coverage, coverageClient.UploadCompressedCoverage);
+                return UploadCoverage(coverage, coverageClient);
         }
 
-        private int UploadCompressedData(
-            ReportType coverage,
-            Func<byte[], int> uploader)
+        private int UploadCoverage(ReportType coverage, ICoverageClient coverageClient)
         {
             return coverage
                 .ConvertToXml()
                 .ValidateXml(_schema, _schemaNamespace, _validationEventHandler)
                 .ConvertXmlToStream()
                 .CompressMemoryStream("BrandbankCoverage.xml")
-                .Then(uploader);
+                .Then(coverageClient.UploadCompressedCoverage);
         }
 
         private BasicHttpsBinding BrandbankHttpsBinding(string name)
