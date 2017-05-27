@@ -18,6 +18,11 @@ namespace Brandbank.Xml.Messages
             _productConverter = productConverter;
         }
 
+        public MessageType CreateMessage(Guid messageGuid, T product)
+        {
+            return CreateMessage(messageGuid, new[] { product });
+        }
+
         public MessageType CreateMessage(Guid messageGuid, IEnumerable<T> products)
         {
             var message = new MessageType(messageGuid, DateTime.UtcNow);

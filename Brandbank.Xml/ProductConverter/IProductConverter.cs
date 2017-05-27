@@ -2,7 +2,7 @@
 
 namespace Brandbank.Xml.ProductConverter
 {
-    public interface IProductConverter<in T>
+    public interface IProductConverter<T>
     {
         ProductType Convert(T item);
     }
