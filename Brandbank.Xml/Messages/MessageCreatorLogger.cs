@@ -1,5 +1,5 @@
 ﻿using Brandbank.Xml.Models.Message;
-using Brandbank.Xml.Logger;
+using Brandbank.Xml.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

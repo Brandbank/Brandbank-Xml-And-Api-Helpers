@@ -2,7 +2,7 @@
 using Brandbank.Api.ExtractData;
 using Brandbank.Xml.Helpers;
 using Brandbank.Xml.Models.Message;
-using Brandbank.Xml.Logger;
+using Brandbank.Xml.Logging;
 using System;
 using System.ServiceModel;
 using System.Xml;

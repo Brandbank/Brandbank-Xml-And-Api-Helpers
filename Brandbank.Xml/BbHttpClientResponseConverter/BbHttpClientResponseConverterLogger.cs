@@ -1,5 +1,5 @@
 ﻿using Brandbank.Xml.Helpers;
-using Brandbank.Xml.Logger;
+using Brandbank.Xml.Logging;
 using System;
 using System.Drawing;
 using System.IO;

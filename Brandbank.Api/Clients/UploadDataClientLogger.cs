@@ -1,5 +1,5 @@
 ﻿using Brandbank.Api.UploadData;
-using Brandbank.Xml.Logger;
+using Brandbank.Xml.Logging;
 using System;
 using System.Text.RegularExpressions;
 

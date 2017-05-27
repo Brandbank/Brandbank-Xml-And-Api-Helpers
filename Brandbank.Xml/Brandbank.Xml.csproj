@@ -77,10 +77,6 @@
     <Compile Include="ImageWriter\IImageWriter.cs" />
     <Compile Include="ImageWriter\ImageWriter.cs" />
     <Compile Include="ImageWriter\ImageWriterLogger.cs" />
-    <Compile Include="Logger\FileLogger.cs" />
-    <Compile Include="Logger\FileLoggerExtensions.cs" />
-    <Compile Include="Logger\FileLoggerProvider.cs" />
-    <Compile Include="Logger\ILogger.cs" />
     <Compile Include="MessageHelpers\DocumentTypeReaderExtensions.cs" />
     <Compile Include="MessageHelpers\IdentityTypeReaderExtensions.cs" />
     <Compile Include="MessageHelpers\IdentityTypeWriterExtensions.cs" />
@@ -110,6 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Brandbank.Xml.Logging\Brandbank.Xml.Logging.csproj">
+      <Project>{626e15e5-3073-4fe4-871a-9eb295dd4010}</Project>
+      <Name>Brandbank.Xml.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

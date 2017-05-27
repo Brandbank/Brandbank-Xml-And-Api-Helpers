@@ -1,4 +1,4 @@
-﻿using Brandbank.Xml.Logger;
+﻿using Brandbank.Xml.Logging;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

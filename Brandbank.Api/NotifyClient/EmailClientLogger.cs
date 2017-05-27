@@ -1,4 +1,4 @@
-﻿using Brandbank.Xml.Logger;
+﻿using Brandbank.Xml.Logging;
 
 namespace Brandbank.Api.NotifyClient
 {

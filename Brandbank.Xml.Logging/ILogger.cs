@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Brandbank.Xml.Logger
+﻿namespace Brandbank.Xml.Logging
 {
     public interface ILogger<T>
     {

@@ -2,7 +2,7 @@
 using Brandbank.Api.ReportData;
 using Brandbank.Xml.Helpers;
 using Brandbank.Xml.Models.Coverage;
-using Brandbank.Xml.Logger;
+using Brandbank.Xml.Logging;
 using System;
 using System.ServiceModel;
 using System.Xml.Schema;

@@ -64,17 +64,21 @@
     <Compile Include="MongoDb\UploadLogApi.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Brandbank.Api\Brandbank.Api.csproj">
       <Project>{72c912c1-ad45-414d-a164-67fa5c1e86cc}</Project>
       <Name>Brandbank.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Brandbank.Xml.Logging\Brandbank.Xml.Logging.csproj">
+      <Project>{626e15e5-3073-4fe4-871a-9eb295dd4010}</Project>
+      <Name>Brandbank.Xml.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Brandbank.Xml\Brandbank.Xml.csproj">
       <Project>{a131b9c8-66fb-4d34-8568-b540fa477c63}</Project>
       <Name>Brandbank.Xml</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
