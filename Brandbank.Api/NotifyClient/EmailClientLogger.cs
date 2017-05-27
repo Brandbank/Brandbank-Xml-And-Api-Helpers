@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
 
 namespace Brandbank.Api.NotifyClient
 {
     public class EmailClientLogger : INotifyClient
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<INotifyClient> _logger;
         private readonly INotifyClient _emailClient;
 
-        public EmailClientLogger(ILogger logger, INotifyClient emailClient)
+        public EmailClientLogger(ILogger<INotifyClient> logger, INotifyClient emailClient)
         {
             _logger = logger;
             _emailClient = emailClient;

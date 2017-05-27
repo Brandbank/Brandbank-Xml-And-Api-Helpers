@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,10 +9,10 @@ namespace Brandbank.Xml.BbHttpClientResponseReader
 {
     public class BbHttpClientResponseReaderLogger : IBbHttpClientResponseReader
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<IBbHttpClientResponseReader> _logger;
         private readonly IBbHttpClientResponseReader _reader;
 
-        public BbHttpClientResponseReaderLogger(ILogger logger, IBbHttpClientResponseReader reader)
+        public BbHttpClientResponseReaderLogger(ILogger<IBbHttpClientResponseReader> logger, IBbHttpClientResponseReader reader)
         {
             _logger = logger;
             _reader = reader;

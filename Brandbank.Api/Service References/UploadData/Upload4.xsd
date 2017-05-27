@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Brandbank.Import.UploadService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Brandbank.Import.UploadService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="UploadResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="FilesReceivedCount" type="xs:int" />

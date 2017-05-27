@@ -1,5 +1,5 @@
 ﻿using Brandbank.Api.UploadData;
-using Microsoft.Extensions.Logging;
+using Brandbank.Xml.Logger;
 using System;
 using System.Text.RegularExpressions;
 
@@ -29,7 +29,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, "Upload to Brandbank failed");
+                _logger.LogError($"Upload to Brandbank failed: {e.Message}");
                 throw new Exception();
             }
         }
@@ -88,7 +88,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Disposing upload client failed: {e.Message}");
+                _logger.LogError($"Disposing upload client failed: {e.Message}");
                 throw;
             }
         }

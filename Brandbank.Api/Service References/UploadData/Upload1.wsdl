@@ -27,10 +27,10 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://www.brandbank.com/WebServices/DataImport/2010/03/Imports">
-      <xsd:import schemaLocation="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd1" namespace="http://www.brandbank.com/WebServices/DataImport/2010/03" />
-      <xsd:import schemaLocation="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/Message" />
-      <xsd:import schemaLocation="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Brandbank.Import.UploadService" />
+      <xsd:import schemaLocation="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd1" namespace="http://www.brandbank.com/WebServices/DataImport/2010/03" />
+      <xsd:import schemaLocation="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/Message" />
+      <xsd:import schemaLocation="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Brandbank.Import.UploadService" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUpload_UploadStream_InputMessage">

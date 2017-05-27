@@ -1,5 +1,5 @@
 ﻿using Brandbank.Xml.Models.Message;
-using Microsoft.Extensions.Logging;
+using Brandbank.Xml.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +26,9 @@ namespace Brandbank.Xml.Messages
                 _logger.LogDebug($"Created Message with Id {messageGuid} and {products.Count()} products");
                 return message;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                _logger.LogError(new EventId(), e, $"Creating Message with Id {messageGuid} and {products.Count()} products failed");
+                _logger.LogError($"Creating Message with Id {messageGuid} and {products.Count()} products failed");
                 throw;
             }
         }

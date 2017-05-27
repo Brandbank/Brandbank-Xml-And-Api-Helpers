@@ -1,5 +1,5 @@
 ﻿using Brandbank.Xml.Helpers;
-using Microsoft.Extensions.Logging;
+using Brandbank.Xml.Logger;
 using System;
 using System.Drawing;
 using System.IO;
@@ -8,10 +8,10 @@ namespace Brandbank.Xml.BbHttpClientResponseConverter
 {
     public class BbHttpClientResponseConverterLogger : IBbHttpClientResponseConverter
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<IBbHttpClientResponseConverter> _logger;
         private readonly IBbHttpClientResponseConverter _converter;
 
-        public BbHttpClientResponseConverterLogger(ILogger logger, IBbHttpClientResponseConverter converter)
+        public BbHttpClientResponseConverterLogger(ILogger<IBbHttpClientResponseConverter> logger, IBbHttpClientResponseConverter converter)
         {
             _logger = logger;
             _converter = converter;

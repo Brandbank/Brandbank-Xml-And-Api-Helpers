@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
 using System;
 using System.IO;
 
@@ -27,19 +27,19 @@ namespace Brandbank.Xml.ImageDownloader
 
         private T Log<T>(Func<string, T> fn, string url, string type)
         {
-            _logger.LogDebug($"Downloading image to {type} from {url}", url);
+            _logger.LogDebug($"Downloading image to {type} from {url}");
             try
             {
                 var item = fn(url);
                 _logger.LogDebug(item != null
                                      ? $"Downloaded image as {type} from {url}"
-                                     : $"Failed to download data {type} as tream from {url}", url);
+                                     : $"Failed to download data {type} as tream from {url}");
                 return item;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                _logger.LogError(new EventId(), e, $"Failed to download {type} as stream from {url}", url);
-                throw new Exception("BrandbankImageDownloaderLogger");
+                _logger.LogError($"Failed to download {type} as stream from {url}");
+                throw;
             }
         }
 

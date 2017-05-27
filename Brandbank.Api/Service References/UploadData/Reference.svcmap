@@ -22,11 +22,11 @@
     <MetadataSource Address="http://api.brandbank.com/svc/DataImport/Upload.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Upload.xsd" MetadataType="Schema" ID="d2b7f1b5-72bf-4023-ba36-fceef8f2942a" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd1" />
-    <MetadataFile FileName="Upload1.xsd" MetadataType="Schema" ID="fdf53790-e605-4690-9cc8-d182200aa3d6" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd0" />
-    <MetadataFile FileName="Upload.wsdl" MetadataType="Wsdl" ID="96cd4b77-01f3-4038-93ff-9878d34a691a" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?wsdl" />
-    <MetadataFile FileName="Upload2.xsd" MetadataType="Schema" ID="ba1af9f5-3141-4225-98f7-43672f5dccc8" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd2" />
-    <MetadataFile FileName="Upload3.xsd" MetadataType="Schema" ID="e46c6406-cb79-46e7-9ca0-477df5ec70f6" SourceId="1" SourceUrl="http://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd3" />
+    <MetadataFile FileName="Upload4.xsd" MetadataType="Schema" ID="3b7c7d92-c837-48bd-b327-3ca3daf7b1b5" SourceId="1" SourceUrl="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd3" />
+    <MetadataFile FileName="Upload41.xsd" MetadataType="Schema" ID="b9b1b078-0d50-4d62-ac3c-47dc4d5a2fa3" SourceId="1" SourceUrl="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd2" />
+    <MetadataFile FileName="Upload42.xsd" MetadataType="Schema" ID="f0f7f03b-1856-41ae-aa43-4896177e6dd3" SourceId="1" SourceUrl="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd0" />
+    <MetadataFile FileName="Upload1.wsdl" MetadataType="Wsdl" ID="345a952e-a704-41cf-a905-7642d4994127" SourceId="1" SourceUrl="https://api.brandbank.com/svc/DataImport/Upload.svc?wsdl" />
+    <MetadataFile FileName="Upload43.xsd" MetadataType="Schema" ID="c881d2ae-f12f-41d7-b3d7-98a31fec3728" SourceId="1" SourceUrl="https://api.brandbank.com/svc/DataImport/Upload.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

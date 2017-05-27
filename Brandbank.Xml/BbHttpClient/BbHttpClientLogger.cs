@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -8,10 +8,10 @@ namespace Brandbank.Xml.BbHttpClient
 {
     public class BbHttpClientLogger : IBbHttpClient
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<IBbHttpClient> _logger;
         private readonly IBbHttpClient _httpClient;
 
-        public BbHttpClientLogger(ILogger logger, IBbHttpClient httpClient)
+        public BbHttpClientLogger(ILogger<IBbHttpClient> logger, IBbHttpClient httpClient)
         {
             _logger = logger;
             _httpClient = httpClient;

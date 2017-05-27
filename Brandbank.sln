@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandbank.Xml", "Brandbank.Xml\Brandbank.Xml.csproj", "{A131B9C8-66FB-4D34-8568-B540FA477C63}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandbank.Xml.Validation", "Brandbank.Xml.Validation\Brandbank.Xml.Validation.csproj", "{F4838D7E-0081-4420-B95B-CFA95CFA6CDD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandbank.Xml.Validation.Tests", "Brandbank.Xml.Validation.Tests\Brandbank.Xml.Validation.Tests.csproj", "{ED2D5161-E39A-46FD-9B45-C959D93EE987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandbank.Api.Logging", "Brandbank.Api.Logging\Brandbank.Api.Logging.csproj", "{2261267C-CA83-4CA0-84EA-45234598486B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{ED2D5161-E39A-46FD-9B45-C959D93EE987}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED2D5161-E39A-46FD-9B45-C959D93EE987}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED2D5161-E39A-46FD-9B45-C959D93EE987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2261267C-CA83-4CA0-84EA-45234598486B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2261267C-CA83-4CA0-84EA-45234598486B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2261267C-CA83-4CA0-84EA-45234598486B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2261267C-CA83-4CA0-84EA-45234598486B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

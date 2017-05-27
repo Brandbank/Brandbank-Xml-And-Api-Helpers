@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
 using System;
 
 namespace Brandbank.Api.Clients
@@ -27,8 +27,8 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, "Upload to Brandbank failed");
-                throw new Exception("Problem uploading compressed coverage to Brandbank", e);
+                _logger.LogError($"Upload to Brandbank failed: {e.Message}");
+                throw;
             }
         }
 
@@ -42,8 +42,8 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Disposing coverage client failed: {e.Message}");
-                throw new Exception("Disposing coverage client failed", e);
+                _logger.LogError($"Disposing coverage client failed: {e.Message}");
+                throw;
             }
         }
     }

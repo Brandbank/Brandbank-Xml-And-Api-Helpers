@@ -1,5 +1,5 @@
-﻿using Brandbank.Xml.Models.Message;
-using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
+using Brandbank.Xml.Models.Message;
 using System;
 using System.Xml;
 
@@ -27,7 +27,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Acknowledging brandbank message failed: {e.Message}");
+                _logger.LogError($"Acknowledging brandbank message failed: {e.Message}");
                 throw;
             }
         }
@@ -43,7 +43,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Getting Unsent Brandbank data failed: {e.Message}");
+                _logger.LogError($"Getting Unsent Brandbank data failed: {e.Message}");
                 throw;
             }
         }
@@ -58,8 +58,8 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, $"Disposing unsent client failed: {e.Message}");
-                throw new Exception("Disposing unsent client failed", e);
+                _logger.LogError($"Disposing unsent client failed: {e.Message}");
+                throw;
             }
         }
     }

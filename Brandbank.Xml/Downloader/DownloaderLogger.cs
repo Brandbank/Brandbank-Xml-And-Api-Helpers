@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
 using System;
 using System.Collections.Generic;
 
@@ -26,9 +26,9 @@ namespace Brandbank.Xml.Downloader
                                      : "Failed to download data from");
                 return item;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                _logger.LogError(new EventId(), e, "Failed to download data");
+                _logger.LogError("Failed to download data");
                 throw new Exception("Downloader");
             }
         }

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
 using System;
 using System.IO;
 
@@ -17,16 +17,16 @@ namespace Brandbank.Xml.ImageWriter
 
         public void SaveToDisk(Stream imageStream, string path)
         {
-            _logger.LogDebug($"Saving image to {path}", path);
+            _logger.LogDebug($"Saving image to {path}");
             try
             {
                 _imageWriter.SaveToDisk(imageStream, path);
-                _logger.LogDebug($"Saved image to {path}", path);
+                _logger.LogDebug($"Saved image to {path}");
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                _logger.LogError(new EventId(), e, $"Saving image to {path} failed", path);
-                throw new Exception($"Saving image to {path} failed");
+                _logger.LogError($"Saving image to {path} failed");
+                throw;
             }
         }
     }

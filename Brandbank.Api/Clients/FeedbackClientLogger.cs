@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Brandbank.Xml.Logger;
 using System;
 
 namespace Brandbank.Api.Clients
@@ -27,8 +27,8 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, "Upload compressed feedback to Brandbank failed");
-                throw new Exception("Upload compressed feedback to Brandbank failed", e);
+                _logger.LogError($"Upload compressed feedback to Brandbank failed: {e.Message}");
+                throw;
             }
         }
 
@@ -42,8 +42,8 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(), e, "Disposing feedback client failed");
-                throw new Exception("Disposing feedback client failed", e);
+                _logger.LogError($"Disposing feedback client failed: {e.Message}");
+                throw;
             }
         }
     }
