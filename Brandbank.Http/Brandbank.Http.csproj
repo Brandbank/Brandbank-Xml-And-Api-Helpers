@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{19E828EB-7A09-427B-93A2-CB69F5491146}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Brandbank.Http</RootNamespace>
+    <AssemblyName>Brandbank.Http</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BbHttpClientResponseConverter\BbHttpClientResponseConverter.cs" />
+    <Compile Include="BbHttpClientResponseConverter\BbHttpClientResponseConverterLogger.cs" />
+    <Compile Include="BbHttpClientResponseConverter\IBbHttpClientResponseConverter.cs" />
+    <Compile Include="BbHttpClientResponseReader\BbHttpClientResponseReader.cs" />
+    <Compile Include="BbHttpClientResponseReader\BbHttpClientResponseReaderLogger.cs" />
+    <Compile Include="BbHttpClientResponseReader\IBbHttpClientResponseReader.cs" />
+    <Compile Include="BbHttpClient\BbHttpClient.cs" />
+    <Compile Include="BbHttpClient\BbHttpClientLogger.cs" />
+    <Compile Include="BbHttpClient\IBbHttpClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Brandbank.Xml.Logging\Brandbank.Xml.Logging.csproj">
+      <Project>{626e15e5-3073-4fe4-871a-9eb295dd4010}</Project>
+      <Name>Brandbank.Xml.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Brandbank.Xml\Brandbank.Xml.csproj">
+      <Project>{a131b9c8-66fb-4d34-8568-b540fa477c63}</Project>
+      <Name>Brandbank.Xml</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

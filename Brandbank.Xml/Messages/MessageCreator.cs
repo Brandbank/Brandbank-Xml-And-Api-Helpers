@@ -1,6 +1,6 @@
 ﻿using Brandbank.Xml.MessageHelpers;
 using Brandbank.Xml.Models.Message;
-using Brandbank.Xml.ProductConverter;
+using Brandbank.Xml.Products;
 using System;
 using System.Collections.Generic;
 
@@ -12,9 +12,6 @@ namespace Brandbank.Xml.Messages
 
         public MessageCreator(IProductConverter<T> productConverter)
         {
-            if (productConverter == null)
-                throw new ArgumentNullException(nameof(productConverter));
-
             _productConverter = productConverter;
         }
 

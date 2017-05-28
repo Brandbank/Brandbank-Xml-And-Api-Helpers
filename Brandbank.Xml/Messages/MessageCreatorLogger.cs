@@ -1,8 +1,7 @@
-﻿using Brandbank.Xml.Models.Message;
-using Brandbank.Xml.Logging;
+﻿using Brandbank.Xml.Logging;
+using Brandbank.Xml.Models.Message;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Brandbank.Xml.Messages
 {
@@ -26,9 +25,9 @@ namespace Brandbank.Xml.Messages
                 _logger.LogDebug($"Created brandbank message [{messageGuid}]");
                 return message;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Creating brandbank message [{messageGuid}] failed");
+                _logger.LogError($"Creating brandbank message [{messageGuid}] failed: {e.Message}");
                 throw;
             }
         }
@@ -42,9 +41,9 @@ namespace Brandbank.Xml.Messages
                 _logger.LogDebug($"Created brandbank message with multiple products [{messageGuid}]");
                 return message;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _logger.LogError($"Creating brandbank message with multiple products [{messageGuid}] failed");
+                _logger.LogError($"Creating brandbank message with multiple products [{messageGuid}] failed: {e.Message}");
                 throw;
             }
         }

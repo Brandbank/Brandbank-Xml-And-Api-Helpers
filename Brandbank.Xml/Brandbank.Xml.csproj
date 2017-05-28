@@ -40,7 +40,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
@@ -51,15 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BbHttpClientResponseConverter\BbHttpClientResponseConverter.cs" />
-    <Compile Include="BbHttpClientResponseConverter\BbHttpClientResponseConverterLogger.cs" />
-    <Compile Include="BbHttpClientResponseConverter\IBbHttpClientResponseConverter.cs" />
-    <Compile Include="BbHttpClient\IBbHttpClient.cs" />
-    <Compile Include="BbHttpClient\BbHttpClient.cs" />
-    <Compile Include="BbHttpClient\BbHttpClientLogger.cs" />
-    <Compile Include="BbHttpClientResponseReader\BbHttpClientResponseReader.cs" />
-    <Compile Include="BbHttpClientResponseReader\BbHttpClientResponseReaderLogger.cs" />
-    <Compile Include="BbHttpClientResponseReader\IBbHttpClientResponseReader.cs" />
     <Compile Include="Downloader\DownloaderLogger.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Helpers\BrandbankCoverageExtensions.cs" />
@@ -101,7 +91,8 @@
     <Compile Include="Models\Message\IBrandbankMessageSummaryProduct.cs" />
     <Compile Include="Models\Message\MessageTypePartial.cs" />
     <Compile Include="Models\Message\StructuredNutrition.cs" />
-    <Compile Include="ProductConverter\IProductConverter.cs" />
+    <Compile Include="Products\IProductConverter.cs" />
+    <Compile Include="Products\ProductConverterLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
