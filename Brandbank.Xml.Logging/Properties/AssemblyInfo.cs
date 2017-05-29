@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Brandbank.Xml.Logging")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Brandbank Api helpers")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Brandbank")]
 [assembly: AssemblyProduct("Brandbank.Xml.Logging")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
