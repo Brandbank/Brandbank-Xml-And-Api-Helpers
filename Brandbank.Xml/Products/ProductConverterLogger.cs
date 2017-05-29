@@ -20,7 +20,7 @@ namespace Brandbank.Xml.Products
         {
             var jsonItem = JsonConvert.SerializeObject(item);
 
-            _logger.LogDebug($"Converting product {JsonConvert.SerializeObject(jsonItem)}");
+            _logger.LogDebug($"Converting product {jsonItem}");
             try
             {
                 var product = _productConverter.Convert(item);

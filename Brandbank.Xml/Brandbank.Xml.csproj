@@ -92,7 +92,9 @@
     <Compile Include="Models\Message\MessageTypePartial.cs" />
     <Compile Include="Models\Message\StructuredNutrition.cs" />
     <Compile Include="Products\IProductConverter.cs" />
+    <Compile Include="Products\IProductWriter.cs" />
     <Compile Include="Products\ProductConverterLogger.cs" />
+    <Compile Include="Products\ProductWriterLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
