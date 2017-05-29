@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Brandbank.Xml.BbHttpClientResponseReader
+namespace Brandbank.Http.BbHttpClientResponseReader
 {
     public interface IBbHttpClientResponseReader
     {

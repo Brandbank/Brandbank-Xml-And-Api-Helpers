@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Brandbank.Xml.BbHttpClient
+namespace Brandbank.Http.BbHttpClient
 {
     public class BbHttpClientLogger : IBbHttpClient
     {

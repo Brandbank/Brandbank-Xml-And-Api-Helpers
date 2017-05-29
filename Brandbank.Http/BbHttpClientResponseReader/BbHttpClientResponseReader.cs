@@ -1,10 +1,10 @@
-﻿using Brandbank.Xml.BbHttpClient;
+﻿using Brandbank.Http.BbHttpClient;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Brandbank.Xml.BbHttpClientResponseReader
+namespace Brandbank.Http.BbHttpClientResponseReader
 {
     public class BbHttpClientResponseReader : IBbHttpClientResponseReader
     {

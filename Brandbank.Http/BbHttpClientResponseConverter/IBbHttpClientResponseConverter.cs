@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Brandbank.Xml.BbHttpClientResponseConverter
+namespace Brandbank.Http.BbHttpClientResponseConverter
 {
     public interface IBbHttpClientResponseConverter
     {

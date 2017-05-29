@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Brandbank.Xml.BbHttpClientResponseReader
+namespace Brandbank.Http.BbHttpClientResponseReader
 {
     public class BbHttpClientResponseReaderLogger : IBbHttpClientResponseReader
     {

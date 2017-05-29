@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO;
 
-namespace Brandbank.Xml.BbHttpClientResponseConverter
+namespace Brandbank.Http.BbHttpClientResponseConverter
 {
     public class BbHttpClientResponseConverter : IBbHttpClientResponseConverter
     {

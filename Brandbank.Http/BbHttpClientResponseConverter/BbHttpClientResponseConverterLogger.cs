@@ -3,7 +3,7 @@ using Brandbank.Xml.Logging;
 using System;
 using System.IO;
 
-namespace Brandbank.Xml.BbHttpClientResponseConverter
+namespace Brandbank.Http.BbHttpClientResponseConverter
 {
     public class BbHttpClientResponseConverterLogger : IBbHttpClientResponseConverter
     {
