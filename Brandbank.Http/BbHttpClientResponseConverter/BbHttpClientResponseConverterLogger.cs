@@ -27,7 +27,7 @@ namespace Brandbank.Http.BbHttpClientResponseConverter
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to convert data stream {e.Message} {e.Source}");
+                _logger.LogError($"Failed to convert data stream: {e}");
                 throw;
             }
         }

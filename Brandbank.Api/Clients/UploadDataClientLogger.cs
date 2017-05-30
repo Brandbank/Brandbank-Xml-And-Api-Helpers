@@ -29,7 +29,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError($"Upload to Brandbank failed: {e.Message}");
+                _logger.LogError($"Uploading message to Brandbank failed: {e}");
                 throw;
             }
         }
@@ -88,7 +88,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError($"Disposing upload client failed: {e.Message}");
+                _logger.LogError($"Disposing upload client failed: {e}");
                 throw;
             }
         }

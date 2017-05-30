@@ -29,7 +29,7 @@ namespace Brandbank.Xml.Products
             }
             catch (Exception e)
             {
-                _logger.LogError($"Converting product {jsonItem} failed: {e.Message}");
+                _logger.LogError($"Converting product {jsonItem} failed: {e}");
                 throw;
             }
         }

@@ -27,7 +27,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError($"Upload to Brandbank failed: {e.Message}");
+                _logger.LogError($"Upload to Brandbank failed: {e}");
                 throw;
             }
         }
@@ -42,7 +42,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError($"Disposing coverage client failed: {e.Message}");
+                _logger.LogError($"Disposing coverage client failed: {e}");
                 throw;
             }
         }

@@ -27,7 +27,7 @@ namespace Brandbank.Xml.Messages
             }
             catch (Exception e)
             {
-                _logger.LogError($"Creating brandbank message [{messageGuid}] failed: {e.Message}");
+                _logger.LogError($"Creating brandbank message [{messageGuid}] failed: {e}");
                 throw;
             }
         }
@@ -43,7 +43,7 @@ namespace Brandbank.Xml.Messages
             }
             catch (Exception e)
             {
-                _logger.LogError($"Creating brandbank message with multiple products [{messageGuid}] failed: {e.Message}");
+                _logger.LogError($"Creating brandbank message with multiple products [{messageGuid}] failed: {e}");
                 throw;
             }
         }

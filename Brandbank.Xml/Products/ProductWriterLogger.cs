@@ -28,7 +28,7 @@ namespace Brandbank.Xml.Products
             }
             catch (Exception e)
             {
-                _logger.LogError($"Saving product {jsonProduct} failed: {e.Message}");
+                _logger.LogError($"Saving product {jsonProduct} failed: {e}");
                 throw;
             }
         }

@@ -27,7 +27,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError($"Acknowledging brandbank message failed: {e.Message}");
+                _logger.LogError($"Acknowledging brandbank message failed: {e}");
                 throw;
             }
         }
@@ -43,7 +43,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError($"Getting Unsent Brandbank data failed: {e.Message}");
+                _logger.LogError($"Getting Unsent Brandbank data failed: {e}");
                 throw;
             }
         }
@@ -58,7 +58,7 @@ namespace Brandbank.Api.Clients
             }
             catch (Exception e)
             {
-                _logger.LogError($"Disposing unsent client failed: {e.Message}");
+                _logger.LogError($"Disposing unsent client failed: {e}");
                 throw;
             }
         }
