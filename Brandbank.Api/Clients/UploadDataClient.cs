@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Brandbank.Api.Clients
 {
-    public class UploadDataClient : IUploadDataClient
+    public sealed class UploadDataClient : IUploadDataClient
     {
         private readonly UploadClient _uploadClient;
         private readonly UserCredentialHeader _header;

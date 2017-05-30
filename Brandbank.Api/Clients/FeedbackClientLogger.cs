@@ -3,7 +3,7 @@ using System;
 
 namespace Brandbank.Api.Clients
 {
-    public class FeedbackClientLogger : IFeedbackClient
+    public sealed class FeedbackClientLogger : IFeedbackClient
     {
         private readonly ILogger<IFeedbackClient> _logger;
         private readonly IFeedbackClient _feedbackClient;

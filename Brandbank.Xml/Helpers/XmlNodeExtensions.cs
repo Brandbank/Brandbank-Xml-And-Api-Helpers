@@ -22,7 +22,7 @@ namespace Brandbank.Xml.Helpers
             };
             settings.ValidationEventHandler += validationEventHandler;
 
-            using (var xmlStream = new StringReader(xmlNode.OuterXml))
+            var xmlStream = new StringReader(xmlNode.OuterXml);
             using (var validator = XmlReader.Create(xmlStream, settings))
             {
                 while(validator.Read());

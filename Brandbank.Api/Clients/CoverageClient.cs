@@ -4,7 +4,7 @@ using System.ServiceModel;
 
 namespace Brandbank.Api.Clients
 {
-    public class CoverageClient : ICoverageClient
+    public sealed class CoverageClient : ICoverageClient
     {
         private readonly DataReportSoapClient _dataReportSoapClient;
         private readonly ExternalCallerHeader _header;

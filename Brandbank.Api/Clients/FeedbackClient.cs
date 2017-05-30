@@ -3,7 +3,7 @@ using System;
 
 namespace Brandbank.Api.Clients
 {
-    public class FeedbackClient : IFeedbackClient
+    public sealed class FeedbackClient : IFeedbackClient
     {
         private readonly DataReportSoapClient _dataReportSoapClient;
         private readonly ExternalCallerHeader _header;

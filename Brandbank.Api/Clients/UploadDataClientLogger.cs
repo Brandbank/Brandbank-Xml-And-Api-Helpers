@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Brandbank.Api.Clients
 {
-    public class UploadDataClientLogger : IUploadDataClient
+    public sealed class UploadDataClientLogger : IUploadDataClient
     {
         private readonly ILogger<IUploadDataClient> _logger;
         private readonly IUploadDataClient _uploadClient;
@@ -30,7 +30,7 @@ namespace Brandbank.Api.Clients
             catch (Exception e)
             {
                 _logger.LogError($"Upload to Brandbank failed: {e.Message}");
-                throw new Exception();
+                throw;
             }
         }
 

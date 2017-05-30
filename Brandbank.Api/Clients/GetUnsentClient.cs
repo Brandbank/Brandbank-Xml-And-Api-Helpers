@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace Brandbank.Api.Clients
 {
-    public class GetUnsentClient : IGetUnsentClient
+    public sealed class GetUnsentClient : IGetUnsentClient
     {
         private readonly DataExtractSoapClient _dataExtractSoapClient;
         private readonly ExternalCallerHeader _header;

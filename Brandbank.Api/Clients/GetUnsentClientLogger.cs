@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace Brandbank.Api.Clients
 {
-    public class GetUnsentClientLogger : IGetUnsentClient
+    public sealed class GetUnsentClientLogger : IGetUnsentClient
     {
         private readonly ILogger<IGetUnsentClient> _logger;
         private readonly IGetUnsentClient _getUnsentClient;

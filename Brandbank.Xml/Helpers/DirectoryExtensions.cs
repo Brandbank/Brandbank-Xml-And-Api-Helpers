@@ -39,7 +39,7 @@ namespace Brandbank.Xml.Helpers
 
         public static MemoryStream ConvertToStream(this string value)
         {
-            return new MemoryStream(Encoding.Default.GetBytes(value));
+            return new MemoryStream(Encoding.UTF8.GetBytes(value));
         }
 
         public static byte[] CompressMemoryStream(this MemoryStream memStreamIn, string zipEntryName)
@@ -77,7 +77,6 @@ namespace Brandbank.Xml.Helpers
 
                 zipStream.AddFilesToZip(pathToFolder, folderOffset);
                 zipStream.IsStreamOwner = true;
-                zipStream.Close();
 
                 return outputMemStream.ToArray();
             }

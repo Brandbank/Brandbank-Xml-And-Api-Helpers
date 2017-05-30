@@ -3,7 +3,7 @@ using System;
 
 namespace Brandbank.Api.Clients
 {
-    public class CoverageClientLogger : ICoverageClient
+    public sealed class CoverageClientLogger : ICoverageClient
     {
         private readonly ILogger<ICoverageClient> _logger;
         private readonly ICoverageClient _coverageClient;
