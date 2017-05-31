@@ -25,6 +25,7 @@ namespace Brandbank.Api.Clients
             {
                 _responseCount = 1;
                 var response = _uploadClient.UploadMessage(message);
+                _logger.LogDebug("Uploaded message to Brandbank");
                 return Log(response);
             }
             catch (Exception e)
@@ -37,8 +38,17 @@ namespace Brandbank.Api.Clients
         public UploadResponse GetResponse(UploadResponse uploadResponse)
         {
             _logger.LogDebug($"Getting upload response for message {uploadResponse.ReceiptId}");
-            var response = _uploadClient.GetResponse(uploadResponse);
-            return Log(response);
+            try
+            {
+                var response = _uploadClient.GetResponse(uploadResponse);
+                _logger.LogDebug($"Got upload response for message {uploadResponse.ReceiptId}");
+                return Log(response);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Getting upload response for message {uploadResponse.ReceiptId} failed: {e}");
+                throw;
+            }
         }
 
         private UploadResponse Log(UploadResponse response)
