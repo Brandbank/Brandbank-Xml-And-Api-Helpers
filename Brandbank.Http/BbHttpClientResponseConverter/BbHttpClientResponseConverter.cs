@@ -1,5 +1,4 @@
 ﻿using Brandbank.Xml.Helpers;
-using System.Drawing;
 using System.IO;
 
 namespace Brandbank.Http.BbHttpClientResponseConverter

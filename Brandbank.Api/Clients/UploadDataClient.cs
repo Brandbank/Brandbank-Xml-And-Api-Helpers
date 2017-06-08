@@ -1,7 +1,6 @@
 ﻿using Brandbank.Api.UploadData;
 using System;
 using System.IO;
-using System.ServiceModel;
 using System.Threading;
 
 namespace Brandbank.Api.Clients

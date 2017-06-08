@@ -31,6 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Brandbank.Api, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Brandbank.Api.0.1.4\lib\net461\Brandbank.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Brandbank.Xml, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Brandbank.Xml.0.1.4\lib\net461\Brandbank.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="Brandbank.Xml.Logging, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Brandbank.Xml.Logging.0.1.3\lib\net452\Brandbank.Xml.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
     </Reference>
@@ -39,6 +51,9 @@
     </Reference>
     <Reference Include="MongoDB.Driver.Core, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Driver.Core.2.4.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,20 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Brandbank.Api\Brandbank.Api.csproj">
-      <Project>{72c912c1-ad45-414d-a164-67fa5c1e86cc}</Project>
-      <Name>Brandbank.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Brandbank.Xml.Logging\Brandbank.Xml.Logging.csproj">
-      <Project>{626e15e5-3073-4fe4-871a-9eb295dd4010}</Project>
-      <Name>Brandbank.Xml.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Brandbank.Xml\Brandbank.Xml.csproj">
-      <Project>{a131b9c8-66fb-4d34-8568-b540fa477c63}</Project>
-      <Name>Brandbank.Xml</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
