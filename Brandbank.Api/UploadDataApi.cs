@@ -6,6 +6,7 @@ using Brandbank.Xml.Logging;
 using System;
 using System.ServiceModel;
 using System.Xml.Schema;
+using System.Net;
 
 namespace Brandbank.Api
 {
@@ -17,8 +18,20 @@ namespace Brandbank.Api
         private readonly string _schemaNamespace;
         private readonly ILogger<IUploadDataClient> _logger;
         private readonly ValidationEventHandler _validationEventHandler;
+        private readonly string _proxy;
+        private readonly string _username;
+        private readonly string _password;
 
-        public UploadDataApi(Guid authGuid, string endpointAddress, string schema, string schemaNamespace, ILogger<IUploadDataClient> logger, ValidationEventHandler validationEventHandler)
+        public UploadDataApi(
+            Guid authGuid, 
+            string endpointAddress, 
+            string schema, 
+            string schemaNamespace, 
+            ILogger<IUploadDataClient> logger, 
+            ValidationEventHandler validationEventHandler,
+            string proxy, 
+            string username, 
+            string password)
         {
             _authGuid = authGuid;
             _endpointAddress = endpointAddress;
@@ -26,13 +39,56 @@ namespace Brandbank.Api
             _schemaNamespace = schemaNamespace;
             _logger = logger;
             _validationEventHandler = validationEventHandler;
+            _proxy = proxy;
+            _username = username;
+            _password = password;
+        }
+
+        public UploadDataApi(
+            Guid authGuid, 
+            string endpointAddress, 
+            string schema, 
+            string schemaNamespace, 
+            ILogger<IUploadDataClient> logger, 
+            ValidationEventHandler validationEventHandler)
+            : this(
+                  authGuid,
+                  endpointAddress,
+                  schema,
+                  schemaNamespace,
+                  logger,
+                  validationEventHandler,
+                  null,
+                  null,
+                  null)
+        {
         }
 
         public UploadResponse UploadData(MessageType message)
         {
             var uploadClient = new UploadClient(BrandbankHttpsBinding("BasicHttpBinding_IUpload"), BrandbankEndpointAddress(_endpointAddress));
+
             using (var uploadDataClient = new UploadDataClientLogger(_logger, new UploadDataClient(_authGuid, uploadClient)))
-                return UploadData(message, uploadDataClient);
+            {
+                var orginalProxy = WebRequest.DefaultWebProxy;
+
+                try
+                {
+                    if (_proxy != null)
+                    {
+                        WebRequest.DefaultWebProxy = new WebProxy(_proxy)
+                        {
+                            Credentials = new NetworkCredential(_username, _password)
+                        };
+                    }
+
+                    return UploadData(message, uploadDataClient);
+                }
+                finally
+                {
+                    WebRequest.DefaultWebProxy = orginalProxy;
+                }
+            }
         }
 
         private UploadResponse UploadData(MessageType message, IUploadDataClient uploadDataClient)
