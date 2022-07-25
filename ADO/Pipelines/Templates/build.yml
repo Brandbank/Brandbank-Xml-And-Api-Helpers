@@ -1,0 +1,50 @@
+steps:
+  - checkout: self
+    persistCredentials: true
+    displayName: Clone Self
+
+  # - script: |
+  #     git tag $(packageversion)
+  #     git push origin $(packageversion)
+  #   workingDirectory: $(Build.SourcesDirectory)
+  
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet 4.4.1'
+    inputs:
+      versionSpec: 4.4.1
+
+  - task: NuGetCommand@2
+    displayName: NuGet Restore
+    inputs:
+      command: 'restore'
+      restoreSolution: '$(basesolution)'
+
+  - task: VSBuild@1
+    displayName: Build
+    inputs:
+      solution: '$(basesolution)'
+      msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+      platform: "$(buildPlatform)"
+      configuration: "$(buildConfiguration)"
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet pack'
+    inputs:
+      command: pack
+      packagesToPack: $(projectpath)
+
+  - task: VSTest@2
+    displayName: 'Test Assemblies'
+    inputs:
+      testAssemblyVer2: |
+       **\$(BuildConfiguration)\*test*.dll
+       !**\obj\**
+      platform: '$(BuildPlatform)'
+      configuration: '$(BuildConfiguration)'
+      
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifacts
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: $(artifactName)
+      publishLocation: 'Container'
