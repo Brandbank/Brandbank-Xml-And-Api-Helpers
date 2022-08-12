@@ -55,6 +55,7 @@
     <Compile Include="ValidationExtensionTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Files\BrandbankXML_v5a - Fully Valid Schema Test.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
