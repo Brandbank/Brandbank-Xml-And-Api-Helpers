@@ -26,12 +26,6 @@ steps:
       msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
       platform: "$(buildPlatform)"
       configuration: "$(buildConfiguration)"
-
-  # - task: NuGetCommand@2
-  #   displayName: 'NuGet pack'
-  #   inputs:
-  #     command: pack
-  #     packagesToPack: $(projectpath)
   
   - task: NuGetCommand@2
     displayName: 'NuGet pack'
@@ -59,14 +53,6 @@ steps:
       packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
       nuGetFeedType: external
       publishFeedCredentials: 'Nuget.org_Connection'
-  
-  # - task: DotNetCoreCLI@2
-  #   displayName: 'dotnet push'
-  #   inputs:
-  #     command: 'push'
-  #     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-  #     nuGetFeedType: 'internal'
-  #     publishVstsFeed: 'ca324533-e788-4c07-bc4d-369280a704e4'
       
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts
