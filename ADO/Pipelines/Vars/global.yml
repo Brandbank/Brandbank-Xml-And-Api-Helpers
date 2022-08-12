@@ -10,5 +10,6 @@ variables:
   major: '0'
   minor: '0'
   patch: $[counter(format('{0}.{1}', variables['major'], variables['minor']), 0)]
-  packageversion: $(major).$(minor).$(patch).$(Build.SourceBranch)
+  test: 'test'
+  packageversion: $(major).$(minor).$(patch).$test
   
