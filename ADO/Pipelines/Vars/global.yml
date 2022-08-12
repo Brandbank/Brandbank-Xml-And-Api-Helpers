@@ -10,6 +10,6 @@ variables:
   major: '0'
   minor: '0'
   patch: $[counter(format('{0}.{1}', variables['major'], variables['minor']), 0)]
-  test: 'test'
-  packageversion: $(major).$(minor).$(patch)
+  test: '0'
+  packageversion: $(major).$(minor).$(patch).$(test)
   
