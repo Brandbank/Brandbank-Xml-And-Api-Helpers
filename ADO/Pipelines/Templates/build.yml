@@ -3,10 +3,10 @@ steps:
     persistCredentials: true
     displayName: Clone Self
 
-  # - script: |
-  #     git tag $(packageversion)
-  #     git push origin $(packageversion)
-  #   workingDirectory: $(Build.SourcesDirectory)
+  - script: |
+      git tag $(packageversion)
+      git push origin $(packageversion)
+    workingDirectory: $(Build.SourcesDirectory)
   
   - task: NuGetToolInstaller@1
     displayName: 'Use NuGet 4.4.1'
@@ -27,11 +27,21 @@ steps:
       platform: "$(buildPlatform)"
       configuration: "$(buildConfiguration)"
 
+  # - task: NuGetCommand@2
+  #   displayName: 'NuGet pack'
+  #   inputs:
+  #     command: pack
+  #     packagesToPack: $(projectpath)
+  
   - task: NuGetCommand@2
     displayName: 'NuGet pack'
     inputs:
       command: pack
       packagesToPack: $(projectpath)
+      configuration: "$(buildConfiguration)"
+      versioningScheme: 'byEnvVar'
+      versionEnvVar: packageversion
+      packDestination: '$(Build.ArtifactStagingDirectory)'
 
   - task: VSTest@2
     displayName: 'Test Assemblies'
@@ -41,6 +51,22 @@ steps:
        !**\obj\**
       platform: '$(BuildPlatform)'
       configuration: '$(BuildConfiguration)'
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet Push'
+    inputs:
+      command: push
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: external
+      publishFeedCredentials: 'Nuget.org_Connection'
+  
+  # - task: DotNetCoreCLI@2
+  #   displayName: 'dotnet push'
+  #   inputs:
+  #     command: 'push'
+  #     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+  #     nuGetFeedType: 'internal'
+  #     publishVstsFeed: 'ca324533-e788-4c07-bc4d-369280a704e4'
       
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts
