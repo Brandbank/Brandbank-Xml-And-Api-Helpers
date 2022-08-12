@@ -1,0 +1,15 @@
+variables:
+  vmImage: windows-2019
+  displayName: Logging
+  buildPlatform: 'Any CPU'
+  buildConfiguration: Release
+  artifactName: Packages
+  basesolution: 'Brandbank.sln'
+  projectpath: 'Brandbank.Xml\Brandbank.Xml.csproj'
+  testprojectpath: 'Brandbank.Xml.Tests\Brandbank.Xml.Tests.csproj'
+  major: '0'
+  minor: '0'
+  patch: $[counter(format('{0}.{1}', variables['major'], variables['minor']), 0)]
+  test: '0'
+  packageversion: $(major).$(minor).$(test).$(patch)
+  

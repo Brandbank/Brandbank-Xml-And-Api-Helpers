@@ -1,0 +1,17 @@
+name: 'build-$(Rev:rr) ($(Date:dd-MMM-yyyy))'
+
+trigger:
+  branches:
+    include:
+      - '*'
+
+variables:
+  - template: Vars/global.yml
+
+pool:
+  vmImage: '$(vmImage)'
+
+jobs:
+- job:
+  steps:
+    - template: Templates/build.yml
