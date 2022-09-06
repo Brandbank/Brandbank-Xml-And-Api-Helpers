@@ -8,7 +8,7 @@ steps:
       $branchSource = "$(Build.SourceBranch)"
       $branchSource = $branchSource.ToLower()
       $branchSourcePath = $branchSource -replace "refs/heads/", ""
-      if ($branchSourcePath -eq "devmain"){
+      if ($branchSourcePath -eq "master"){
         $splitTag = $tagName.Split('.')
         $oldCounter = [int]($splitTag[$splitTag.Length - 1])
         $newCounter = $oldCounter + 1
