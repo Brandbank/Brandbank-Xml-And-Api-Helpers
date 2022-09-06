@@ -1,6 +1,6 @@
 variables:
   vmImage: windows-2019
-  repoName: Brandbank-Xml-And-Api-Helpers
+  repoName: PingYin-Brandbank/Brandbank-Xml-And-Api-Helpers
   buildPlatform: 'Any CPU'
   buildConfiguration: Release
   artifactName: Packages
