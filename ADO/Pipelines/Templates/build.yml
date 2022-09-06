@@ -3,10 +3,31 @@ steps:
     persistCredentials: true
     displayName: Clone Self
 
-  - script: |
-      git tag $(packageversion)
-      git push origin $(packageversion)
-    workingDirectory: $(Build.SourcesDirectory)
+  - powershell: |
+      $tagName = git describe --tags --abbrev=0
+      $branchSource = "$(Build.SourceBranch)"
+      $branchSource = $branchSource.ToLower()
+      $branchSourcePath = $branchSource -replace "refs/heads/", ""
+      if ($branchSourcePath -eq "devmain"){
+        $splitTag = $tagName.Split('.')
+        $oldCounter = [int]($splitTag[$splitTag.Length - 1])
+        $newCounter = $oldCounter + 1
+        $nugetVersion = $tagName.TrimEnd([string]$oldCounter) + [string]$newCounter
+        git tag $(nugetVersion)
+        git push origin $(nugetVersion)
+      }
+      else{
+        $splitTag = $tagName.Split('.')
+        $oldCounter = [int]($splitTag[$splitTag.Length - 1])
+        $newCounter = $oldCounter + 1
+        $buildNumber = $Env:BUILD_BUILDNUMBER
+        $revision = ($buildNumber.Split('('))[0]
+        $nugetVersion = $tagName.TrimEnd([string]$oldCounter) + [string]$newCounter + '-' + $branchSourcePath + '.' + $revision
+      }
+      echo "##vso[task.setvariable variable=nugetVersion;]$nugetVersion"
+    workingDirectory: $(Agent.BuildDirectory)\s\$(repoName)
+    failOnStderr: true
+    displayName: 'Calculating NuGet Version'
   
   - task: NuGetToolInstaller@1
     displayName: 'Use NuGet 4.4.1'
@@ -34,7 +55,7 @@ steps:
       packagesToPack: $(projectpath)
       configuration: "$(buildConfiguration)"
       versioningScheme: 'byEnvVar'
-      versionEnvVar: packageversion
+      versionEnvVar: nugetVersion 
       packDestination: '$(Build.ArtifactStagingDirectory)'
 
   - task: VSTest@2
