@@ -13,8 +13,10 @@ steps:
         $oldCounter = [int]($splitTag[$splitTag.Length - 1])
         $newCounter = $oldCounter + 1
         $nugetVersion = $tagName.TrimEnd([string]$oldCounter) + [string]$newCounter
-        git tag $(nugetVersion)
-        git push origin $(nugetVersion)
+        git tag $nugetVersion
+        $ErrorActionPreference = "SilentlyContinue"
+        git push origin $nugetVersion
+        $ErrorActionPreference = "Stop"
       }
       else{
         $splitTag = $tagName.Split('.')
